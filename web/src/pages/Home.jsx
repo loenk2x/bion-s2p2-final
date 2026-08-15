@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@shared/AuthProvider";
-import { firstName, formatLongDate } from "@shared/format";
+import { firstName } from "@shared/format";
 import { CATEGORY_SLUGS, CONTENT_TYPE_SLUGS, categoryLabel, contentTypeLabel } from "@shared/categories";
 import Icon from "../components/Icon";
 import { CardSkeleton } from "../components/Loading";
@@ -15,7 +15,6 @@ const SEARCH_DEBOUNCE_MS = 400;
 
 export default function Home() {
   const { user } = useAuth();
-  const [today] = useState(() => new Date());
 
   const [summary, setSummary] = useState(null);
   const [searchInput, setSearchInput] = useState("");
@@ -84,8 +83,7 @@ export default function Home() {
     <div>
       <div className="beranda-atas">
         <div>
-          <h1 className="judul-hal">Halo, {firstName(user?.name)}</h1>
-          <p className="redup" style={{ margin: "6px 0 20px" }}>{formatLongDate(today)}</p>
+          <h1 className="judul-hal" style={{ marginBottom: 20 }}>Halo, {firstName(user?.name)}</h1>
 
           <div className="cari" style={{ maxWidth: 420, marginBottom: 18 }}>
             <Icon name="search" size={20} />
