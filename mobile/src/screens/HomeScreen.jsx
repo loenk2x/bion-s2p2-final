@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "@shared/AuthProvider";
-import { firstName, formatLongDate } from "@shared/format";
+import { firstName } from "@shared/format";
 import { CATEGORY_SLUGS, CONTENT_TYPE_SLUGS, categoryLabel, contentTypeLabel } from "@shared/categories";
 import Icon from "../components/Icon";
 import Loading from "../components/Loading";
@@ -20,7 +20,6 @@ const SEARCH_DEBOUNCE_MS = 400;
 
 export default function HomeScreen({ navigation }) {
   const { user } = useAuth();
-  const [today] = useState(() => new Date());
 
   const [summary, setSummary] = useState(null);
   const [searchInput, setSearchInput] = useState("");
@@ -93,10 +92,9 @@ export default function HomeScreen({ navigation }) {
 
   const header = (
     <View>
-      <Text style={styles.greeting}>Halo, {firstName(user?.name)}</Text>
-      <Text style={styles.date}>{formatLongDate(today)}</Text>
-
       {summary ? <DailyRings rings={summary.cincin} /> : null}
+
+      <Text style={styles.greeting}>Halo, {firstName(user?.name)}</Text>
 
       <View style={styles.searchBox}>
         <Icon name="search" size={18} color={colors.tinta400} />
@@ -179,8 +177,11 @@ const styles = StyleSheet.create({
   list: { padding: spacing.s16, gap: spacing.s12 },
   column: { gap: spacing.s12 },
   cardSpacing: { marginBottom: spacing.s12 },
-  greeting: { fontSize: 22, fontWeight: "700", color: colors.tinta900 },
-  date: { fontSize: 13, color: colors.tinta600, marginTop: 4, marginBottom: spacing.s16 },
+  // Sits below the rings card now; marginTop stands in for the date line's old
+  // marginBottom now that the date is gone, so the gap to the rings card above
+  // doesn't collapse. No marginBottom here - searchBox's own marginTop below
+  // already provides the gap down to the search box.
+  greeting: { fontSize: 22, fontWeight: "700", color: colors.tinta900, marginTop: spacing.s16 },
   searchBox: {
     flexDirection: "row",
     alignItems: "center",
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.sm,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    // Sits below the rings card now, so the gap belongs above it. The gap to the
+    // Sits below the greeting now, so the gap belongs above it. The gap to the
     // category chips comes from chipRow's own marginTop.
     marginTop: spacing.s16
   },
