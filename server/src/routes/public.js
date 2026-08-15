@@ -4,30 +4,30 @@ const { asyncHandler } = require("../middleware/error");
 
 const router = express.Router();
 
-// Satu-satunya route konten yang boleh dibuka tanpa token, khusus halaman landing.
-// Yang dikirim hanya judul, kategori, tipe, dan gambar sampul — body dan videoId
-// sengaja tidak ikut, jadi isi kontennya tetap tertutup.
+// The only content route that may be opened without a token, just for the landing page.
+// Only title, category, type, and cover image are sent — body and videoId are
+// deliberately left out, so the content itself stays behind the login.
 router.get(
   "/teaser",
   asyncHandler(async (req, res) => {
-    const daftar = await Content.find({})
+    const items = await Content.find({})
       .sort({ publishedAt: -1 })
       .limit(3)
       .select("slug title category type imageUrl");
 
-    const jumlah = await Content.countDocuments();
-    const kategori = await Content.distinct("category");
+    const count = await Content.countDocuments();
+    const categories = await Content.distinct("category");
 
     res.json({
-      konten: daftar.map((k) => ({
+      konten: items.map((k) => ({
         slug: k.slug,
         title: k.title,
         category: k.category,
         type: k.type,
         imageUrl: k.imageUrl
       })),
-      jumlahKonten: jumlah,
-      jumlahKategori: kategori.length
+      jumlahKonten: count,
+      jumlahKategori: categories.length
     });
   })
 );

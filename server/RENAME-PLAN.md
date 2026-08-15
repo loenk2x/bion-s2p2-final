@@ -193,7 +193,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
    `src/routes/contents.js`). Ini identifier dengan sebaran terluas —
    kerjakan sebagai satu commit mekanis, lalu jalankan smoke test penuh
    karena semua endpoint melewati `bungkus`.
-9. `src/routes/publik.js` → pindah jadi `src/routes/public.js`, ganti
+9. ✅ `src/routes/publik.js` → pindah jadi `src/routes/public.js`, ganti
    variabel lokalnya (`daftar`, `jumlah`, `kategori`), sekaligus perbarui
    path impor dan nama variabel `rutePublik` di `src/app.js`.
 10. `src/routes/auth.js` — ganti `buatToken`, `cocok`, dan nama variabel

@@ -7,7 +7,7 @@ const { requireAuth } = require("./middleware/requireAuth");
 const { notFound, errorHandler, asyncHandler } = require("./middleware/error");
 const { ACTIVITIES, BREATHING_SESSION_MINUTES, DAILY_TARGETS, MOOD_LABELS } = require("./utils/activities");
 
-const rutePublik = require("./routes/publik");
+const publicRouter = require("./routes/public");
 const ruteAuth = require("./routes/auth");
 const ruteContents = require("./routes/contents");
 const ruteFavorites = require("./routes/favorites");
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== "test") app.use(morgan("dev"));
 app.get("/api/health", (req, res) => res.json({ status: "hidup", waktu: new Date().toISOString() }));
 
 // Tanpa login
-app.use("/api/public", rutePublik);
+app.use("/api/public", publicRouter);
 app.use("/api/auth", ruteAuth);
 
 // Semua yang di bawah ini wajib login. requireAuth dipasang di tingkat app,
