@@ -196,7 +196,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
 9. ✅ `src/routes/publik.js` → pindah jadi `src/routes/public.js`, ganti
    variabel lokalnya (`daftar`, `jumlah`, `kategori`), sekaligus perbarui
    path impor dan nama variabel `rutePublik` di `src/app.js`.
-10. `src/routes/auth.js` — ganti `buatToken`, `cocok`, dan nama variabel
+10. ✅ `src/routes/auth.js` — ganti `buatToken`, `cocok`, dan nama variabel
     lokal hasil destructure `passwordLama`/`passwordBaru` (field JSON di
     body tetap sama, hanya nama variabel JavaScript-nya yang berubah).
 11. `src/routes/contents.js` — ganti variabel lokal (`pola`, `daftar`,
