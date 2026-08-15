@@ -47,6 +47,11 @@ code{font-family:ui-monospace,Consolas,monospace;font-size:12px}
 .legenda .n .tgt{font:600 12px/16px var(--font);color:var(--tinta-400)}
 .legenda .sat{font:400 11px/15px var(--font);color:var(--tinta-400);margin-top:1px}
 svg.cincin{display:block;margin:0 auto}
+
+/* denyut lingkaran aktif — mulai dari ukuran capaian, lalu mengembang dan mengempis pelan */
+@keyframes denyut{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.cincin-aktif{transform-box:fill-box;transform-origin:center;animation:denyut 3.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.cincin-aktif{animation:none}}
 </style>
 </head>
 <body>
@@ -106,16 +111,27 @@ svg.cincin{display:block;margin:0 auto}
   Kelebihannya ditandai cincin putih tipis di dalam tepi lingkaran, dan angka di legenda tetap menampilkan nilai sebenarnya.</p>
   <div class="papan"><div class="rak" id="lampau" style="gap:20px"></div></div>
 
-  <h2>Yang perlu Anda putuskan</h2>
+  <h2>7 · Denyut</h2>
+  <p class="ket">Lingkaran aktif tidak tumbuh dari nol saat halaman dibuka. Ia langsung digambar sebesar capaian, lalu mengembang dan
+  mengempis pelan di sekitar ukuran itu. Skalanya 1 sampai 1,045 selama 3,6 detik dengan pelambatan di kedua ujung, dan ketiga lingkaran
+  diberi jeda awal berbeda — 0, 1,2, dan 2,4 detik — supaya tidak berdenyut serempak seperti satu benda.</p>
+  <p class="ket">Titik jangkar penskalaan ada di pusat tiap lingkaran, jadi bayangan target di belakangnya tetap diam dan jarak antara tepi
+  lingkaran aktif dan tepi bayangan tetap terbaca sebagai sisa capaian. Denyutnya dimatikan otomatis kalau perangkat menyalakan
+  <code>prefers-reduced-motion</code>.</p>
+  <div class="papan"><div class="rak" style="gap:20px" id="denyut"></div></div>
+
+  <h2>Keputusan yang sudah disetujui</h2>
   <table>
-    <tr><th style="width:220px">Pilihan</th><th>Saran saya</th></tr>
-    <tr><td>Cara menghitung ukuran</td><td>Opsi B, luas sebanding capaian</td></tr>
-    <tr><td>Tampilan bayangan</td><td>Bentuk 3, isian samar ditambah garis tepi tipis</td></tr>
-    <tr><td>Satuan target relaksasi</td><td>3 sesi — mohon dipastikan, bisa juga 3 menit</td></tr>
-    <tr><td>Perilaku saat target terlampaui</td><td>Berhenti di ukuran bayangan, ditandai cincin putih tipis</td></tr>
+    <tr><th style="width:230px">Hal</th><th>Yang dipakai</th></tr>
+    <tr><td>Cara menghitung ukuran</td><td>Opsi B — luas sebanding capaian, <code>r = rTarget × √p</code>, ukuran terkecil 18%</td></tr>
+    <tr><td>Tampilan bayangan</td><td>Bentuk 3 — isian samar 10% ditambah garis tepi 1,5px pada 28%</td></tr>
+    <tr><td>Target bawaan</td><td>Gerak 10.000 langkah, Tidur 8 jam, Relaksasi 3 sesi</td></tr>
+    <tr><td>Penulisan angka</td><td>Capaian besar dan gelap, target menempel di belakangnya 12px warna <code>tinta-400</code>, satuan di baris bawah</td></tr>
+    <tr><td>Saat target terlampaui</td><td>Berhenti di ukuran bayangan, ditandai cincin putih tipis di dalam tepinya</td></tr>
+    <tr><td>Denyut</td><td>Skala 1 sampai 1,045 selama 3,6 detik, jeda awal 0 / 1,2 / 2,4 detik, mati saat gerak dikurangi</td></tr>
   </table>
-  <p class="ket">Setelah keempatnya dipilih, saya pindahkan ke <code>mockups.html</code>, <code>design-system.md</code>, dan
-  <code>figma-prompt.md</code> sekaligus.</p>
+  <p class="ket">Semuanya sudah dipindahkan ke <code>mockups.html</code>, <code>design-system.md</code>, dan <code>figma-prompt.md</code>.
+  Berkas ini disimpan sebagai catatan kenapa pilihannya begitu.</p>
 </div>
 
 <script>
@@ -143,12 +159,15 @@ function bayanganSvg(s, bentuk){
 function cincin(nilai, {opsi="B", bentuk=3, lebar=240, tinggi=160, hanya=null} = {}){
   const dipakai = hanya ? SUMBU.filter(s => s.kunci === hanya) : SUMBU;
   const bayang = dipakai.map(s => bayanganSvg(s, bentuk)).join("");
+  const jeda = {gerak: "0s", tidur: "-1.2s", relaksasi: "-2.4s"};
   const aktif = dipakai.map(s => {
     const p = nilai[s.kunci] / s.target;
     const r = jariJari(s.rT, p, opsi);
     const lampau = p > 1;
-    return `<circle cx="${s.cx}" cy="${s.cy}" r="${r}" fill="${s.warna}" opacity=".8" style="mix-blend-mode:multiply"/>` +
-      (lampau ? `<circle cx="${s.cx}" cy="${s.cy}" r="${r-4}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.5"/>` : "");
+    return `<circle class="cincin-aktif" style="animation-delay:${jeda[s.kunci]};mix-blend-mode:multiply"
+              cx="${s.cx}" cy="${s.cy}" r="${r}" fill="${s.warna}" opacity=".8"/>` +
+      (lampau ? `<circle class="cincin-aktif" style="animation-delay:${jeda[s.kunci]}"
+              cx="${s.cx}" cy="${s.cy}" r="${r-4}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.5"/>` : "");
   }).join("");
   return `<svg class="cincin" width="${lebar}" height="${tinggi}" viewBox="0 0 240 160">${bayang}${aktif}</svg>`;
 }
@@ -220,6 +239,12 @@ document.getElementById("kartu").innerHTML = [
 document.getElementById("lampau").innerHTML = [
   kartu("Pas di target",   {gerak: 10000, tidur: 8,   relaksasi: 3}),
   kartu("Lewat target",    {gerak: 13800, tidur: 9.2, relaksasi: 5}),
+].join("");
+
+// 7 denyut — sama seperti kartu biasa, denyutnya berjalan sendiri
+document.getElementById("denyut").innerHTML = [
+  kartu("Berdenyut — capaian sebagian", {gerak: 6240,  tidur: 7.1, relaksasi: 2}),
+  kartu("Berdenyut — target tercapai",  {gerak: 10000, tidur: 8,   relaksasi: 3}),
 ].join("");
 </script>
 </body>

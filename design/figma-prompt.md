@@ -30,7 +30,7 @@ Text styles memakai font Inter:
 judul-besar 28/34 Bold, judul-1 22/28 Bold, judul-2 18/24 SemiBold,
 badan 15/22 Regular, badan-tebal 15/22 SemiBold, kecil 13/18 Regular,
 label 12/16 SemiBold, angka-besar 26/30 Bold, angka-aktivitas 22/28 Bold,
-angka-stepper 44/48 Bold.
+angka-sorot 44/48 Bold.
 
 Effect styles:
 bayang-1 = 0 1 2 rgba(18,33,27,0.06) ditambah 0 1 3 rgba(18,33,27,0.04),
@@ -96,15 +96,30 @@ Di halaman "Komponen", buatkan komponen berikut memakai variable dan text style 
 Masih di halaman "Komponen", tambahkan empat komponen berikut.
 
 1. CINCIN HARIAN.
-   Kartu putih radius 16 padding 18, berisi grafik tiga lingkaran bertumpuk seperti Huawei Health.
-   Lingkaran atas di tengah berwarna #F2762E jari-jari 42, lingkaran kiri bawah #7A5AF8 jari-jari 36,
-   lingkaran kanan bawah #0E9DA8 jari-jari 28. Ketiganya memakai blend mode Multiply
-   supaya bagian yang bertumpuk menggelap. Di dalam tiap lingkaran ada ikon putih 22:
-   orang berlari, bulan sabit, dan tiga cincin sepusat.
-   Di bawah grafik ada tiga kolom legenda yang dipisah garis tipis, tiap kolom berisi
-   titik warna 8px, nama sumbu memakai label, dan angkanya 20/26 Bold:
-   Gerak 6.240 langkah, Tidur 7,1 jam, Relaksasi 1 sesi.
-   Di pojok kanan atas kartu ada pil kecil latar hijau-100 teks hijau-700 bertuliskan "2 dari 3 target".
+   Kartu putih radius 16 padding 16, berisi grafik di atas kanvas 240x160
+   berupa tiga pasang lingkaran bertumpuk seperti Huawei Health.
+   Tiap sumbu punya DUA lingkaran di titik yang sama: lingkaran bayangan sebesar target,
+   dan lingkaran aktif yang lebih kecil di atasnya.
+
+   Titik pusat dan jari-jari bayangan:
+   Gerak di 120,54 jari-jari 46 warna #F2762E;
+   Tidur di 82,106 jari-jari 40 warna #7A5AF8;
+   Relaksasi di 158,106 jari-jari 33 warna #0E9DA8.
+   Bayangan digambar dua lapis: isian warna sumbunya pada opasitas 10 persen,
+   ditambah garis tepi 1,5px warna sama pada opasitas 28 persen. Bayangan tanpa blend mode.
+
+   Lingkaran aktif digambar di titik yang sama dengan jari-jari lebih kecil:
+   Gerak 36,3; Tidur 37,7; Relaksasi 26,9.
+   Ketiganya memakai warna sumbunya pada opasitas 80 persen dan blend mode Multiply,
+   supaya bagian yang bertumpuk menggelap.
+   Di dalam tiap lingkaran aktif ada ikon putih 22: orang berlari, bulan sabit, dan tiga cincin sepusat.
+
+   Di bawah grafik ada tiga kolom legenda yang dipisah garis tipis. Tiap kolom tiga baris:
+   baris pertama titik warna 8px dan nama sumbu memakai label warna tinta-600;
+   baris kedua angka capaian 19/24 Bold warna tinta-900 yang langsung diikuti angka target
+   berukuran 12/16 SemiBold warna tinta-400, ditulis "6.240/10.000", "7,1/8", dan "2/3";
+   baris ketiga satuan 11/15 warna tinta-400: langkah, jam, sesi.
+   Jangan tambahkan pil "sekian dari tiga target" di pojok kartu.
 
 2. KARTU AKTIVITAS.
    Kartu putih radius 12 padding 14 efek bayang-1, dengan batang warna selebar 4 menempel di sisi kiri,
@@ -448,12 +463,14 @@ lalu dikembalikan ke alamat yang tadi dituju setelah berhasil masuk."
 
 ## Yang perlu dirapikan sendiri setelah Figma AI selesai
 
-1. **Blend mode cincin harian.** Figma AI sering melewatkan Multiply pada ketiga lingkaran. Atur manual di panel Layer, kalau tidak bentuknya tidak akan terlihat menyatu.
-2. **Gambar latar kartu aktivitas.** Ikon 96px di pojok kanan bawah harus dipotong tepi kartu dan diturunkan opasitasnya ke 13 persen.
-3. **Gambar sampul.** Ganti dengan gambar sesuai topik. Kalau ingin sama persis dengan aplikasi, ambil `imageUrl` dari berkas JSON di folder `content/`.
-4. **Pemotongan teks.** Judul kartu dua baris, kutipan dua baris, lewat properti truncate.
-5. **Komponen dan variant.** Ubah kartu konten, kartu aktivitas, tombol, input, chip, dan avatar menjadi component dengan variant.
-6. **Penamaan frame.** Samakan dengan nama di prompt supaya urutannya rapi.
+1. **Blend mode cincin harian.** Figma AI sering melewatkan Multiply, dan kadang menerapkannya juga ke lingkaran bayangan. Pastikan Multiply hanya menempel pada ketiga lingkaran aktif; bayangan tetap Normal, kalau tidak bayangannya ikut menggelap dan bentuknya berantakan.
+
+2. **Denyut cincin harian tidak digambar di Figma.** Animasinya hanya hidup di kode — skala 1 sampai 1,045 selama 3,6 detik dengan jeda awal 0, 1,2, dan 2,4 detik untuk ketiga lingkaran. Di Figma cukup gambar keadaan diamnya. Kalau ingin memperagakannya saat presentasi, buat dua frame kembar dengan lingkaran aktif berbeda 4,5 persen lalu hubungkan dengan Smart Animate berdurasi 1,8 detik dan easing Ease In And Out.
+3. **Gambar latar kartu aktivitas.** Ikon 96px di pojok kanan bawah harus dipotong tepi kartu dan diturunkan opasitasnya ke 13 persen.
+4. **Gambar sampul.** Ganti dengan gambar sesuai topik. Kalau ingin sama persis dengan aplikasi, ambil `imageUrl` dari berkas JSON di folder `content/`.
+5. **Pemotongan teks.** Judul kartu dua baris, kutipan dua baris, lewat properti truncate.
+6. **Komponen dan variant.** Ubah kartu konten, kartu aktivitas, tombol, input, chip, dan avatar menjadi component dengan variant.
+7. **Penamaan frame.** Samakan dengan nama di prompt supaya urutannya rapi.
 
 ## Daftar frame yang harus ada saat dikumpulkan
 
@@ -461,6 +478,6 @@ lalu dikembalikan ke alamat yang tadi dituju setelah berhasil masuk."
 |---|---|
 | Design System | Swatch warna termasuk enam warna aktivitas, text style, radius, bayangan |
 | Komponen | Sepuluh komponen dasar dan empat komponen khas Healthy Life |
-| Mobile | 19 frame 390 × 844, termasuk enam lembar tambah catatan dan dua frame sesi latihan pernapasan |
+| Mobile | 20 frame 390 × 844, termasuk enam lembar tambah catatan, dua papan tombol, dan dua frame sesi latihan pernapasan |
 | Web | 8 frame 1440 × 900 |
 | Alur | Satu diagram perpindahan layar |

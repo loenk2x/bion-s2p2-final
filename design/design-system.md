@@ -81,7 +81,7 @@ Font: **Inter**. Kalau tidak tersedia, jatuh ke `-apple-system, "Segoe UI", Robo
 | `label` | 12 / 16 | 600 | Label input, teks lencana, label tab, jam pada kartu aktivitas |
 | `angka-besar` | 26 / 30 | 700 | Angka pada kotak ringkasan |
 | `angka-aktivitas` | 22 / 28 | 700 | Angka pada kartu aktivitas |
-| `angka-stepper` | 44 / 48 | 700 | Angka pada lembar pencatatan |
+| `angka-sorot` | 44 / 48 | 700 | Angka pada lembar pencatatan |
 
 Di layar 1024px ke atas, `judul-besar` naik ke 34 / 40 dan `judul-1` naik ke 26 / 32. Panjang baris teks isi dibatasi 68 karakter.
 
@@ -154,17 +154,62 @@ Di web tidak ada gestur geser. Sebagai gantinya, tombol ikon bulat berwarna `bah
 
 ### Cincin harian
 
-Tiga lingkaran bertumpuk dalam satu kartu putih radius `radius-lg`, mengikuti pola Huawei Health. Jari-jari tiap lingkaran naik seiring capaian terhadap target harian, dari 18px saat kosong sampai 44px saat target tercapai. Ketiganya memakai `mix-blend-mode: multiply` sehingga bagian yang bertumpuk menggelap dan ketiganya terbaca sebagai satu bentuk.
+Tiga pasang lingkaran bertumpuk dalam satu kartu putih radius `radius-lg`, mengikuti pola Huawei Health. Tiap sumbu punya dua lingkaran di posisi yang sama: **bayangan** yang selalu sebesar target dan tidak pernah berubah, dan **lingkaran aktif** di atasnya yang ukurannya mengikuti capaian. Jarak antara tepi keduanya itulah sisa yang belum tercapai.
 
-| Lingkaran | Warna | Isi | Target harian |
-|---|---|---|---|
-| Gerak, di atas | `ak-langkah` `#F2762E` | jumlah langkah ditambah menit olahraga | 8.000 langkah |
-| Tidur, kiri bawah | `ak-tidur` `#7A5AF8` | jam tidur | 7 jam |
-| Relaksasi, kanan bawah | `ak-napas` `#0E9DA8` | menit latihan pernapasan | 1 sesi |
+Kanvasnya `viewBox="0 0 240 160"`.
+
+| Sumbu | Warna | Posisi | Jari-jari target | Isi | Target bawaan |
+|---|---|---|---|---|---|
+| Gerak | `ak-langkah` `#F2762E` | 120, 54 | 46 | jumlah seluruh catatan `steps` hari itu | 10.000 langkah |
+| Tidur | `ak-tidur` `#7A5AF8` | 82, 106 | 40 | catatan `sleep` terakhir hari itu | 8 jam |
+| Relaksasi | `ak-napas` `#0E9DA8` | 158, 106 | 33 | jumlah catatan `breathing` hari itu | 3 sesi |
+
+**Bayangan** digambar dua lapis: isian warna sumbunya pada opasitas 10%, ditambah garis tepi 1,5px warna yang sama pada opasitas 28%. Bayangan tidak memakai blend mode dan tidak ikut bergerak.
+
+**Lingkaran aktif** memakai warna sumbunya pada opasitas 80% dengan `mix-blend-mode: multiply`, sehingga bagian yang bertumpuk menggelap dan ketiganya terbaca sebagai satu bentuk.
+
+Ukurannya dihitung dari luas, bukan dari lebar:
+
+```
+r = rTarget × max(0,18, √(capaian ÷ target))
+```
+
+Akar kuadratnya dipakai supaya luas lingkaran sebanding dengan capaian. Kalau jari-jari yang disebandingkan langsung, capaian 50% hanya menghasilkan seperempat luas bayangan dan pagi hari terasa jauh lebih kosong daripada kenyataannya. Batas bawah 18% menjaga capaian nol tetap terlihat sebagai titik, bukan hilang sama sekali.
+
+Kalau target terlampaui, lingkaran berhenti di ukuran bayangan supaya ketiganya tidak saling menabrak, dan kelebihannya ditandai cincin putih 1,5px pada opasitas 75% di dalam tepinya. Angka di legenda tetap menampilkan nilai sebenarnya.
+
+Di dalam tiap lingkaran ada ikon putih 20–24px: orang berlari, bulan sabit, dan tiga cincin sepusat.
+
+#### Denyut
+
+Lingkaran aktif tidak tumbuh dari nol saat layar dibuka. Ia langsung digambar sebesar capaian, lalu mengembang dan mengempis pelan di sekitar ukuran itu.
+
+```css
+@keyframes denyut { 0%, 100% { transform: scale(1) } 50% { transform: scale(1.045) } }
+.cincin-aktif {
+  transform-box: fill-box;
+  transform-origin: center;
+  mix-blend-mode: multiply;
+  animation: denyut 3.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) { .cincin-aktif { animation: none } }
+```
+
+Jeda awal tiap lingkaran dibuat berbeda — `0s`, `-1.2s`, dan `-2.4s` — supaya ketiganya tidak berdenyut serempak seperti satu benda. Jangkar penskalaannya di pusat masing-masing lingkaran, jadi bayangan target tetap diam dan sisa capaian tetap terbaca.
+
+#### Legenda
+
+Di bawah grafik ada tiga kolom yang dipisah garis tipis. Tiap kolom berisi tiga baris:
+
+1. Titik warna 8px dan nama sumbu, memakai `label` warna `tinta-600`
+2. Angka capaian 19/24 tebal warna `tinta-900`, langsung diikuti target berukuran 12/16 tebal warna `tinta-400` — misalnya **6.240**/10.000
+3. Satuan 11/15 warna `tinta-400`
+
+Target sengaja lebih kecil dan lebih pudar supaya terbaca sebagai konteks, bukan sebagai angka kedua yang setara. Tidak ada lagi lencana pil "sekian dari tiga target" di pojok kartu; targetnya sudah tertulis per sumbu.
 
 Mengetuk lingkaran Relaksasi membuka jalur latihan pernapasan, sama seperti memilihnya dari tombol tambah.
 
-Di dalam tiap lingkaran ada ikon putih 20–24px. Di bawah grafik ada tiga kolom legenda berisi titik warna, nama sumbu, dan angkanya, dipisah garis tipis. Di pojok kanan atas kartu ada lencana pil `hijau-100` bertuliskan capaian, misalnya "2 dari 3 target".
+Alasan tiap pilihan di atas, beserta perbandingan yang membuatnya dipilih, tercatat di `design/cincin-harian.html`.
 
 ### Kartu aktivitas
 
@@ -210,25 +255,31 @@ Lembar yang naik dari bawah, radius `radius-lg` di sudut atas, `bayang-3`, denga
 
 Satu lembar hanya mengisi satu jenis aktivitas. Tidak ada formulir gabungan.
 
-Pengatur angka terdiri dari tombol bulat 52px bertanda kurang di kiri, angka `angka-stepper` dengan satuan di bawahnya di tengah, dan tombol bulat bertanda tambah di kanan. Besar langkahnya berbeda tiap jenis:
+Tidak ada tombol tambah-kurang. Angka diketik lewat satu **input angka** setinggi 76px, radius `radius-md`, batas `hijau-600` dengan cincin 3px `hijau-100` karena ia selalu dalam keadaan terfokus begitu lembar terbuka. Isinya angka `angka-sorot` rata tengah, diikuti kursor tegak 2px dan satuan `badan` warna `tinta-400` yang menempel di garis dasar angka.
 
-| Jenis | Bagian pengisian | Langkah | Pintasan cepat |
+Papan tombol perangkat muncul hanya selama input itu sedang diisi, lalu lembarnya naik ke atas papan tombol. Jenis papan tombolnya mengikuti kebutuhan desimal tiap jenis:
+
+| Jenis | Papan tombol | Contoh nilai | Pintasan cepat |
 |---|---|---|---|
-| Langkah | Pengatur angka | 100 | +500, +1.000, +2.000 |
-| Olahraga | Pengatur angka | 5 menit | +5, +15, +30 |
-| Air minum | Pengatur angka | 1 gelas | tidak ada |
-| Tidur | Pengatur angka | 0,5 jam | tidak ada |
-| Berat badan | Pengatur angka | 0,1 kg | tidak ada |
-| Latihan pernapasan | Tiga kotak pilihan durasi 1, 3, dan 5 menit, lalu tombol "Mulai sesi" | — | tidak ada |
+| Langkah | Angka bulat, tanpa koma | 3.120 | +500, +1.000, +2.000 |
+| Olahraga | Angka bulat, tanpa koma | 25 | +5, +15, +30 |
+| Air minum | Angka bulat, tanpa koma | 3 | tidak ada |
+| Tidur | Angka desimal, ada tombol koma | 7,1 | tidak ada |
+| Berat badan | Angka desimal, ada tombol koma | 68,4 | tidak ada |
+| Latihan pernapasan | tidak ada input angka | — | tidak ada |
 
-Lembar latihan pernapasan tidak punya pengatur angka dan tidak punya input catatan. Angkanya lahir dari sesi yang dijalani, bukan diketik, dan tombol utamanya "Mulai sesi", bukan "Simpan".
+Di web, `inputMode` dan `type` diatur sesuai kolom di atas. Di mobile, `keyboardType` bernilai `number-pad` untuk tiga jenis pertama dan `decimal-pad` untuk tidur dan berat badan.
+
+Pintasan cepat berupa tiga tombol netral setinggi 36px di bawah input angka. Fungsinya menambah nilai yang sedang diketik, bukan menggantikan papan tombol.
+
+Lembar latihan pernapasan tidak punya input angka maupun input catatan. Sebagai gantinya ada tiga kotak pilihan durasi setinggi 72px berisi angka 1, 3, dan 5 dengan kata "menit" di bawahnya; kotak terpilih memakai batas `ak-napas`, latar `#EAF7F8`, dan cincin luar 2px `#CDECEF`. Tombol utamanya "Mulai sesi", bukan "Simpan", karena angkanya lahir dari sesi yang dijalani.
 
 ### Sesi latihan pernapasan
 
 Layar penuh berlatar gradien `#0E9DA8` ke `#095E66`, mengikuti pola latihan pernapasan Huawei Health. Isinya:
 
 1. Baris atas: judul "Latihan pernapasan" putih dan tombol tutup bulat 36px dengan latar putih 18%.
-2. Di tengah: tiga lingkaran putih sepusat beropasitas 14%, 22%, dan 34% dengan diameter 260, 210, dan 160px, mengelilingi inti putih 120px. Inti berisi aba-aba "Tarik napas", "Tahan", atau "Buang napas" dan hitungan mundur detik `angka-stepper` warna `#0B7C86`. Ketiga lingkaran membesar saat menarik napas dan mengecil saat membuang napas.
+2. Di tengah: tiga lingkaran putih sepusat beropasitas 14%, 22%, dan 34% dengan diameter 260, 210, dan 160px, mengelilingi inti putih 120px. Inti berisi aba-aba "Tarik napas", "Tahan", atau "Buang napas" dan hitungan mundur detik `angka-sorot` warna `#0B7C86`. Ketiga lingkaran membesar saat menarik napas dan mengecil saat membuang napas.
 3. Kalimat pemandu di bawah lingkaran: "Ikuti lingkarannya. Tarik napas saat membesar, buang napas saat mengecil."
 4. Bagian bawah: garis kemajuan setinggi 4px, keterangan durasi sesi dan sisa waktu, lalu tombol "Selesai lebih awal" berlatar putih 18%.
 
