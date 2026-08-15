@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const { JENIS } = require("../utils/aktivitas");
+const { ACTIVITY_TYPES } = require("../utils/activities");
 
 const skemaHealthLog = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    type: { type: String, required: true, enum: JENIS },
+    type: { type: String, required: true, enum: ACTIVITY_TYPES },
     value: { type: Number, required: true, min: 0 },
     // Hanya terisi pada catatan breathing, dan boleh kosong kalau pengguna melewati
     // pertanyaan mood di akhir sesi.

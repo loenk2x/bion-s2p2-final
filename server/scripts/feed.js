@@ -15,7 +15,7 @@ const Content = require("../src/models/Content");
 const User = require("../src/models/User");
 const Favorite = require("../src/models/Favorite");
 const HealthLog = require("../src/models/HealthLog");
-const { tanggalKunci } = require("../src/utils/aktivitas");
+const { dateKey } = require("../src/utils/activities");
 
 const CONTENT_DIR = path.join(__dirname, "..", "..", "content");
 const REQUIRED_FIELDS = ["slug", "title", "type", "category", "excerpt", "body", "imageUrl", "publishedAt"];
@@ -126,7 +126,7 @@ async function prepareDemoAccount() {
     const daysBack = dailyPatterns.length - 1 - i;
     const baseDate = new Date();
     baseDate.setDate(baseDate.getDate() - daysBack);
-    const date = tanggalKunci(baseDate);
+    const date = dateKey(baseDate);
     const at = (hour, minute) => {
       const d = new Date(baseDate);
       d.setHours(hour, minute, 0, 0);

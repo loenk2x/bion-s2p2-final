@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const Content = require("./models/Content");
 const { requireAuth } = require("./middleware/requireAuth");
 const { tidakDitemukan, tanganiGalat, bungkus } = require("./middleware/error");
-const { AKTIVITAS, DURASI_SESI_NAPAS, TARGET_HARIAN, MOOD } = require("./utils/aktivitas");
+const { ACTIVITIES, BREATHING_SESSION_MINUTES, DAILY_TARGETS, MOOD_LABELS } = require("./utils/activities");
 
 const rutePublik = require("./routes/publik");
 const ruteAuth = require("./routes/auth");
@@ -45,7 +45,7 @@ app.get(
 
 // Rujukan jenis aktivitas untuk klien, supaya nama dan satuannya tidak ditulis dua kali.
 app.get("/api/aktivitas", requireAuth, (req, res) => {
-  res.json({ aktivitas: AKTIVITAS, durasiSesiNapas: DURASI_SESI_NAPAS, targetHarian: TARGET_HARIAN, mood: MOOD });
+  res.json({ aktivitas: ACTIVITIES, durasiSesiNapas: BREATHING_SESSION_MINUTES, targetHarian: DAILY_TARGETS, mood: MOOD_LABELS });
 });
 
 app.use(tidakDitemukan);

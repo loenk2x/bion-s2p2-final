@@ -177,7 +177,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
    fungsi `requireAuth` sudah Inggris, tidak berubah.
 6. ✅ `src/config/db.js` — ganti `sambungkanDatabase` dan `namaDatabase`,
    sekaligus perbarui pemanggilnya di `src/server.js` dan `scripts/feed.js`.
-7. `src/utils/aktivitas.js` → pindah jadi `src/utils/activities.js`, ganti
+7. ✅ `src/utils/aktivitas.js` → pindah jadi `src/utils/activities.js`, ganti
    seluruh isinya (`AKTIVITAS`, `JENIS`, `DURASI_SESI_NAPAS`,
    `TARGET_HARIAN`, `MOOD`, `tanggalKunci`, `tanggalMundur`,
    `periksaNilai`, `periksaMood`, dan properti konfigurasi `nama`,

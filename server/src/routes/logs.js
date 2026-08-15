@@ -2,30 +2,30 @@ const express = require("express");
 const HealthLog = require("../models/HealthLog");
 const { bungkus, galatKlien } = require("../middleware/error");
 const {
-  AKTIVITAS,
-  JENIS,
-  TARGET_HARIAN,
-  MOOD,
-  periksaNilai,
-  periksaMood,
-  tanggalKunci,
-  tanggalMundur
-} = require("../utils/aktivitas");
+  ACTIVITIES,
+  ACTIVITY_TYPES,
+  DAILY_TARGETS,
+  MOOD_LABELS,
+  validateValue,
+  validateMood,
+  dateKey,
+  daysAgo
+} = require("../utils/activities");
 
 const router = express.Router();
 
 // Semua query di berkas ini menyertakan req.user._id. Catatan harian bersifat privat.
 
 function bentukCatatan(c) {
-  const info = AKTIVITAS[c.type];
+  const info = ACTIVITIES[c.type];
   return {
     id: c._id,
     type: c.type,
-    namaJenis: info.nama,
+    namaJenis: info.label,
     value: c.value,
-    satuan: info.satuan,
+    satuan: info.unit,
     mood: c.mood,
-    namaMood: c.mood ? MOOD[c.mood] : null,
+    namaMood: c.mood ? MOOD_LABELS[c.mood] : null,
     note: c.note,
     loggedAt: c.loggedAt,
     date: c.date
@@ -36,8 +36,8 @@ function bentukCatatan(c) {
 router.get(
   "/summary",
   bungkus(async (req, res) => {
-    const hariIni = tanggalKunci();
-    const mulai = tanggalKunci(tanggalMundur(6));
+    const hariIni = dateKey();
+    const mulai = dateKey(daysAgo(6));
 
     const catatan = await HealthLog.find({
       userId: req.user._id,
@@ -64,9 +64,9 @@ router.get(
     });
 
     const cincin = {
-      gerak: { ...capaian(h.steps, TARGET_HARIAN.gerak), satuan: "langkah" },
-      tidur: { ...capaian(h.sleep || 0, TARGET_HARIAN.tidur), satuan: "jam" },
-      relaksasi: { ...capaian(h.breathingSesi, TARGET_HARIAN.relaksasi), satuan: "sesi" }
+      gerak: { ...capaian(h.steps, DAILY_TARGETS.gerak), satuan: "langkah" },
+      tidur: { ...capaian(h.sleep || 0, DAILY_TARGETS.tidur), satuan: "jam" },
+      relaksasi: { ...capaian(h.breathingSesi, DAILY_TARGETS.relaksasi), satuan: "sesi" }
     };
     cincin.targetTercapai = ["gerak", "tidur", "relaksasi"].filter((k) => cincin[k].persen >= 1).length;
 
@@ -100,7 +100,7 @@ router.get(
     const filter = { userId: req.user._id };
 
     if (type) {
-      if (!JENIS.includes(type)) throw galatKlien(400, `Jenis catatan "${type}" tidak dikenal.`);
+      if (!ACTIVITY_TYPES.includes(type)) throw galatKlien(400, `Jenis catatan "${type}" tidak dikenal.`);
       filter.type = type;
     }
     if (from || to) {
@@ -138,14 +138,14 @@ router.post(
   bungkus(async (req, res) => {
     const { type, value, mood, note, loggedAt } = req.body || {};
 
-    if (!JENIS.includes(type)) {
-      throw galatKlien(400, `Jenis catatan harus salah satu dari: ${JENIS.join(", ")}.`);
+    if (!ACTIVITY_TYPES.includes(type)) {
+      throw galatKlien(400, `Jenis catatan harus salah satu dari: ${ACTIVITY_TYPES.join(", ")}.`);
     }
 
-    const nilai = periksaNilai(type, value);
+    const nilai = validateValue(type, value);
     if (nilai.pesan) throw galatKlien(400, nilai.pesan);
 
-    const hasilMood = periksaMood(type, mood);
+    const hasilMood = validateMood(type, mood);
     if (hasilMood.pesan) throw galatKlien(400, hasilMood.pesan);
 
     const waktu = loggedAt ? new Date(loggedAt) : new Date();
@@ -154,11 +154,11 @@ router.post(
     const catatan = await HealthLog.create({
       userId: req.user._id,
       type,
-      value: nilai.nilai,
+      value: nilai.value,
       mood: hasilMood.mood,
       note: note ? String(note).trim() : "",
       loggedAt: waktu,
-      date: tanggalKunci(waktu)
+      date: dateKey(waktu)
     });
 
     res.status(201).json({ catatan: bentukCatatan(catatan) });
@@ -177,13 +177,13 @@ router.put(
     // Aturan validasi yang sama persis dengan saat membuat. Jenis catatan tidak
     // bisa diubah — mengubah jenis sama saja membuat catatan baru.
     if (value !== undefined) {
-      const nilai = periksaNilai(catatan.type, value);
+      const nilai = validateValue(catatan.type, value);
       if (nilai.pesan) throw galatKlien(400, nilai.pesan);
-      catatan.value = nilai.nilai;
+      catatan.value = nilai.value;
     }
     if (note !== undefined) catatan.note = String(note).trim();
     if (mood !== undefined) {
-      const hasilMood = periksaMood(catatan.type, mood);
+      const hasilMood = validateMood(catatan.type, mood);
       if (hasilMood.pesan) throw galatKlien(400, hasilMood.pesan);
       catatan.mood = hasilMood.mood;
     }
