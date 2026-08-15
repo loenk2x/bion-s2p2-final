@@ -95,11 +95,28 @@ export default function ContentDetailScreen({ route, navigation }) {
         {content.type === "video" ? (
           <View style={styles.player}>
             <WebView
-              source={{ uri: `https://www.youtube.com/embed/${content.videoId}` }}
+              source={{
+                html: `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>html,body{margin:0;padding:0;background:#000;height:100%;}iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}</style></head><body><iframe src="https://www.youtube.com/embed/${content.videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></body></html>`,
+                baseUrl: "https://www.youtube.com"
+              }}
+              originWhitelist={["*"]}
+              javaScriptEnabled
+              domStorageEnabled
+              allowsInlineMediaPlayback
+              mediaPlaybackRequiresUserAction={false}
               allowsFullscreenVideo
               style={styles.playerWebview}
             />
           </View>
+        ) : null}
+
+        {content.type === "video" ? (
+          <TouchableOpacity
+            style={styles.youtubeFallback}
+            onPress={() => Linking.openURL(`https://www.youtube.com/watch?v=${content.videoId}`)}
+          >
+            <Text style={styles.youtubeFallbackText}>Buka di YouTube</Text>
+          </TouchableOpacity>
         ) : null}
 
         {content.type === "infographic" ? (
@@ -177,6 +194,8 @@ const styles = StyleSheet.create({
   roundButtonOn: { backgroundColor: colors.hijau600, borderColor: colors.hijau600 },
   player: { aspectRatio: 16 / 9, borderRadius: radius.md, overflow: "hidden", backgroundColor: "#000" },
   playerWebview: { flex: 1 },
+  youtubeFallback: { alignSelf: "flex-start", marginTop: 6 },
+  youtubeFallbackText: { fontSize: 12, fontWeight: "600", color: colors.hijau700 },
   infographicFrame: { borderRadius: radius.md, overflow: "hidden", backgroundColor: colors.latar },
   infographicImage: { width: "100%", height: 420 },
   enlargeBadge: {
