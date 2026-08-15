@@ -42,9 +42,6 @@ export default function FavoritesScreen({ navigation }) {
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <View style={styles.header}>
         <Text style={styles.title}>Favorit</Text>
-        <Text style={styles.subtitle}>
-          {favorites ? `${favorites.length} konten disimpan. ` : ""}Hanya Anda yang bisa melihat daftar ini.
-        </Text>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </View>
 
@@ -92,9 +89,8 @@ export default function FavoritesScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.putih },
-  header: { paddingHorizontal: spacing.s16, paddingTop: spacing.s8 },
+  header: { paddingHorizontal: spacing.s16, paddingTop: spacing.s8, paddingBottom: spacing.s16 },
   title: { fontSize: 22, fontWeight: "700", color: colors.tinta900 },
-  subtitle: { fontSize: 13, color: colors.tinta600, marginTop: 4, marginBottom: spacing.s16 },
   errorText: { color: colors.bahaya, marginBottom: spacing.s12 },
   list: { paddingHorizontal: spacing.s16, paddingBottom: spacing.s24, gap: spacing.s12 },
   row: {
