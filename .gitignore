@@ -1,12 +1,37 @@
+# dependensi
 node_modules/
+
+# rahasia — .env.example tetap ikut karena isinya cuma contoh
 .env
 .env.local
 .env.*.local
+!.env.example
+
+# hasil build
 dist/
 build/
+web/dist/
+*.tsbuildinfo
+
+# Expo dan EAS
 .expo/
 .expo-shared/
+*.apk
+*.aab
+# folder native hasil prebuild, bukan sumber
+mobile/android/
+mobile/ios/
+
+# catatan dan cache
 *.log
 npm-debug.log*
+yarn-error.log*
+.cache/
+coverage/
+
+# editor dan sistem
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
+desktop.ini
