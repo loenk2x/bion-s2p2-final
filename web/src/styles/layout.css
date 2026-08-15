@@ -158,6 +158,14 @@ button { font: inherit; cursor: pointer; }
 .app-head .wadah { display: flex; align-items: center; gap: var(--jarak-32); }
 .app-head .aksi { display: flex; align-items: center; gap: var(--jarak-12); margin-left: auto; }
 
+/* the mockup's comparison table is explicit: "Tambah catatan" is a header
+   button on the web screen and a floating button (.fab-tempel) on the phone
+   screen — never both at once. Below 1024px .fab-tempel already covers the
+   action, so the header button must stay hidden there or it overflows the
+   header alongside the bookmark/avatar icons. */
+.app-head .aksi .tombol { display: none; }
+@media (min-width: 1024px) { .app-head .aksi .tombol { display: inline-flex; } }
+
 /* ---------- content body lists ---------- */
 /* .isi-teks only styles p and h3 in komponen.css; article bodies also use
    "- " lists, which need to keep the same rhythm as the paragraphs around them. */
