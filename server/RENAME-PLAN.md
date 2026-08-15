@@ -201,9 +201,9 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
     body tetap sama, hanya nama variabel JavaScript-nya yang berubah).
 11. ✅ `src/routes/contents.js` — ganti variabel lokal (`pola`, `daftar`,
     `idFavorit`, `himpunanFavorit`).
-12. `src/routes/favorites.js` — ganti variabel lokal (`daftar`, `ada`,
+12. ✅ `src/routes/favorites.js` — ganti variabel lokal (`daftar`, `ada`,
     `hasil`).
-13. `src/routes/logs.js` — berkas paling padat identifier Indonesia.
+13. ✅ `src/routes/logs.js` — berkas paling padat identifier Indonesia.
     Ganti `bentukCatatan` dan seluruh variabel lokal ringkasan (`hariIni`,
     `mulai`, `catatan`, `perHari`, `capaian`, `cincin`, `hari`, `jumlah`,
     `rata`, `kelompok`, `nilai`, `hasilMood`, `waktu`). Perhatikan bagian 5

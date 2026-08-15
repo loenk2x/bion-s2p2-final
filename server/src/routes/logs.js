@@ -14,85 +14,85 @@ const {
 
 const router = express.Router();
 
-// Semua query di berkas ini menyertakan req.user._id. Catatan harian bersifat privat.
+// Every query in this file includes req.user._id. Daily entries are private.
 
-function bentukCatatan(c) {
-  const info = ACTIVITIES[c.type];
+function toLogEntry(log) {
+  const info = ACTIVITIES[log.type];
   return {
-    id: c._id,
-    type: c.type,
+    id: log._id,
+    type: log.type,
     namaJenis: info.label,
-    value: c.value,
+    value: log.value,
     satuan: info.unit,
-    mood: c.mood,
-    namaMood: c.mood ? MOOD_LABELS[c.mood] : null,
-    note: c.note,
-    loggedAt: c.loggedAt,
-    date: c.date
+    mood: log.mood,
+    namaMood: log.mood ? MOOD_LABELS[log.mood] : null,
+    note: log.note,
+    loggedAt: log.loggedAt,
+    date: log.date
   };
 }
 
-// ---------- ringkasan: cincin harian hari ini dan rekap tujuh hari ----------
+// ---------- summary: today's rings plus a seven-day recap ----------
 router.get(
   "/summary",
   asyncHandler(async (req, res) => {
-    const hariIni = dateKey();
-    const mulai = dateKey(daysAgo(6));
+    const today = dateKey();
+    const start = dateKey(daysAgo(6));
 
-    const catatan = await HealthLog.find({
+    const logs = await HealthLog.find({
       userId: req.user._id,
-      date: { $gte: mulai, $lte: hariIni }
+      date: { $gte: start, $lte: today }
     }).sort({ loggedAt: 1 });
 
-    const perHari = {};
-    for (const c of catatan) {
-      if (!perHari[c.date]) perHari[c.date] = { steps: 0, exercise: 0, water: 0, breathingMenit: 0, breathingSesi: 0, sleep: null, weight: null, mood: null };
-      const h = perHari[c.date];
-      if (c.type === "steps") h.steps += c.value;
-      else if (c.type === "exercise") h.exercise += c.value;
-      else if (c.type === "water") h.water += c.value;
-      else if (c.type === "breathing") { h.breathingMenit += c.value; h.breathingSesi += 1; if (c.mood) h.mood = c.mood; }
-      else if (c.type === "sleep") h.sleep = c.value;   // catatan terakhir hari itu menang
-      else if (c.type === "weight") h.weight = c.value;
+    const byDate = {};
+    for (const log of logs) {
+      if (!byDate[log.date]) byDate[log.date] = { steps: 0, exercise: 0, water: 0, breathingMinutes: 0, breathingSessions: 0, sleep: null, weight: null, mood: null };
+      const day = byDate[log.date];
+      if (log.type === "steps") day.steps += log.value;
+      else if (log.type === "exercise") day.exercise += log.value;
+      else if (log.type === "water") day.water += log.value;
+      else if (log.type === "breathing") { day.breathingMinutes += log.value; day.breathingSessions += 1; if (log.mood) day.mood = log.mood; }
+      else if (log.type === "sleep") day.sleep = log.value;   // the last entry of that day wins
+      else if (log.type === "weight") day.weight = log.value;
     }
 
-    const h = perHari[hariIni] || { steps: 0, sleep: null, breathingSesi: 0 };
-    const capaian = (nilai, target) => ({
-      capaian: nilai,
+    const todayStats = byDate[today] || { steps: 0, sleep: null, breathingSessions: 0 };
+    const progress = (value, target) => ({
+      capaian: value,
       target,
-      persen: Math.min(1, target ? nilai / target : 0)
+      persen: Math.min(1, target ? value / target : 0)
     });
 
-    const cincin = {
-      gerak: { ...capaian(h.steps, DAILY_TARGETS.gerak), satuan: "langkah" },
-      tidur: { ...capaian(h.sleep || 0, DAILY_TARGETS.tidur), satuan: "jam" },
-      relaksasi: { ...capaian(h.breathingSesi, DAILY_TARGETS.relaksasi), satuan: "sesi" }
+    const rings = {
+      gerak: { ...progress(todayStats.steps, DAILY_TARGETS.gerak), satuan: "langkah" },
+      tidur: { ...progress(todayStats.sleep || 0, DAILY_TARGETS.tidur), satuan: "jam" },
+      relaksasi: { ...progress(todayStats.breathingSessions, DAILY_TARGETS.relaksasi), satuan: "sesi" }
     };
-    cincin.targetTercapai = ["gerak", "tidur", "relaksasi"].filter((k) => cincin[k].persen >= 1).length;
+    rings.targetTercapai = ["gerak", "tidur", "relaksasi"].filter((k) => rings[k].persen >= 1).length;
 
-    const hari = Object.values(perHari);
-    const jumlah = (ambil) => hari.reduce((t, x) => t + (ambil(x) || 0), 0);
-    const rata = (ambil) => {
-      const isi = hari.map(ambil).filter((v) => v !== null && v !== undefined);
-      return isi.length ? Number((isi.reduce((t, v) => t + v, 0) / isi.length).toFixed(1)) : 0;
+    const days = Object.values(byDate);
+    const sum = (pick) => days.reduce((t, x) => t + (pick(x) || 0), 0);
+    const average = (pick) => {
+      const values = days.map(pick).filter((v) => v !== null && v !== undefined);
+      return values.length ? Number((values.reduce((t, v) => t + v, 0) / values.length).toFixed(1)) : 0;
     };
 
     res.json({
-      hariIni,
-      cincin,
+      hariIni: today,
+      cincin: rings,
       tujuhHari: {
-        totalLangkah: jumlah((x) => x.steps),
-        rataTidur: rata((x) => x.sleep),
-        totalOlahraga: jumlah((x) => x.exercise),
-        rataAir: rata((x) => x.water),
-        totalMenitPernapasan: jumlah((x) => x.breathingMenit),
-        jumlahHariTercatat: hari.length
+        totalLangkah: sum((x) => x.steps),
+        rataTidur: average((x) => x.sleep),
+        totalOlahraga: sum((x) => x.exercise),
+        rataAir: average((x) => x.water),
+        totalMenitPernapasan: sum((x) => x.breathingMinutes),
+        jumlahHariTercatat: days.length
       }
     });
   })
 );
 
-// ---------- riwayat ----------
+// ---------- history ----------
 router.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -112,27 +112,27 @@ router.get(
     const page = Math.max(1, parseInt(req.query.page, 10) || 1);
     const perPage = Math.min(100, parseInt(req.query.perPage, 10) || 30);
 
-    const [daftar, total] = await Promise.all([
+    const [items, total] = await Promise.all([
       HealthLog.find(filter).sort({ loggedAt: -1 }).skip((page - 1) * perPage).limit(perPage),
       HealthLog.countDocuments(filter)
     ]);
 
-    // Dikelompokkan per tanggal, persis seperti tampilan riwayat di aplikasi.
-    const kelompok = [];
-    for (const c of daftar) {
-      let k = kelompok.find((x) => x.date === c.date);
-      if (!k) { k = { date: c.date, catatan: [] }; kelompok.push(k); }
-      k.catatan.push(bentukCatatan(c));
+    // Grouped by date, exactly the way the history screen shows it.
+    const groups = [];
+    for (const log of items) {
+      let group = groups.find((x) => x.date === log.date);
+      if (!group) { group = { date: log.date, catatan: [] }; groups.push(group); }
+      group.catatan.push(toLogEntry(log));
     }
 
-    res.json({ kelompok, total, halaman: page, perHalaman: perPage });
+    res.json({ kelompok: groups, total, halaman: page, perHalaman: perPage });
   })
 );
 
-// ---------- catat satu aktivitas, semua jenis lewat pintu yang sama ----------
-// Latihan pernapasan tidak punya endpoint sendiri. Yang membedakannya hanya dua
-// aturan validasi yang sudah menempel pada jenisnya: nilai harus 1, 3, atau 5 menit,
-// dan hanya jenis ini yang boleh menyertakan mood.
+// ---------- record one activity; every type goes through the same door ----------
+// Breathing has no endpoint of its own. All that sets it apart are two validation
+// rules already attached to its type: the value must be 1, 3, or 5 minutes, and it
+// is the only type allowed to carry a mood.
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -142,62 +142,62 @@ router.post(
       throw clientError(400, `Jenis catatan harus salah satu dari: ${ACTIVITY_TYPES.join(", ")}.`);
     }
 
-    const nilai = validateValue(type, value);
-    if (nilai.pesan) throw clientError(400, nilai.pesan);
+    const validated = validateValue(type, value);
+    if (validated.pesan) throw clientError(400, validated.pesan);
 
-    const hasilMood = validateMood(type, mood);
-    if (hasilMood.pesan) throw clientError(400, hasilMood.pesan);
+    const moodResult = validateMood(type, mood);
+    if (moodResult.pesan) throw clientError(400, moodResult.pesan);
 
-    const waktu = loggedAt ? new Date(loggedAt) : new Date();
-    if (Number.isNaN(waktu.getTime())) throw clientError(400, "Waktu pencatatan tidak terbaca.");
+    const loggedAtDate = loggedAt ? new Date(loggedAt) : new Date();
+    if (Number.isNaN(loggedAtDate.getTime())) throw clientError(400, "Waktu pencatatan tidak terbaca.");
 
-    const catatan = await HealthLog.create({
+    const entry = await HealthLog.create({
       userId: req.user._id,
       type,
-      value: nilai.value,
-      mood: hasilMood.mood,
+      value: validated.value,
+      mood: moodResult.mood,
       note: note ? String(note).trim() : "",
-      loggedAt: waktu,
-      date: dateKey(waktu)
+      loggedAt: loggedAtDate,
+      date: dateKey(loggedAtDate)
     });
 
-    res.status(201).json({ catatan: bentukCatatan(catatan) });
+    res.status(201).json({ catatan: toLogEntry(entry) });
   })
 );
 
-// ---------- ubah dan hapus ----------
+// ---------- edit and delete ----------
 router.put(
   "/:id",
   asyncHandler(async (req, res) => {
     const { value, note, mood } = req.body || {};
-    const catatan = await HealthLog.findOne({ _id: req.params.id, userId: req.user._id });
-    // 404, bukan 403 — keberadaan catatan milik orang lain tidak boleh bocor.
-    if (!catatan) throw clientError(404, "Catatan tidak ditemukan.");
+    const entry = await HealthLog.findOne({ _id: req.params.id, userId: req.user._id });
+    // 404, not 403 — the existence of another user's entry must never leak.
+    if (!entry) throw clientError(404, "Catatan tidak ditemukan.");
 
-    // Aturan validasi yang sama persis dengan saat membuat. Jenis catatan tidak
-    // bisa diubah — mengubah jenis sama saja membuat catatan baru.
+    // Exactly the same validation rules as on create. The type cannot be changed —
+    // changing the type would amount to creating a different entry.
     if (value !== undefined) {
-      const nilai = validateValue(catatan.type, value);
-      if (nilai.pesan) throw clientError(400, nilai.pesan);
-      catatan.value = nilai.value;
+      const validated = validateValue(entry.type, value);
+      if (validated.pesan) throw clientError(400, validated.pesan);
+      entry.value = validated.value;
     }
-    if (note !== undefined) catatan.note = String(note).trim();
+    if (note !== undefined) entry.note = String(note).trim();
     if (mood !== undefined) {
-      const hasilMood = validateMood(catatan.type, mood);
-      if (hasilMood.pesan) throw clientError(400, hasilMood.pesan);
-      catatan.mood = hasilMood.mood;
+      const moodResult = validateMood(entry.type, mood);
+      if (moodResult.pesan) throw clientError(400, moodResult.pesan);
+      entry.mood = moodResult.mood;
     }
 
-    await catatan.save();
-    res.json({ catatan: bentukCatatan(catatan) });
+    await entry.save();
+    res.json({ catatan: toLogEntry(entry) });
   })
 );
 
 router.delete(
   "/:id",
   asyncHandler(async (req, res) => {
-    const hasil = await HealthLog.deleteOne({ _id: req.params.id, userId: req.user._id });
-    if (hasil.deletedCount === 0) throw clientError(404, "Catatan tidak ditemukan.");
+    const result = await HealthLog.deleteOne({ _id: req.params.id, userId: req.user._id });
+    if (result.deletedCount === 0) throw clientError(404, "Catatan tidak ditemukan.");
     res.json({ pesan: "Catatan dihapus." });
   })
 );
