@@ -31,6 +31,11 @@ services:
     volumes:
       - ./web:/app
       - /app/node_modules
+      # shared/ hidup di luar konteks build web/ (context: ./web), jadi tidak pernah
+      # ikut ter-COPY ke image maupun terlihat lewat bind mount ./web:/app. Alias
+      # "@shared" di vite.config.js meresolusi ke /shared (satu tingkat di atas
+      # WORKDIR /app), jadi shared/ host harus dipetakan persis ke situ.
+      - ./shared:/shared
     environment:
       # Web jalan di browser host, server jalan di localhost:4000 host juga
       # (port 4000 dipetakan di atas), jadi alamatnya tetap localhost, bukan
