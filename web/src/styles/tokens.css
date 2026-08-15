@@ -1,0 +1,65 @@
+/* Diturunkan dari design/design-system.md. Nilainya sama persis dengan variable
+   di berkas Figma. Jangan menulis nilai warna mentah di komponen mana pun. */
+
+:root {
+  /* warna utama dan aksen */
+  --hijau-700: #0E6E49;
+  --hijau-600: #128A5B;
+  --hijau-500: #19A96F;
+  --hijau-100: #DCF3E8;
+  --hijau-50: #F1FAF5;
+  --jingga-500: #F2762E;
+  --jingga-100: #FDE8DA;
+
+  /* netral dan status */
+  --tinta-900: #12211B;
+  --tinta-600: #4B5B54;
+  --tinta-400: #84968D;
+  --garis: #E2EBE6;
+  --putih: #FFFFFF;
+  --latar: #F6FBF8;
+  --bahaya: #D2453C;
+  --bahaya-100: #FBE4E2;
+  --peringatan: #C9820A;
+
+  /* jenis aktivitas — hanya dipakai di kartu riwayat, cincin harian, dan lembar catat */
+  --ak-langkah: #F2762E;
+  --ak-olahraga: #19A96F;
+  --ak-air: #2D7FF9;
+  --ak-tidur: #7A5AF8;
+  --ak-napas: #0E9DA8;
+  --ak-berat: #C9820A;
+
+  /* lencana tipe konten */
+  --len-artikel-teks: #0E6E49;
+  --len-artikel-latar: #DCF3E8;
+  --len-video-teks: #9A3F0B;
+  --len-video-latar: #FDE8DA;
+  --len-infografis-teks: #1A4E8A;
+  --len-infografis-latar: #DDEAFB;
+
+  /* bentuk */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-penuh: 999px;
+
+  /* jarak */
+  --jarak-4: 4px;
+  --jarak-8: 8px;
+  --jarak-12: 12px;
+  --jarak-16: 16px;
+  --jarak-20: 20px;
+  --jarak-24: 24px;
+  --jarak-32: 32px;
+  --jarak-40: 40px;
+  --jarak-48: 48px;
+
+  /* bayangan */
+  --bayang-1: 0 1px 2px rgba(18, 33, 27, .06), 0 1px 3px rgba(18, 33, 27, .04);
+  --bayang-2: 0 4px 12px rgba(18, 33, 27, .08);
+  --bayang-3: 0 8px 24px rgba(18, 33, 27, .16);
+
+  /* tipografi */
+  --font: Inter, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
