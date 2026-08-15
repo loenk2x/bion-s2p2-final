@@ -13,7 +13,7 @@ import {
 import { formatInteger, formatLongDate, formatTime } from "@shared/format";
 import Icon, { ACTIVITY_ICONS } from "./Icon";
 import BreathingSession from "./BreathingSession";
-import { activityColorVar } from "../lib/activityColors";
+import { activityColorVar } from "@shared/activityColors";
 import { notifyEntryAdded } from "../lib/entryEvents";
 import { api } from "../lib/api";
 

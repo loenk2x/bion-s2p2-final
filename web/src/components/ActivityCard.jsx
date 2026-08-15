@@ -4,7 +4,7 @@
 import { ACTIVITIES, moodByValue } from "@shared/activities";
 import { formatActivityValue, formatTime } from "@shared/format";
 import Icon, { ACTIVITY_ICONS } from "./Icon";
-import { activityColorVar } from "../lib/activityColors";
+import { activityColorVar } from "@shared/activityColors";
 
 export default function ActivityCard({ entry }) {
   const activity = ACTIVITIES[entry.type];
