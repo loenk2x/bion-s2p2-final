@@ -30,7 +30,7 @@ router.get(
 
     res.json({
       konten: daftar.map((k) => ({
-        ...k.keKartu(),
+        ...k.toCard(),
         disimpan: himpunanFavorit.has(k._id.toString())
       })),
       halaman: page,

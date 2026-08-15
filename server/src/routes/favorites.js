@@ -18,7 +18,7 @@ router.get(
     res.json({
       favorit: daftar
         .filter((f) => f.contentId)
-        .map((f) => ({ ...f.contentId.keKartu(), disimpan: true, disimpanPada: f.createdAt })),
+        .map((f) => ({ ...f.contentId.toCard(), disimpan: true, disimpanPada: f.createdAt })),
       total: daftar.length
     });
   })

@@ -170,7 +170,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
 2. ✅ `src/models/Favorite.js` — ganti `skemaFavorite`. Tanpa dependen.
 3. ✅ `src/models/User.js` — ganti `skemaUser` dan `keBentukPublik`, sekaligus
    perbarui 4 titik pemanggilan `keBentukPublik` di `src/routes/auth.js`.
-4. `src/models/Content.js` — ganti `KATEGORI`, `TIPE`, `skemaContent`, dan
+4. ✅ `src/models/Content.js` — ganti `KATEGORI`, `TIPE`, `skemaContent`, dan
    `keKartu`, sekaligus perbarui pemanggilan `keKartu` di
    `src/routes/contents.js` dan `src/routes/favorites.js`.
 5. `src/middleware/requireAuth.js` — ganti `isi` menjadi `payload`. Nama

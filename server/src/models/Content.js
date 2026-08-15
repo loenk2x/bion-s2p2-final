@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const KATEGORI = [
+const CATEGORIES = [
   "pola-hidup-sehat",
   "gizi-seimbang",
   "olahraga",
@@ -8,14 +8,14 @@ const KATEGORI = [
   "pencegahan-penyakit"
 ];
 
-const TIPE = ["article", "video", "infographic"];
+const CONTENT_TYPES = ["article", "video", "infographic"];
 
-const skemaContent = new mongoose.Schema(
+const contentSchema = new mongoose.Schema(
   {
     slug: { type: String, required: true, unique: true, trim: true },
     title: { type: String, required: true, trim: true },
-    type: { type: String, required: true, enum: TIPE },
-    category: { type: String, required: true, enum: KATEGORI },
+    type: { type: String, required: true, enum: CONTENT_TYPES },
+    category: { type: String, required: true, enum: CATEGORIES },
     excerpt: { type: String, required: true },
     body: { type: String, required: true },
     imageUrl: { type: String, required: true },
@@ -33,12 +33,12 @@ const skemaContent = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Menopang pencarian judul dan kutipan di halaman Beranda.
-skemaContent.index({ title: "text", excerpt: "text" });
-skemaContent.index({ category: 1, type: 1, publishedAt: -1 });
+// Supports searching by title and excerpt on the Home page.
+contentSchema.index({ title: "text", excerpt: "text" });
+contentSchema.index({ category: 1, type: 1, publishedAt: -1 });
 
-// Bentuk ringkas untuk kartu di daftar — tanpa body, supaya balasan daftar tetap kecil.
-skemaContent.methods.keKartu = function () {
+// Compact shape for cards in a list — no body, so list responses stay small.
+contentSchema.methods.toCard = function () {
   return {
     id: this._id,
     slug: this.slug,
@@ -52,6 +52,6 @@ skemaContent.methods.keKartu = function () {
   };
 };
 
-module.exports = mongoose.model("Content", skemaContent);
-module.exports.KATEGORI = KATEGORI;
-module.exports.TIPE = TIPE;
+module.exports = mongoose.model("Content", contentSchema);
+module.exports.CATEGORIES = CATEGORIES;
+module.exports.CONTENT_TYPES = CONTENT_TYPES;
