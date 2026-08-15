@@ -11,15 +11,15 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const daftar = await Favorite.find({ userId: req.user._id })
+    const favorites = await Favorite.find({ userId: req.user._id })
       .sort({ createdAt: -1 })
       .populate("contentId");
 
     res.json({
-      favorit: daftar
+      favorit: favorites
         .filter((f) => f.contentId)
         .map((f) => ({ ...f.contentId.toCard(), disimpan: true, disimpanPada: f.createdAt })),
-      total: daftar.length
+      total: favorites.length
     });
   })
 );
