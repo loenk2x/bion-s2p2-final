@@ -47,8 +47,7 @@ export default function DailyLog() {
 
   return (
     <div>
-      <h1 className="judul-hal">Catatan Harian</h1>
-      <p className="redup" style={{ margin: "6px 0 20px" }}>Boleh mencatat beberapa kali dalam sehari. Catatan ini privat.</p>
+      <h1 className="judul-hal" style={{ marginBottom: 20 }}>Catatan Harian</h1>
 
       {error && <div className="kotak-galat">{error}</div>}
 
