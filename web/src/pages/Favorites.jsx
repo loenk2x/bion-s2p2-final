@@ -34,10 +34,7 @@ export default function Favorites() {
 
   return (
     <div>
-      <h1 className="judul-hal">Favorit</h1>
-      <p className="redup" style={{ margin: "6px 0 24px" }}>
-        {favorites ? `${favorites.length} konten disimpan. ` : ""}Hanya Anda yang bisa melihat daftar ini.
-      </p>
+      <h1 className="judul-hal" style={{ marginBottom: 24 }}>Favorit</h1>
 
       {error && <div className="kotak-galat">{error}</div>}
       {!favorites && !error && <Loading message="Memuat favorit…" />}
