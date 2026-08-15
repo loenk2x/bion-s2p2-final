@@ -125,13 +125,31 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 1024px) { .landing-hero { grid-template-columns: 1fr 1fr; } }
 
 /* ---------- home page top row: search/filters beside the daily rings ---------- */
-.beranda-atas { display: grid; grid-template-columns: 1fr; gap: var(--jarak-24); align-items: start; margin-bottom: var(--jarak-24); }
-@media (min-width: 1024px) { .beranda-atas { grid-template-columns: 1fr 380px; } }
+/* minmax(0, 1fr) instead of 1fr: a bare 1fr track never shrinks past its
+   content's min-content size, and the category chip row inside is wider
+   than the viewport on phones, so without the minmax the whole grid — and
+   the page — pushed out sideways instead of letting .deret-chip scroll. */
+.beranda-atas { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--jarak-24); align-items: start; margin-bottom: var(--jarak-24); }
+@media (min-width: 1024px) { .beranda-atas { grid-template-columns: minmax(0, 1fr) 380px; } }
 
 /* ---------- profile page ---------- */
-.profil-layout { display: grid; grid-template-columns: 1fr; gap: var(--jarak-32); align-items: start; }
-@media (min-width: 1024px) { .profil-layout { grid-template-columns: 340px 1fr; } }
+.profil-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--jarak-32); align-items: start; }
+@media (min-width: 1024px) { .profil-layout { grid-template-columns: 340px minmax(0, 1fr); } }
 .profil-avatar { margin: 0 auto; }
+
+/* komponen.css defines .g2 as repeat(2, 1fr), taken straight from the mockup.
+   The mockup only ever uses .g2 for content that fits either column (short
+   landing-page stat numbers, or inside its fixed-width phone/web frames);
+   the profile page's real "Nama"/"Email" and password inputs are wider than
+   that, so a bare 1fr track refused to shrink and pushed the page sideways.
+   minmax(0, 1fr) keeps the same two-column look everywhere it already works
+   and only changes behaviour where content would otherwise overflow. */
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Same fix, same reason, for the daily-log page's four-card weekly summary
+   row (.g4): the mockup only ever places it on the web screen, so a bare
+   repeat(4, 1fr) never had to shrink to phone width before. */
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 /* generic white card, used on the profile page — the mockup wrote this as a
    one-off inline style each time rather than giving it a class */
