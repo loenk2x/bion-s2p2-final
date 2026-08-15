@@ -43,14 +43,18 @@ Mode terang saja. Tidak ada mode gelap.
 
 Enam warna ini menandai jenis catatan harian. Dipakai di kartu riwayat, cincin harian, pilihan tombol tambah, dan lembar pencatatan — tidak di tempat lain.
 
-| Jenis | Token | Nilai | Ikon |
-|---|---|---|---|
-| Langkah | `ak-langkah` | `#F2762E` | jejak kaki |
-| Olahraga | `ak-olahraga` | `#19A96F` | orang berlari |
-| Air minum | `ak-air` | `#2D7FF9` | tetes air |
-| Tidur | `ak-tidur` | `#7A5AF8` | bulan sabit |
-| Mood | `ak-mood` | `#0E9DA8` | wajah tersenyum |
-| Berat badan | `ak-berat` | `#C9820A` | timbangan |
+| Jenis | Kunci di database | Token | Nilai | Ikon | Satuan |
+|---|---|---|---|---|---|
+| Langkah | `steps` | `ak-langkah` | `#F2762E` | jejak kaki | langkah |
+| Olahraga | `exercise` | `ak-olahraga` | `#19A96F` | orang berlari | menit |
+| Air minum | `water` | `ak-air` | `#2D7FF9` | tetes air | gelas |
+| Tidur | `sleep` | `ak-tidur` | `#7A5AF8` | bulan sabit | jam |
+| Latihan pernapasan | `breathing` | `ak-napas` | `#0E9DA8` | tiga cincin sepusat | menit |
+| Berat badan | `weight` | `ak-berat` | `#C9820A` | timbangan | kg |
+
+Enam jenis ini adalah seluruh jenis yang bisa dicatat aplikasi. Tidak ada jenis lain.
+
+**Mood bukan jenis tersendiri.** Mengikuti pola Huawei Health, mood hanya ditanyakan di akhir sesi latihan pernapasan dan disimpan sebagai field tambahan pada catatan `breathing`. Tidak ada tombol "catat mood" yang berdiri sendiri di mana pun.
 
 ### Warna lencana tipe konten
 
@@ -156,7 +160,9 @@ Tiga lingkaran bertumpuk dalam satu kartu putih radius `radius-lg`, mengikuti po
 |---|---|---|---|
 | Gerak, di atas | `ak-langkah` `#F2762E` | jumlah langkah ditambah menit olahraga | 8.000 langkah |
 | Tidur, kiri bawah | `ak-tidur` `#7A5AF8` | jam tidur | 7 jam |
-| Mood, kanan bawah | `ak-mood` `#0E9DA8` | ada tidaknya catatan mood hari ini | 1 catatan |
+| Relaksasi, kanan bawah | `ak-napas` `#0E9DA8` | menit latihan pernapasan | 1 sesi |
+
+Mengetuk lingkaran Relaksasi membuka jalur latihan pernapasan, sama seperti memilihnya dari tombol tambah.
 
 Di dalam tiap lingkaran ada ikon putih 20–24px. Di bawah grafik ada tiga kolom legenda berisi titik warna, nama sumbu, dan angkanya, dipisah garis tipis. Di pojok kanan atas kartu ada lencana pil `hijau-100` bertuliskan capaian, misalnya "2 dari 3 target".
 
@@ -170,26 +176,71 @@ Satu kartu untuk satu catatan, bukan satu kartu berisi semua angka. Latar putih,
 
 Isi kartu dari atas: jam pencatatan `label` warna `tinta-400`, nilai `angka-aktivitas` dengan satuan `kecil` warna `tinta-400` di sampingnya, nama jenis, lalu catatan opsional `kecil` warna `tinta-600`.
 
+Keenam jenis memakai susunan yang sama persis; yang berbeda hanya warna, ikon, angka, dan satuannya:
+
+| Jenis | Contoh isi kartu | Baris catatan |
+|---|---|---|
+| Langkah | 3.120 langkah | catatan bebas kalau diisi |
+| Olahraga | 25 menit | catatan bebas kalau diisi |
+| Air minum | 3 gelas | catatan bebas kalau diisi |
+| Tidur | 7,1 jam | catatan bebas kalau diisi |
+| Latihan pernapasan | 3 menit | "Perasaan setelah sesi: 🙂 Biasa saja" |
+| Berat badan | 68,4 kg | catatan bebas kalau diisi |
+
+Kartu latihan pernapasan adalah satu-satunya yang memakai baris catatan untuk menampilkan mood, karena mood memang tersimpan di catatan itu.
+
 ### Tombol tambah dan pilihan jenis catatan
 
 Lingkaran 56px warna `hijau-600` dengan ikon tambah putih, `bayang-3`, menempel 16px dari kanan dan 102px dari bawah supaya tidak bertabrakan dengan bottom tab. Muncul di Beranda dan Catatan Harian.
 
 Saat ditekan, latar ditutup tirai `rgba(18,33,27,.55)`, ikon tambah berputar 45 derajat menjadi tanda silang, dan enam pilihan muncul bertumpuk di atasnya — mengikuti pola tombol tambah Strava. Tiap pilihan berupa label putih radius `radius-sm` di kiri dan lingkaran putih 48px berisi ikon jenis aktivitas di kanan.
 
-Urutan pilihan dari bawah ke atas: Berat badan, Mood, Tidur, Air minum, Olahraga, Langkah.
+Urutan pilihan dari bawah ke atas: Berat badan, Latihan pernapasan, Tidur, Air minum, Olahraga, Langkah.
 
 Di web, tombol ini menjadi tombol primer ukuran kecil bertuliskan "Tambah catatan" di header, dan pilihannya muncul sebagai modal di tengah layar.
 
 ### Lembar pencatatan
 
-Lembar yang naik dari bawah, radius `radius-lg` di sudut atas, `bayang-3`, dengan pegangan 40 × 4px di tengah atas. Isi dari atas:
+Lembar yang naik dari bawah, radius `radius-lg` di sudut atas, `bayang-3`, dengan pegangan 40 × 4px di tengah atas. Susunan dasarnya:
 
 1. Baris judul: lingkaran 40px berisi ikon jenis aktivitas dengan latar 10% warna jenisnya, lalu nama jenis `judul-1` dan tanggal beserta jam `kecil` warna `tinta-600`.
-2. Pengatur angka: tombol bulat 52px bertanda kurang di kiri, angka `angka-stepper` dengan satuan di bawahnya di tengah, tombol bulat bertanda tambah di kanan. Untuk Mood, pengatur angka diganti empat kotak pilihan emoji setinggi 52px.
+2. Bagian pengisian, berbeda-beda menurut jenisnya.
 3. Input catatan opsional.
 4. Tombol primer "Simpan" selebar lembar, lalu tombol netral "Batal".
 
 Satu lembar hanya mengisi satu jenis aktivitas. Tidak ada formulir gabungan.
+
+Pengatur angka terdiri dari tombol bulat 52px bertanda kurang di kiri, angka `angka-stepper` dengan satuan di bawahnya di tengah, dan tombol bulat bertanda tambah di kanan. Besar langkahnya berbeda tiap jenis:
+
+| Jenis | Bagian pengisian | Langkah | Pintasan cepat |
+|---|---|---|---|
+| Langkah | Pengatur angka | 100 | +500, +1.000, +2.000 |
+| Olahraga | Pengatur angka | 5 menit | +5, +15, +30 |
+| Air minum | Pengatur angka | 1 gelas | tidak ada |
+| Tidur | Pengatur angka | 0,5 jam | tidak ada |
+| Berat badan | Pengatur angka | 0,1 kg | tidak ada |
+| Latihan pernapasan | Tiga kotak pilihan durasi 1, 3, dan 5 menit, lalu tombol "Mulai sesi" | — | tidak ada |
+
+Lembar latihan pernapasan tidak punya pengatur angka dan tidak punya input catatan. Angkanya lahir dari sesi yang dijalani, bukan diketik, dan tombol utamanya "Mulai sesi", bukan "Simpan".
+
+### Sesi latihan pernapasan
+
+Layar penuh berlatar gradien `#0E9DA8` ke `#095E66`, mengikuti pola latihan pernapasan Huawei Health. Isinya:
+
+1. Baris atas: judul "Latihan pernapasan" putih dan tombol tutup bulat 36px dengan latar putih 18%.
+2. Di tengah: tiga lingkaran putih sepusat beropasitas 14%, 22%, dan 34% dengan diameter 260, 210, dan 160px, mengelilingi inti putih 120px. Inti berisi aba-aba "Tarik napas", "Tahan", atau "Buang napas" dan hitungan mundur detik `angka-stepper` warna `#0B7C86`. Ketiga lingkaran membesar saat menarik napas dan mengecil saat membuang napas.
+3. Kalimat pemandu di bawah lingkaran: "Ikuti lingkarannya. Tarik napas saat membesar, buang napas saat mengecil."
+4. Bagian bawah: garis kemajuan setinggi 4px, keterangan durasi sesi dan sisa waktu, lalu tombol "Selesai lebih awal" berlatar putih 18%.
+
+### Lembar akhir sesi
+
+Begitu sesi selesai, lembar dari bawah muncul di atas halaman Catatan Harian:
+
+1. Lingkaran 56px berisi ikon pernapasan, judul "Sesi selesai", dan kalimat "3 menit latihan pernapasan tercatat."
+2. Pertanyaan "Bagaimana perasaan Anda sekarang?" diikuti empat kotak emoji setinggi 52px: 😞 😐 🙂 😄, dengan label Buruk, Kurang, Biasa saja, dan Senang di bawahnya. Label pilihan yang aktif berwarna `hijau-700`.
+3. Tombol primer "Simpan" dan tombol teks "Lewati pencatatan mood".
+
+Melewati pencatatan mood tetap menyimpan catatan `breathing`; yang kosong hanya field moodnya.
 
 ### Bottom tab, khusus mobile
 
@@ -221,7 +272,7 @@ Kerangka pemuatan: kotak `#EDF3F0` dengan radius yang sama dan animasi berkedip 
 
 ## Susunan layar
 
-Delapan layar. Satu bisa dibuka tanpa login, tujuh sisanya wajib login.
+Sembilan layar. Satu bisa dibuka tanpa login, delapan sisanya wajib login.
 
 | Layar | Perlu login | Isi utama |
 |---|---|---|
@@ -232,6 +283,7 @@ Delapan layar. Satu bisa dibuka tanpa login, tujuh sisanya wajib login.
 | Detail Konten | ya | Tiga tampilan berbeda menurut tipe konten |
 | Favorit | ya | Baris konten yang bisa digeser untuk dihapus |
 | Catatan Harian | ya | Riwayat kartu aktivitas dikelompokkan per tanggal, tombol tambah |
+| Sesi latihan pernapasan | ya | Layar penuh berlatar gradien, lingkaran pemandu napas, lalu lembar pencatatan mood di akhir |
 | Profil | ya | Avatar inisial, ubah nama dan bio, ganti password, tombol keluar |
 
 ### Tiga tampilan halaman Detail Konten
@@ -262,6 +314,9 @@ Sudah masuk
   Beranda ⇄ Favorit ⇄ Catatan Harian ⇄ Profil     bottom tab di mobile, menu header di web
   Beranda ──▶ tombol tambah ──▶ Lembar catat satu jenis aktivitas
   Catatan Harian ──▶ tombol tambah ──▶ lembar yang sama
+  tombol tambah ──▶ Latihan pernapasan ──▶ pilih durasi ──▶ Sesi berjalan
+                                            └──▶ Lembar akhir sesi, catat mood ──▶ tersimpan
+  Beranda ──▶ ketuk lingkaran Relaksasi ──▶ jalur latihan pernapasan yang sama
   Favorit ──▶ Detail Konten
   Favorit ──▶ geser ke kiri ──▶ hapus dari favorit
   Profil  ──▶ keluar ──▶ Landing
@@ -302,13 +357,19 @@ export const warna = {
   latar: "#F6FBF8",
 };
 export const aktivitas = {
-  steps:    { warna: "#F2762E", nama: "Langkah",     satuan: "langkah" },
-  exercise: { warna: "#19A96F", nama: "Olahraga",    satuan: "menit"   },
-  water:    { warna: "#2D7FF9", nama: "Air minum",   satuan: "gelas"   },
-  sleep:    { warna: "#7A5AF8", nama: "Tidur",       satuan: "jam"     },
-  mood:     { warna: "#0E9DA8", nama: "Mood",        satuan: ""        },
-  weight:   { warna: "#C9820A", nama: "Berat badan", satuan: "kg"      },
+  steps:     { warna: "#F2762E", nama: "Langkah",            satuan: "langkah", langkah: 100 },
+  exercise:  { warna: "#19A96F", nama: "Olahraga",           satuan: "menit",   langkah: 5   },
+  water:     { warna: "#2D7FF9", nama: "Air minum",          satuan: "gelas",   langkah: 1   },
+  sleep:     { warna: "#7A5AF8", nama: "Tidur",              satuan: "jam",     langkah: 0.5 },
+  breathing: { warna: "#0E9DA8", nama: "Latihan pernapasan", satuan: "menit",   sesi: [1,3,5] },
+  weight:    { warna: "#C9820A", nama: "Berat badan",        satuan: "kg",      langkah: 0.1 },
 };
+export const mood = [
+  { nilai: 1, emoji: "😞", label: "Buruk" },
+  { nilai: 2, emoji: "😐", label: "Kurang" },
+  { nilai: 3, emoji: "🙂", label: "Biasa saja" },
+  { nilai: 4, emoji: "😄", label: "Senang" },
+];
 export const radius = { sm: 8, md: 12, lg: 16, penuh: 999 };
 export const jarak = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32 };
 ```

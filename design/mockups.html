@@ -15,7 +15,7 @@
   --biru-t:#1A4E8A; --biru-l:#DDEAFB;
   /* jenis aktivitas */
   --ak-langkah:#F2762E; --ak-olahraga:#19A96F; --ak-air:#2D7FF9;
-  --ak-tidur:#7A5AF8;  --ak-mood:#0E9DA8;    --ak-berat:#C9820A;
+  --ak-tidur:#7A5AF8;  --ak-napas:#0E9DA8;    --ak-berat:#C9820A;
   --r-sm:8px; --r-md:12px; --r-lg:16px; --r-full:999px;
   --b1:0 1px 2px rgba(18,33,27,.06), 0 1px 3px rgba(18,33,27,.04);
   --b2:0 4px 12px rgba(18,33,27,.08);
@@ -212,6 +212,12 @@ body{font-family:var(--font);background:#EFF4F1;color:var(--tinta-900);-webkit-f
   justify-content:space-between;padding:0 16px}
 .appbar-lay .ikon-bulat{background:rgba(255,255,255,.94);border-color:transparent;box-shadow:var(--b1)}
 
+/* sesi latihan pernapasan */
+.napas-bungkus{position:relative;width:260px;height:260px;display:flex;align-items:center;justify-content:center}
+.napas-cincin{position:absolute;border-radius:50%;background:#fff}
+.napas-inti{position:relative;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.95);
+  color:#0B7C86;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+
 /* ---------- bingkai web ---------- */
 .slot{width:calc(1180px * var(--skala-web));height:calc(820px * var(--skala-web));margin-bottom:26px}
 .wb{width:1180px;height:820px;transform:scale(var(--skala-web));transform-origin:top left;
@@ -280,6 +286,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
 <symbol id="i-air" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c3.6 4.3 6.5 7.6 6.5 11.2A6.5 6.5 0 0 1 5.5 13.7C5.5 10.1 8.4 6.8 12 2.5Z"/></symbol>
 <symbol id="i-lari" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 4.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM8.9 8.2 6 10.6l1.4 1.8 3-2.4 2 2.2-2.6 4.2L6 20.9l1.7 1.6 4.6-5.4 3 3.3v3.1h2.2v-4.2l-3.2-3.5 1.5-4 2.3 2.4h3.4v-2.2h-2.5l-3.2-3.4c-.5-.5-1.1-.8-1.8-.8-.6 0-1.1.2-1.6.5l-3.5 2.9Z"/></symbol>
 <symbol id="i-tidur" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5 8.6 8.6 0 1 0 20.5 14.3Z"/></symbol>
+<symbol id="i-napas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="7" opacity=".6"/><circle cx="12" cy="12" r="10.6" opacity=".3"/></symbol>
 <symbol id="i-mood" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM8.5 9.5a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0Zm4.2 0a1.4 1.4 0 1 1 2.8 0 1.4 1.4 0 0 1-2.8 0ZM12 17.6c-2.3 0-4.2-1.4-5-3.4h10c-.8 2-2.7 3.4-5 3.4Z"/></symbol>
 <symbol id="i-berat" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm7 3a3.6 3.6 0 0 0-3.5 3.6h1.9c0-.9.7-1.7 1.6-1.7s1.6.8 1.6 1.7h1.9A3.6 3.6 0 0 0 12 6Zm-4 6.5h8v1.8H8v-1.8Z"/></symbol>
 <symbol id="i-kunci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
@@ -316,6 +323,11 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
     <tr><td>Kartu riwayat</td><td>Satu kartu berisi semua angka</td><td>Satu kartu per jenis aktivitas, dengan warna dan gambar latar sesuai jenisnya</td></tr>
     <tr><td>Profil</td><td>Ada kotak jumlah favorit dan catatan</td><td>Dua kotak itu dihapus</td></tr>
     <tr><td>Sebelum login</td><td>Langsung Login</td><td>Ada halaman landing publik berisi tujuan aplikasi dan cuplikan konten</td></tr>
+    <tr><td>Mood</td><td>Jenis catatan tersendiri, diisi lewat baris emoji di form</td><td>Bukan jenis tersendiri. Mood hanya dicatat di akhir sesi latihan pernapasan, mengikuti pola Huawei Health</td></tr>
+    <tr><td>Lingkaran ketiga cincin harian</td><td>Mood</td><td>Relaksasi — terisi kalau sesi latihan pernapasan hari itu sudah dijalani</td></tr>
+    <tr><td>Kartu aktivitas</td><td>Empat contoh</td><td>Enam jenis lengkap, ditambah tabel kunci database, satuan, warna, dan cara mengisinya</td></tr>
+    <tr><td>Lembar tambah catatan</td><td>Satu contoh</td><td>Enam lembar lengkap; lima memakai pengatur angka dengan langkah berbeda, satu memakai pilihan durasi sesi</td></tr>
+    <tr><td>Gambar mockup</td><td>Ditarik dari Unsplash saat halaman dibuka</td><td>Disimpan di <code>design/img/</code> dan dirujuk secara relatif, jadi tidak perlu jaringan</td></tr>
   </table>
 
   <!-- ============================= FONDASI ============================= -->
@@ -409,37 +421,186 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
         <circle cx="138" cy="100" r="28" fill="#0E9DA8" opacity=".72"/>
         <g fill="#fff"><use href="#i-lari" x="98" y="44" width="24" height="24"/></g>
         <g fill="#fff" opacity=".95"><use href="#i-tidur" x="71" y="89" width="22" height="22"/></g>
-        <g fill="#fff" opacity=".95"><use href="#i-mood" x="128" y="90" width="20" height="20"/></g>
+        <g fill="#fff" opacity=".95"><use href="#i-napas" x="128" y="90" width="20" height="20"/></g>
       </svg>
       <div class="cincin-legenda">
         <div><div class="l"><i style="background:#F2762E"></i>Gerak</div><div class="n">6.240<span>langkah</span></div></div>
         <div><div class="l"><i style="background:#7A5AF8"></i>Tidur</div><div class="n">7,1<span>jam</span></div></div>
-        <div><div class="l"><i style="background:#0E9DA8"></i>Mood</div><div class="n">🙂</div></div>
+        <div><div class="l"><i style="background:#0E9DA8"></i>Relaksasi</div><div class="n">1<span>sesi</span></div></div>
       </div>
     </div>
   </div>
 
-  <h3>Kartu aktivitas per jenis</h3>
-  <p class="ket">Satu kartu untuk satu jenis aktivitas, bukan satu kartu berisi semua angka. Tiap jenis punya warna, ikon, dan gambar latar
-  samar yang menggambarkan aktivitasnya, sehingga riwayat bisa dipindai sekilas tanpa membaca teksnya.</p>
-  <div class="papan g2">
+  <h3>Kartu aktivitas — enam jenis, seluruhnya</h3>
+  <p class="ket">Satu kartu untuk satu catatan. Enam jenis di bawah ini adalah seluruh jenis yang bisa dicatat aplikasi; tidak ada jenis lain.
+  Tiap jenis punya warna, ikon, satuan, dan gambar latar samar sendiri, sehingga riwayat bisa dipindai sekilas tanpa membaca teksnya.</p>
+  <div class="papan" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
     <div class="ak"><span class="cap" style="background:var(--ak-langkah)"></span>
       <svg class="wm" width="96" height="96" style="color:var(--ak-langkah)"><use href="#i-langkah"/></svg>
       <div class="jam">07.10</div><div class="nilai">3.120 <span>langkah</span></div>
       <div class="jns" style="color:var(--ak-langkah)">Langkah</div></div>
-    <div class="ak"><span class="cap" style="background:var(--ak-air)"></span>
-      <svg class="wm" width="96" height="96" style="color:var(--ak-air)"><use href="#i-air"/></svg>
-      <div class="jam">09.30</div><div class="nilai">3 <span>gelas</span></div>
-      <div class="jns" style="color:var(--ak-air)">Air minum</div></div>
     <div class="ak"><span class="cap" style="background:var(--ak-olahraga)"></span>
       <svg class="wm" width="96" height="96" style="color:var(--ak-olahraga)"><use href="#i-lari"/></svg>
       <div class="jam">06.15</div><div class="nilai">25 <span>menit</span></div>
       <div class="jns" style="color:var(--ak-olahraga)">Olahraga</div>
       <div class="cat">Jalan pagi keliling komplek</div></div>
+    <div class="ak"><span class="cap" style="background:var(--ak-air)"></span>
+      <svg class="wm" width="96" height="96" style="color:var(--ak-air)"><use href="#i-air"/></svg>
+      <div class="jam">09.30</div><div class="nilai">3 <span>gelas</span></div>
+      <div class="jns" style="color:var(--ak-air)">Air minum</div></div>
     <div class="ak"><span class="cap" style="background:var(--ak-tidur)"></span>
       <svg class="wm" width="96" height="96" style="color:var(--ak-tidur)"><use href="#i-tidur"/></svg>
       <div class="jam">06.00</div><div class="nilai">7,1 <span>jam</span></div>
       <div class="jns" style="color:var(--ak-tidur)">Tidur</div></div>
+    <div class="ak"><span class="cap" style="background:var(--ak-napas)"></span>
+      <svg class="wm" width="96" height="96" style="color:var(--ak-napas)"><use href="#i-napas"/></svg>
+      <div class="jam">12.00</div><div class="nilai">3 <span>menit</span></div>
+      <div class="jns" style="color:var(--ak-napas)">Latihan pernapasan</div>
+      <div class="cat">Perasaan setelah sesi: 🙂 Biasa saja</div></div>
+    <div class="ak"><span class="cap" style="background:var(--ak-berat)"></span>
+      <svg class="wm" width="96" height="96" style="color:var(--ak-berat)"><use href="#i-berat"/></svg>
+      <div class="jam">07.00</div><div class="nilai">68,4 <span>kg</span></div>
+      <div class="jns" style="color:var(--ak-berat)">Berat badan</div></div>
+  </div>
+  <table class="mini-tabel">
+    <tr><th style="width:150px">Jenis</th><th>Kunci di database</th><th>Satuan</th><th>Warna</th><th>Cara mengisi</th></tr>
+    <tr><td>Langkah</td><td><code>steps</code></td><td>langkah</td><td><code>#F2762E</code></td><td>Pengatur angka, langkah 100, ditambah tiga pintasan cepat</td></tr>
+    <tr><td>Olahraga</td><td><code>exercise</code></td><td>menit</td><td><code>#19A96F</code></td><td>Pengatur angka, langkah 5</td></tr>
+    <tr><td>Air minum</td><td><code>water</code></td><td>gelas</td><td><code>#2D7FF9</code></td><td>Pengatur angka, langkah 1</td></tr>
+    <tr><td>Tidur</td><td><code>sleep</code></td><td>jam</td><td><code>#7A5AF8</code></td><td>Pengatur angka, langkah 0,5</td></tr>
+    <tr><td>Latihan pernapasan</td><td><code>breathing</code></td><td>menit</td><td><code>#0E9DA8</code></td><td>Pilih durasi lalu jalani sesi; mood dicatat di akhir sesi</td></tr>
+    <tr><td>Berat badan</td><td><code>weight</code></td><td>kg</td><td><code>#C9820A</code></td><td>Pengatur angka, langkah 0,1</td></tr>
+  </table>
+  <div class="catatan-rev"><b>Mood bukan jenis tersendiri.</b> Mengikuti pola Huawei Health, mood hanya dicatat di akhir sesi latihan pernapasan
+  dan disimpan sebagai field tambahan pada catatan <code>breathing</code>, bukan sebagai catatan terpisah. Jadi tidak ada tombol "catat mood"
+  yang berdiri sendiri di mana pun.</div>
+
+  <style>
+  .lembar-contoh{position:static;width:358px;border-radius:var(--r-lg);border:1px solid var(--garis);
+    box-shadow:var(--b1);padding:8px 16px 20px;background:#fff}
+  .rak-lembar{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px}
+  .rak-lembar > div > p{font:600 12px/16px var(--font);color:var(--tinta-600);margin:0 0 8px;
+    text-transform:uppercase;letter-spacing:.06em}
+  .pintasan{display:flex;gap:8px;margin-bottom:16px}
+  .pintasan span{flex:1;height:36px;border:1px solid var(--garis);border-radius:var(--r-sm);background:#fff;
+    display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--font);color:var(--hijau-600)}
+  .durasi{display:flex;gap:10px;margin:6px 0 18px}
+  .durasi span{flex:1;height:72px;border:1px solid var(--garis);border-radius:var(--r-md);background:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font:700 22px/26px var(--font);color:var(--tinta-900)}
+  .durasi span i{font:400 12px/16px var(--font);color:var(--tinta-400);font-style:normal}
+  .durasi span.on{border-color:var(--ak-napas);background:#EAF7F8;box-shadow:0 0 0 2px #CDECEF}
+  </style>
+
+  <h3>Lembar tambah catatan — enam jenis, seluruhnya</h3>
+  <p class="ket">Satu lembar hanya mengisi satu jenis. Lima jenis pertama memakai pengatur angka dengan langkah yang berbeda-beda sesuai
+  satuannya. Latihan pernapasan tidak memakai pengatur angka sama sekali, karena angkanya lahir dari sesi yang dijalani, bukan diketik.</p>
+  <div class="rak-lembar">
+
+    <div><p>1 · Langkah</p>
+      <div class="lembar-contoh">
+        <div class="pegangan"></div>
+        <div class="baris" style="gap:10px;margin-bottom:10px">
+          <span class="ikon-bulat" style="color:var(--ak-langkah);border-color:var(--jingga-100);background:#FEF3EC">
+            <svg width="22" height="22"><use href="#i-langkah"/></svg></span>
+          <div><h3 style="font:700 22px/28px var(--font);margin:0">Langkah</h3>
+            <p class="sub" style="margin:0">Sabtu, 15 Agustus · 07.10</p></div>
+        </div>
+        <div class="stepper"><span class="tbl">−</span><span class="nilai">3.120<span>langkah</span></span><span class="tbl">+</span></div>
+        <div class="pintasan"><span>+500</span><span>+1.000</span><span>+2.000</span></div>
+        <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span><div class="inp ph">Jalan pagi</div></div>
+        <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
+        <span class="tombol t-netral t-blok">Batal</span>
+      </div>
+    </div>
+
+    <div><p>2 · Olahraga</p>
+      <div class="lembar-contoh">
+        <div class="pegangan"></div>
+        <div class="baris" style="gap:10px;margin-bottom:10px">
+          <span class="ikon-bulat" style="color:var(--ak-olahraga);border-color:var(--hijau-100);background:var(--hijau-50)">
+            <svg width="22" height="22"><use href="#i-lari"/></svg></span>
+          <div><h3 style="font:700 22px/28px var(--font);margin:0">Olahraga</h3>
+            <p class="sub" style="margin:0">Sabtu, 15 Agustus · 06.15</p></div>
+        </div>
+        <div class="stepper"><span class="tbl">−</span><span class="nilai">25<span>menit</span></span><span class="tbl">+</span></div>
+        <div class="pintasan"><span>+5</span><span>+15</span><span>+30</span></div>
+        <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
+          <div class="inp ph">Jalan pagi keliling komplek</div></div>
+        <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
+        <span class="tombol t-netral t-blok">Batal</span>
+      </div>
+    </div>
+
+    <div><p>3 · Air minum</p>
+      <div class="lembar-contoh">
+        <div class="pegangan"></div>
+        <div class="baris" style="gap:10px;margin-bottom:10px">
+          <span class="ikon-bulat" style="color:var(--ak-air);border-color:var(--biru-l);background:#F2F7FE">
+            <svg width="22" height="22"><use href="#i-air"/></svg></span>
+          <div><h3 style="font:700 22px/28px var(--font);margin:0">Air minum</h3>
+            <p class="sub" style="margin:0">Sabtu, 15 Agustus · 09.30</p></div>
+        </div>
+        <div class="stepper"><span class="tbl">−</span><span class="nilai">3<span>gelas</span></span><span class="tbl">+</span></div>
+        <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
+          <div class="inp ph">Setelah olahraga pagi</div></div>
+        <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
+        <span class="tombol t-netral t-blok">Batal</span>
+      </div>
+    </div>
+
+    <div><p>4 · Tidur</p>
+      <div class="lembar-contoh">
+        <div class="pegangan"></div>
+        <div class="baris" style="gap:10px;margin-bottom:10px">
+          <span class="ikon-bulat" style="color:var(--ak-tidur);border-color:#E4DEFE;background:#F4F1FE">
+            <svg width="22" height="22"><use href="#i-tidur"/></svg></span>
+          <div><h3 style="font:700 22px/28px var(--font);margin:0">Tidur</h3>
+            <p class="sub" style="margin:0">Sabtu, 15 Agustus · 06.00</p></div>
+        </div>
+        <div class="stepper"><span class="tbl">−</span><span class="nilai">7,1<span>jam</span></span><span class="tbl">+</span></div>
+        <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
+          <div class="inp ph">Sempat terbangun tengah malam</div></div>
+        <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
+        <span class="tombol t-netral t-blok">Batal</span>
+      </div>
+    </div>
+
+    <div><p>5 · Latihan pernapasan — pilih durasi, lalu jalani sesi</p>
+      <div class="lembar-contoh">
+        <div class="pegangan"></div>
+        <div class="baris" style="gap:10px;margin-bottom:6px">
+          <span class="ikon-bulat" style="color:var(--ak-napas);border-color:#CDECEF;background:#EAF7F8">
+            <svg width="22" height="22"><use href="#i-napas"/></svg></span>
+          <div><h3 style="font:700 22px/28px var(--font);margin:0">Latihan pernapasan</h3>
+            <p class="sub" style="margin:0">Menenangkan diri sebelum mencatat perasaan</p></div>
+        </div>
+        <span class="inp-label" style="margin-top:10px">Durasi sesi</span>
+        <div class="durasi"><span>1<i>menit</i></span><span class="on">3<i>menit</i></span><span>5<i>menit</i></span></div>
+        <span class="tombol t-primer t-blok" style="margin-bottom:10px">Mulai sesi</span>
+        <span class="tombol t-netral t-blok">Batal</span>
+        <p style="font:400 12px/17px var(--font);color:var(--tinta-400);margin:12px 0 0;text-align:center">
+          Mood dicatat otomatis di akhir sesi.</p>
+      </div>
+    </div>
+
+    <div><p>6 · Berat badan</p>
+      <div class="lembar-contoh">
+        <div class="pegangan"></div>
+        <div class="baris" style="gap:10px;margin-bottom:10px">
+          <span class="ikon-bulat" style="color:var(--ak-berat);border-color:#F3E3C2;background:#FBF4E6">
+            <svg width="22" height="22"><use href="#i-berat"/></svg></span>
+          <div><h3 style="font:700 22px/28px var(--font);margin:0">Berat badan</h3>
+            <p class="sub" style="margin:0">Sabtu, 15 Agustus · 07.00</p></div>
+        </div>
+        <div class="stepper"><span class="tbl">−</span><span class="nilai">68,4<span>kg</span></span><span class="tbl">+</span></div>
+        <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
+          <div class="inp ph">Ditimbang sebelum sarapan</div></div>
+        <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
+        <span class="tombol t-netral t-blok">Batal</span>
+      </div>
+    </div>
+
   </div>
 
   <h3>Geser untuk menghapus, dan tombol tambah</h3>
@@ -448,7 +609,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
       <div class="geser-luar aktif" style="margin-bottom:10px">
         <div class="geser-hapus"><svg width="22" height="22"><use href="#i-sampah"/></svg>Hapus</div>
         <div class="geser-isi baris-konten">
-          <img class="thumb" src="https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=320&q=70" alt="">
+          <img class="thumb" src="img/tidur.jpg" alt="">
           <div style="flex:1"><h4>Pentingnya Tidur Cukup untuk Kesehatan</h4><div class="meta">Pola Hidup Sehat · Artikel · 4 menit</div></div>
         </div>
       </div>
@@ -462,9 +623,9 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
 
   <!-- ============================= MOBILE ============================= -->
   <h2 id="mobile">Layar mobile — 390 × 844</h2>
-  <p class="ket">Delapan layar dalam dua belas bingkai. Landing bisa dibuka tanpa login. Detail konten digambar tiga kali karena tampilannya
-  berbeda untuk artikel, video, dan infografis. Beranda dan Catatan Harian masing-masing punya satu bingkai tambahan untuk memperlihatkan
-  tombol tambah yang terbuka dan lembar pencatatan.</p>
+  <p class="ket">Sembilan layar dalam empat belas bingkai. Landing bisa dibuka tanpa login. Detail konten digambar tiga kali karena tampilannya
+  berbeda untuk artikel, video, dan infografis. Beranda punya bingkai tambahan untuk tombol tambah yang terbuka, Catatan Harian punya bingkai
+  lembar pencatatan, dan latihan pernapasan punya dua bingkai: sesi yang sedang berjalan dan pencatatan mood di akhir sesi.</p>
 
   <div class="rak">
 
@@ -488,11 +649,11 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <p class="label-mini">CUPLIKAN KONTEN</p>
           <div style="display:flex;flex-direction:column;gap:8px">
             <div class="baris-konten">
-              <img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+              <img class="thumb" src="img/jalan-kaki.jpg" alt="">
               <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Olahraga · Artikel</div></div>
             </div>
             <div class="baris-konten" style="position:relative">
-              <img class="thumb" src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=320&q=70" alt="" style="filter:blur(2px)">
+              <img class="thumb" src="img/isi-piringku.jpg" alt="" style="filter:blur(2px)">
               <div style="flex:1"><h4 style="color:var(--tinta-400)">Infografis Isi Piringku: Panduan Porsi Makan</h4><div class="meta">Gizi Seimbang · Infografis</div></div>
               <span class="ikon-bulat" style="width:32px;height:32px"><svg width="16" height="16"><use href="#i-kunci"/></svg></span>
             </div>
@@ -572,12 +733,12 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
                 <circle cx="138" cy="98" r="28" fill="#0E9DA8" opacity=".72"/>
                 <g fill="#fff"><use href="#i-lari" x="98" y="42" width="24" height="24"/></g>
                 <g fill="#fff" opacity=".95"><use href="#i-tidur" x="71" y="87" width="22" height="22"/></g>
-                <g fill="#fff" opacity=".95"><use href="#i-mood" x="128" y="88" width="20" height="20"/></g>
+                <g fill="#fff" opacity=".95"><use href="#i-napas" x="128" y="88" width="20" height="20"/></g>
               </svg>
               <div class="cincin-legenda">
                 <div><div class="l"><i style="background:#F2762E"></i>Gerak</div><div class="n">6.240<span>langkah</span></div></div>
                 <div><div class="l"><i style="background:#7A5AF8"></i>Tidur</div><div class="n">7,1<span>jam</span></div></div>
-                <div><div class="l"><i style="background:#0E9DA8"></i>Mood</div><div class="n">🙂</div></div>
+                <div><div class="l"><i style="background:#0E9DA8"></i>Relaksasi</div><div class="n">1<span>sesi</span></div></div>
               </div>
             </div>
             <div class="cari" style="margin-bottom:12px"><svg width="20" height="20"><use href="#i-cari"/></svg> Cari artikel, video, infografis</div>
@@ -587,7 +748,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
             <div class="tab-garis" style="margin-bottom:14px"><a class="on">Semua</a><a>Artikel</a><a>Video</a><a>Infografis</a></div>
             <div class="kartu">
               <div class="sampul">
-                <img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=640&q=70" alt="">
+                <img src="img/jalan-kaki.jpg" alt="">
                 <span class="lencana l-art">Artikel</span>
                 <span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
               </div>
@@ -635,7 +796,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
             <a><span>Olahraga</span><i style="color:var(--ak-olahraga)"><svg width="24" height="24"><use href="#i-lari"/></svg></i></a>
             <a><span>Air minum</span><i style="color:var(--ak-air)"><svg width="24" height="24"><use href="#i-air"/></svg></i></a>
             <a><span>Tidur</span><i style="color:var(--ak-tidur)"><svg width="24" height="24"><use href="#i-tidur"/></svg></i></a>
-            <a><span>Mood</span><i style="color:var(--ak-mood)"><svg width="24" height="24"><use href="#i-mood"/></svg></i></a>
+            <a><span>Latihan pernapasan</span><i style="color:var(--ak-napas)"><svg width="24" height="24"><use href="#i-napas"/></svg></i></a>
             <a><span>Berat badan</span><i style="color:var(--ak-berat)"><svg width="24" height="24"><use href="#i-berat"/></svg></i></a>
           </div>
           <span class="fab" style="background:#fff;color:var(--tinta-900);transform:rotate(45deg)"><svg width="26" height="26"><use href="#i-plus"/></svg></span>
@@ -655,7 +816,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
       <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
         <div class="hp-isi">
           <div style="position:relative">
-            <img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=800&q=70" style="width:100%;height:220px;object-fit:cover;display:block" alt="">
+            <img src="img/jalan-kaki.jpg" style="width:100%;height:220px;object-fit:cover;display:block" alt="">
             <div class="appbar-lay">
               <span class="ikon-bulat"><svg width="22" height="22"><use href="#i-back"/></svg></span>
               <div class="baris" style="gap:8px">
@@ -702,7 +863,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
             </div>
           </div>
           <div class="pemutar">
-            <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=800&q=70" alt="">
+            <img src="img/olahraga-usia.jpg" alt="">
             <span class="main-yt"><svg width="30" height="30"><use href="#i-play"/></svg></span>
           </div>
           <div class="hp-gulir" style="padding-top:16px">
@@ -743,7 +904,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
             <h1 style="font:700 22px/28px var(--font);margin:10px 0 6px">Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</h1>
             <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0 0 14px">Gizi Seimbang · 3 menit</p>
             <div class="infografis-bingkai" style="margin-bottom:14px">
-              <img src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=800&q=70" style="height:300px;object-fit:cover" alt="">
+              <img src="img/isi-piringku.jpg" style="height:300px;object-fit:cover" alt="">
               <span class="perbesar"><svg width="16" height="16"><use href="#i-perbesar"/></svg> Ketuk untuk memperbesar</span>
             </div>
             <div class="isi-teks">
@@ -775,28 +936,28 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
               <div class="geser-luar">
                 <div class="geser-hapus"><svg width="22" height="22"><use href="#i-sampah"/></svg>Hapus</div>
                 <div class="geser-isi baris-konten">
-                  <img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+                  <img class="thumb" src="img/jalan-kaki.jpg" alt="">
                   <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Olahraga · Artikel · 5 menit</div></div>
                 </div>
               </div>
               <div class="geser-luar aktif">
                 <div class="geser-hapus"><svg width="22" height="22"><use href="#i-sampah"/></svg>Hapus</div>
                 <div class="geser-isi baris-konten">
-                  <img class="thumb" src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=320&q=70" alt="">
+                  <img class="thumb" src="img/isi-piringku.jpg" alt="">
                   <div style="flex:1"><h4>Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</h4><div class="meta">Gizi Seimbang · Infografis · 3 menit</div></div>
                 </div>
               </div>
               <div class="geser-luar">
                 <div class="geser-hapus"><svg width="22" height="22"><use href="#i-sampah"/></svg>Hapus</div>
                 <div class="geser-isi baris-konten">
-                  <img class="thumb" src="https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=320&q=70" alt="">
+                  <img class="thumb" src="img/tidur.jpg" alt="">
                   <div style="flex:1"><h4>Pentingnya Tidur Cukup untuk Kesehatan</h4><div class="meta">Pola Hidup Sehat · Artikel · 4 menit</div></div>
                 </div>
               </div>
               <div class="geser-luar">
                 <div class="geser-hapus"><svg width="22" height="22"><use href="#i-sampah"/></svg>Hapus</div>
                 <div class="geser-isi baris-konten">
-                  <img class="thumb" src="https://images.unsplash.com/photo-1758876019043-cedb0b6f56ea?w=320&q=70" alt="">
+                  <img class="thumb" src="img/stres.jpg" alt="">
                   <div style="flex:1"><h4>Mengelola Stres dalam Kehidupan Sehari-hari</h4><div class="meta">Kesehatan Mental · Artikel · 5 menit</div></div>
                 </div>
               </div>
@@ -834,10 +995,11 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
                 <svg class="wm" width="96" height="96" style="color:var(--ak-air)"><use href="#i-air"/></svg>
                 <div class="jam">09.30</div><div class="nilai">3 <span>gelas</span></div>
                 <div class="jns" style="color:var(--ak-air)">Air minum</div></div>
-              <div class="ak"><span class="cap" style="background:var(--ak-mood)"></span>
-                <svg class="wm" width="96" height="96" style="color:var(--ak-mood)"><use href="#i-mood"/></svg>
-                <div class="jam">12.00</div><div class="nilai">🙂 <span>Biasa saja</span></div>
-                <div class="jns" style="color:var(--ak-mood)">Mood</div></div>
+              <div class="ak"><span class="cap" style="background:var(--ak-napas)"></span>
+                <svg class="wm" width="96" height="96" style="color:var(--ak-napas)"><use href="#i-napas"/></svg>
+                <div class="jam">12.00</div><div class="nilai">3 <span>menit</span></div>
+                <div class="jns" style="color:var(--ak-napas)">Latihan pernapasan</div>
+                <div class="cat">Perasaan setelah sesi: 🙂 Biasa saja</div></div>
             </div>
             <p class="kel-tanggal">14 AGUSTUS</p>
             <div class="ak"><span class="cap" style="background:var(--ak-tidur)"></span>
@@ -890,9 +1052,81 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
       </div>
     </div>
 
-    <!-- 12 PROFIL -->
+    <!-- 12 SESI PERNAPASAN -->
     <div class="hp">
-      <p class="hp-nama">12 · Profil</p>
+      <p class="hp-nama">12 · Sesi latihan pernapasan</p>
+      <div class="hp-layar"><div class="hp-status" style="color:#fff"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi" style="background:linear-gradient(180deg,#0E9DA8 0%,#0B7C86 60%,#095E66 100%)">
+          <div class="baris" style="justify-content:space-between;padding:8px 16px 0">
+            <span style="font:600 15px/20px var(--font);color:#fff">Latihan pernapasan</span>
+            <span class="ikon-bulat" style="background:rgba(255,255,255,.18);border:0;color:#fff;width:36px;height:36px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:520px">
+            <div class="napas-bungkus">
+              <span class="napas-cincin" style="width:260px;height:260px;opacity:.14"></span>
+              <span class="napas-cincin" style="width:210px;height:210px;opacity:.22"></span>
+              <span class="napas-cincin" style="width:160px;height:160px;opacity:.34"></span>
+              <div class="napas-inti">
+                <span style="font:600 14px/18px var(--font);opacity:.85">Tarik napas</span>
+                <span style="font:700 46px/52px var(--font)">4</span>
+              </div>
+            </div>
+            <p style="font:400 14px/20px var(--font);color:rgba(255,255,255,.85);margin:34px 0 0;text-align:center;max-width:260px">
+              Ikuti lingkarannya. Tarik napas saat membesar, buang napas saat mengecil.</p>
+          </div>
+          <div style="padding:0 24px">
+            <div style="height:4px;border-radius:2px;background:rgba(255,255,255,.25)">
+              <div style="width:38%;height:4px;border-radius:2px;background:#fff"></div></div>
+            <div class="baris" style="justify-content:space-between;margin-top:10px">
+              <span style="font:600 12px/16px var(--font);color:rgba(255,255,255,.8)">Sesi 3 menit</span>
+              <span style="font:600 12px/16px var(--font);color:#fff">01.52 tersisa</span>
+            </div>
+            <span class="tombol t-blok" style="margin-top:18px;background:rgba(255,255,255,.18);color:#fff">Selesai lebih awal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13 AKHIR SESI, CATAT MOOD -->
+    <div class="hp">
+      <p class="hp-nama">13 · Akhir sesi, catat mood</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-head"><h2>Catatan Harian</h2></div>
+          <div class="hp-gulir" style="padding-top:12px">
+            <p class="kel-tanggal" style="margin-top:0">HARI INI · 15 AGUSTUS</p>
+            <div class="ak"><span class="cap" style="background:var(--ak-langkah)"></span>
+              <div class="jam">07.10</div><div class="nilai">3.120 <span>langkah</span></div>
+              <div class="jns" style="color:var(--ak-langkah)">Langkah</div></div>
+          </div>
+          <div class="tirai"></div>
+          <div class="lembar">
+            <div class="pegangan"></div>
+            <div style="text-align:center;margin-bottom:18px">
+              <span class="ikon-bulat" style="width:56px;height:56px;color:var(--ak-napas);border-color:#CDECEF;background:#EAF7F8;margin:0 auto">
+                <svg width="28" height="28"><use href="#i-napas"/></svg></span>
+              <h3 style="font:700 22px/28px var(--font);margin:12px 0 2px">Sesi selesai</h3>
+              <p class="sub" style="margin:0">3 menit latihan pernapasan tercatat.</p>
+            </div>
+            <span class="inp-label">Bagaimana perasaan Anda sekarang?</span>
+            <div class="mood" style="margin-bottom:6px"><a>😞</a><a>😐</a><a class="on">🙂</a><a>😄</a></div>
+            <div class="baris" style="justify-content:space-between;margin-bottom:16px">
+              <span style="font:400 11px/14px var(--font);color:var(--tinta-400);flex:1;text-align:center">Buruk</span>
+              <span style="font:400 11px/14px var(--font);color:var(--tinta-400);flex:1;text-align:center">Kurang</span>
+              <span style="font:600 11px/14px var(--font);color:var(--hijau-700);flex:1;text-align:center">Biasa saja</span>
+              <span style="font:400 11px/14px var(--font);color:var(--tinta-400);flex:1;text-align:center">Senang</span>
+            </div>
+            <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
+            <span class="tombol t-teks t-blok">Lewati pencatatan mood</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14 PROFIL -->
+    <div class="hp">
+      <p class="hp-nama">14 · Profil</p>
       <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
         <div class="hp-isi">
           <div class="hp-head"><h2>Profil</h2></div>
@@ -955,12 +1189,12 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
       </div>
       <div style="background:var(--hijau-50);padding:48px 40px;display:flex;flex-direction:column;justify-content:center;gap:14px">
         <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0">CUPLIKAN KONTEN</p>
-        <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+        <div class="baris-konten"><img class="thumb" src="img/jalan-kaki.jpg" alt="">
           <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Olahraga · Artikel · 5 menit</div></div></div>
-        <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=320&q=70" alt="">
+        <div class="baris-konten"><img class="thumb" src="img/olahraga-usia.jpg" alt="">
           <div style="flex:1"><h4>Manfaat Olahraga Sesuai Usia</h4><div class="meta">Olahraga · Video · 2 menit</div></div></div>
         <div class="baris-konten" style="opacity:.6">
-          <img class="thumb" src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=320&q=70" style="filter:blur(3px)" alt="">
+          <img class="thumb" src="img/isi-piringku.jpg" style="filter:blur(3px)" alt="">
           <div style="flex:1"><h4 style="color:var(--tinta-400)">Infografis Isi Piringku: Panduan Porsi Makan</h4><div class="meta">Gizi Seimbang · Infografis</div></div>
           <span class="ikon-bulat"><svg width="20" height="20"><use href="#i-kunci"/></svg></span></div>
         <p style="font:400 13px/18px var(--font);color:var(--tinta-600);margin:4px 0 0">Daftar dulu untuk membuka seluruh konten.</p>
@@ -1056,32 +1290,32 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
             <circle cx="150" cy="100" r="29" fill="#0E9DA8" opacity=".72"/>
             <g fill="#fff"><use href="#i-lari" x="108" y="44" width="24" height="24"/></g>
             <g fill="#fff" opacity=".95"><use href="#i-tidur" x="79" y="89" width="22" height="22"/></g>
-            <g fill="#fff" opacity=".95"><use href="#i-mood" x="140" y="90" width="20" height="20"/></g>
+            <g fill="#fff" opacity=".95"><use href="#i-napas" x="140" y="90" width="20" height="20"/></g>
           </svg>
           <div class="cincin-legenda">
             <div><div class="l"><i style="background:#F2762E"></i>Gerak</div><div class="n">6.240<span>langkah</span></div></div>
             <div><div class="l"><i style="background:#7A5AF8"></i>Tidur</div><div class="n">7,1<span>jam</span></div></div>
-            <div><div class="l"><i style="background:#0E9DA8"></i>Mood</div><div class="n">🙂</div></div>
+            <div><div class="l"><i style="background:#0E9DA8"></i>Relaksasi</div><div class="n">1<span>sesi</span></div></div>
           </div>
         </div>
       </div>
       <div class="g3">
         <div class="kartu">
-          <div class="sampul"><img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=640&q=70" alt="">
+          <div class="sampul"><img src="img/jalan-kaki.jpg" alt="">
             <span class="lencana l-art">Artikel</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
           <div class="kartu-isi"><p class="kartu-judul">Manfaat Jalan Kaki 30 Menit Setiap Hari</p>
             <p class="kartu-kutip">Olahraga tidak selalu harus berat. Jalan kaki rutin 30 menit sehari sudah memberi manfaat nyata.</p>
             <p class="kartu-meta">Olahraga · 5 menit baca</p></div>
         </div>
         <div class="kartu">
-          <div class="sampul"><img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=640&q=70" alt="">
+          <div class="sampul"><img src="img/olahraga-usia.jpg" alt="">
             <span class="lencana l-vid">Video</span><span class="simpan"><svg width="18" height="18"><use href="#i-mark"/></svg></span></div>
           <div class="kartu-isi"><p class="kartu-judul">Manfaat Olahraga Sesuai Usia</p>
             <p class="kartu-kutip">Video ini menjelaskan bagaimana kebutuhan olahraga berbeda-beda tergantung kelompok usia.</p>
             <p class="kartu-meta">Olahraga · 2 menit</p></div>
         </div>
         <div class="kartu">
-          <div class="sampul"><img src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=640&q=70" alt="">
+          <div class="sampul"><img src="img/isi-piringku.jpg" alt="">
             <span class="lencana l-inf">Infografis</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
           <div class="kartu-isi"><p class="kartu-judul">Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</p>
             <p class="kartu-kutip">Merangkum pembagian porsi makanan pokok, sayur, buah, dan lauk pauk dalam satu piring.</p>
@@ -1113,7 +1347,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
       <div style="display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start">
         <div>
           <div class="pemutar" style="margin-bottom:20px;border-radius:var(--r-md)">
-            <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=900&q=70" alt="">
+            <img src="img/olahraga-usia.jpg" alt="">
             <span class="main-yt"><svg width="30" height="30"><use href="#i-play"/></svg></span>
           </div>
           <span class="lencana l-vid">Video</span>
@@ -1129,9 +1363,9 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <div class="sumber" style="margin-bottom:16px"><div class="l">SUMBER</div><div class="v">CNN Indonesia — youtube.com</div></div>
           <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0 0 10px">KONTEN LAIN DI OLAHRAGA</p>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+            <div class="baris-konten"><img class="thumb" src="img/jalan-kaki.jpg" alt="">
               <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Artikel · 5 menit</div></div></div>
-            <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1518843875459-f738682238a6?w=320&q=70" alt="">
+            <div class="baris-konten"><img class="thumb" src="img/olahraga-rumah.jpg" alt="">
               <div style="flex:1"><h4>Olahraga Ringan di Rumah Tanpa Alat</h4><div class="meta">Artikel · 5 menit</div></div></div>
           </div>
         </div>
@@ -1154,16 +1388,16 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
       <h1 class="judul-hal">Favorit</h1>
       <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:6px 0 24px">4 konten disimpan. Hanya Anda yang bisa melihat daftar ini.</p>
       <div style="display:flex;flex-direction:column;gap:12px;max-width:760px">
-        <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+        <div class="baris-konten"><img class="thumb" src="img/jalan-kaki.jpg" alt="">
           <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Olahraga · Artikel · 5 menit</div></div></div>
         <div class="baris-konten" style="box-shadow:var(--b2)">
-          <img class="thumb" src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=320&q=70" alt="">
+          <img class="thumb" src="img/isi-piringku.jpg" alt="">
           <div style="flex:1"><h4>Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</h4><div class="meta">Gizi Seimbang · Infografis · 3 menit</div></div>
           <span class="ikon-bulat" style="color:var(--bahaya);border-color:var(--bahaya-100);background:var(--bahaya-100)">
             <svg width="20" height="20"><use href="#i-sampah"/></svg></span></div>
-        <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=320&q=70" alt="">
+        <div class="baris-konten"><img class="thumb" src="img/tidur.jpg" alt="">
           <div style="flex:1"><h4>Pentingnya Tidur Cukup untuk Kesehatan</h4><div class="meta">Pola Hidup Sehat · Artikel · 4 menit</div></div></div>
-        <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1758876019043-cedb0b6f56ea?w=320&q=70" alt="">
+        <div class="baris-konten"><img class="thumb" src="img/stres.jpg" alt="">
           <div style="flex:1"><h4>Mengelola Stres dalam Kehidupan Sehari-hari</h4><div class="meta">Kesehatan Mental · Artikel · 5 menit</div></div></div>
       </div>
     </div></div>
@@ -1210,10 +1444,11 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <svg class="wm" width="96" height="96" style="color:var(--ak-tidur)"><use href="#i-tidur"/></svg>
           <div class="jam">06.00</div><div class="nilai">7,1 <span>jam</span></div>
           <div class="jns" style="color:var(--ak-tidur)">Tidur</div></div>
-        <div class="ak"><span class="cap" style="background:var(--ak-mood)"></span>
-          <svg class="wm" width="96" height="96" style="color:var(--ak-mood)"><use href="#i-mood"/></svg>
-          <div class="jam">21.00</div><div class="nilai">😄 <span>Senang</span></div>
-          <div class="jns" style="color:var(--ak-mood)">Mood</div></div>
+        <div class="ak"><span class="cap" style="background:var(--ak-napas)"></span>
+          <svg class="wm" width="96" height="96" style="color:var(--ak-napas)"><use href="#i-napas"/></svg>
+          <div class="jam">21.00</div><div class="nilai">5 <span>menit</span></div>
+          <div class="jns" style="color:var(--ak-napas)">Latihan pernapasan</div>
+          <div class="cat">Perasaan setelah sesi: 😄 Senang</div></div>
         <div class="ak"><span class="cap" style="background:var(--ak-berat)"></span>
           <svg class="wm" width="96" height="96" style="color:var(--ak-berat)"><use href="#i-berat"/></svg>
           <div class="jam">07.00</div><div class="nilai">68,4 <span>kg</span></div>
@@ -1279,8 +1514,10 @@ Tanpa login — boleh dibuka siapa saja
 Sudah masuk
   Beranda ──▶ Detail Konten ──▶ kembali ke Beranda
   Beranda ⇄ Favorit ⇄ Catatan Harian ⇄ Profil      bottom tab di mobile, menu header di web
-  Beranda ──▶ tombol tambah ──▶ Lembar catat: Langkah, Olahraga, Air minum, Tidur, Mood, Berat badan
+  Beranda ──▶ tombol tambah ──▶ Lembar catat: Langkah, Olahraga, Air minum, Tidur, Berat badan
   Catatan Harian ──▶ tombol tambah ──▶ lembar yang sama
+  tombol tambah ──▶ Latihan pernapasan ──▶ pilih durasi ──▶ Sesi berjalan ──▶ Catat mood ──▶ tersimpan
+  Beranda ──▶ ketuk lingkaran Relaksasi ──▶ jalur latihan pernapasan yang sama
   Favorit ──▶ Detail Konten
   Favorit ──▶ geser ke kiri ──▶ hapus dari favorit
   Profil  ──▶ keluar ──▶ Landing

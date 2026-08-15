@@ -24,7 +24,7 @@ bahaya #D2453C, bahaya-100 #FBE4E2, peringatan #C9820A.
 
 Tambahkan enam warna jenis aktivitas dalam kelompok terpisah bernama "Aktivitas":
 ak-langkah #F2762E, ak-olahraga #19A96F, ak-air #2D7FF9,
-ak-tidur #7A5AF8, ak-mood #0E9DA8, ak-berat #C9820A.
+ak-tidur #7A5AF8, ak-napas #0E9DA8, ak-berat #C9820A.
 
 Text styles memakai font Inter:
 judul-besar 28/34 Bold, judul-1 22/28 Bold, judul-2 18/24 SemiBold,
@@ -100,10 +100,10 @@ Masih di halaman "Komponen", tambahkan empat komponen berikut.
    Lingkaran atas di tengah berwarna #F2762E jari-jari 42, lingkaran kiri bawah #7A5AF8 jari-jari 36,
    lingkaran kanan bawah #0E9DA8 jari-jari 28. Ketiganya memakai blend mode Multiply
    supaya bagian yang bertumpuk menggelap. Di dalam tiap lingkaran ada ikon putih 22:
-   orang berlari, bulan sabit, dan wajah tersenyum.
+   orang berlari, bulan sabit, dan tiga cincin sepusat.
    Di bawah grafik ada tiga kolom legenda yang dipisah garis tipis, tiap kolom berisi
    titik warna 8px, nama sumbu memakai label, dan angkanya 20/26 Bold:
-   Gerak 6.240 langkah, Tidur 7,1 jam, Mood emoji senyum.
+   Gerak 6.240 langkah, Tidur 7,1 jam, Relaksasi 1 sesi.
    Di pojok kanan atas kartu ada pil kecil latar hijau-100 teks hijau-700 bertuliskan "2 dari 3 target".
 
 2. KARTU AKTIVITAS.
@@ -114,7 +114,7 @@ Masih di halaman "Komponen", tambahkan empat komponen berikut.
    nama jenis 12/16 SemiBold berwarna sesuai jenisnya, lalu catatan opsional kecil warna tinta-600.
    Buat enam varian: Langkah #F2762E ikon jejak kaki, Olahraga #19A96F ikon orang berlari,
    Air minum #2D7FF9 ikon tetes air, Tidur #7A5AF8 ikon bulan sabit,
-   Mood #0E9DA8 ikon wajah, Berat badan #C9820A ikon timbangan.
+   Latihan pernapasan #0E9DA8 ikon tiga cincin sepusat, Berat badan #C9820A ikon timbangan.
 
 3. BARIS GESER HAPUS.
    Baris konten yang digeser ke kiri sejauh 84, memperlihatkan panel merah #D2453C di belakangnya
@@ -126,7 +126,7 @@ Masih di halaman "Komponen", tambahkan empat komponen berikut.
    Buat juga keadaan terbuka: latar ditutup tirai hitam 55 persen, ikon tambah berputar 45 derajat,
    dan enam pilihan bertumpuk di atas tombol dengan jarak 12, tiap pilihan berupa
    label putih radius 8 padding 7x12 di kiri dan lingkaran putih 48 berisi ikon berwarna di kanan.
-   Urutan dari bawah ke atas: Berat badan, Mood, Tidur, Air minum, Olahraga, Langkah.
+   Urutan dari bawah ke atas: Berat badan, Latihan pernapasan, Tidur, Air minum, Olahraga, Langkah.
 ```
 
 ## Prompt 4 — Layar mobile, 390 × 844
@@ -253,23 +253,84 @@ Isinya hanya riwayat, tanpa formulir apa pun.
 Kelompok pertama berlabel "HARI INI · 15 AGUSTUS" berisi empat kartu aktivitas berurutan:
 Olahraga 25 menit jam 06.15 dengan catatan "Jalan pagi keliling komplek",
 Langkah 3.120 langkah jam 07.10, Air minum 3 gelas jam 09.30,
-Mood emoji senyum jam 12.00 dengan keterangan "Biasa saja".
+Latihan pernapasan 3 menit jam 12.00 dengan catatan "Perasaan setelah sesi: 🙂 Biasa saja".
 Kelompok kedua berlabel "14 AGUSTUS" berisi satu kartu Tidur 7,1 jam jam 06.00.
 Tombol tambah mengambang di kanan bawah.
 Paling bawah bottom tab dengan tab Catatan aktif.
 ```
 
+### Enam lembar tambah catatan
+
+Buat enam frame terpisah bernama **Mobile / Lembar — Langkah**, **Mobile / Lembar — Olahraga**, **Mobile / Lembar — Air minum**, **Mobile / Lembar — Tidur**, **Mobile / Lembar — Latihan pernapasan**, dan **Mobile / Lembar — Berat badan**. Kelimanya memakai kerangka yang sama; hanya bagian pengisian yang berbeda.
+
 ```
-Frame mobile 390x844 bernama "Mobile / Lembar tambah catatan", latar #F6FBF8.
+Frame mobile 390x844 bernama "Mobile / Lembar — Air minum", latar #F6FBF8.
 Di belakang: header "Catatan Harian" dan satu kartu aktivitas, ditutup tirai hitam 55 persen.
 Di depan: lembar putih naik dari bawah, radius 16 di sudut atas, efek bayang-3,
 dengan pegangan abu 40x4 di tengah atas.
-Isi lembar: baris judul berisi lingkaran 40 biru muda dengan ikon tetes air,
-lalu "Air minum" judul-1 dan "Sabtu, 15 Agustus · 09.30" kecil warna tinta-600.
-Lalu pengatur angka: tombol bulat 52 bertanda kurang, angka 3 memakai 44/48 Bold
-dengan satuan "gelas" di bawahnya, tombol bulat bertanda tambah.
-Lalu input "Catatan, opsional" dengan placeholder "Setelah olahraga pagi".
+Isi lembar: baris judul berisi lingkaran 40 dengan ikon jenis aktivitas berlatar 10 persen warna jenisnya,
+lalu nama jenis judul-1 dan "Sabtu, 15 Agustus · 09.30" kecil warna tinta-600.
+Lalu pengatur angka: tombol bulat 52 bertanda kurang, angka memakai 44/48 Bold
+dengan satuan di bawahnya, tombol bulat bertanda tambah.
+Lalu input "Catatan, opsional".
 Lalu tombol primer selebar lembar "Simpan" dan tombol netral "Batal".
+```
+
+Ulangi prompt di atas untuk kelima jenis lain, dengan penyesuaian berikut:
+
+| Frame | Ikon dan warna lingkaran judul | Angka dan satuan | Tambahan |
+|---|---|---|---|
+| Langkah | jejak kaki, `#F2762E` | 3.120 langkah | tiga tombol pintasan "+500", "+1.000", "+2.000" di bawah pengatur angka |
+| Olahraga | orang berlari, `#19A96F` | 25 menit | tiga tombol pintasan "+5", "+15", "+30" |
+| Air minum | tetes air, `#2D7FF9` | 3 gelas | — |
+| Tidur | bulan sabit, `#7A5AF8` | 7,1 jam | — |
+| Berat badan | timbangan, `#C9820A` | 68,4 kg | — |
+
+Lembar Latihan pernapasan berbeda sendiri:
+
+```
+Frame mobile 390x844 bernama "Mobile / Lembar — Latihan pernapasan", latar #F6FBF8.
+Susunan belakang dan lembarnya sama seperti lembar lain, tapi tanpa pengatur angka
+dan tanpa input catatan.
+Baris judul: lingkaran 40 warna #0E9DA8 berlatar #EAF7F8 dengan ikon tiga cincin sepusat,
+lalu "Latihan pernapasan" judul-1 dan kalimat "Menenangkan diri sebelum mencatat perasaan".
+Lalu label "Durasi sesi" dan tiga kotak pilihan setinggi 72 bersebelahan berisi angka 1, 3, dan 5
+dengan kata "menit" kecil di bawah angkanya. Kotak angka 3 dalam keadaan terpilih:
+garis #0E9DA8, latar #EAF7F8, dan cincin luar 2px #CDECEF.
+Lalu tombol primer selebar lembar "Mulai sesi" dan tombol netral "Batal".
+Paling bawah kalimat rata tengah 12/17 warna tinta-400 "Mood dicatat otomatis di akhir sesi."
+```
+
+### Sesi latihan pernapasan dan pencatatan mood
+
+```
+Frame mobile 390x844 bernama "Mobile / Sesi latihan pernapasan".
+Seluruh layar berlatar gradien vertikal dari #0E9DA8 di atas ke #095E66 di bawah.
+Baris atas: teks putih "Latihan pernapasan" di kiri, tombol tutup bulat 36
+berlatar putih 18 persen dengan ikon silang putih di kanan.
+Di tengah layar: tiga lingkaran putih sepusat dengan diameter 260, 210, dan 160
+beropasitas 14, 22, dan 34 persen, mengelilingi lingkaran inti putih 120.
+Inti berisi teks "Tarik napas" 14/18 SemiBold dan angka hitung mundur "4" memakai 46/52 Bold,
+keduanya berwarna #0B7C86.
+Di bawah lingkaran, kalimat rata tengah warna putih 85 persen
+"Ikuti lingkarannya. Tarik napas saat membesar, buang napas saat mengecil."
+Bagian bawah layar: garis kemajuan setinggi 4 berlatar putih 25 persen dengan isian putih 38 persen,
+lalu baris "Sesi 3 menit" di kiri dan "01.52 tersisa" di kanan,
+lalu tombol selebar layar berlatar putih 18 persen bertuliskan "Selesai lebih awal".
+Tanpa bottom tab.
+```
+
+```
+Frame mobile 390x844 bernama "Mobile / Akhir sesi — catat mood", latar #F6FBF8.
+Di belakang: header "Catatan Harian" dan satu kartu aktivitas, ditutup tirai hitam 55 persen.
+Di depan lembar putih dari bawah berisi, rata tengah:
+lingkaran 56 warna #0E9DA8 berlatar #EAF7F8 dengan ikon tiga cincin sepusat,
+judul "Sesi selesai" judul-1, dan kalimat "3 menit latihan pernapasan tercatat."
+Lalu label "Bagaimana perasaan Anda sekarang?" dan empat kotak emoji setinggi 52 bersebelahan:
+😞 😐 🙂 😄, dengan kotak ketiga dalam keadaan terpilih bergaris hijau-600 dan latar hijau-50.
+Di bawah tiap kotak ada label 11/14: Buruk, Kurang, Biasa saja, Senang.
+Label "Biasa saja" berwarna hijau-700 dan tebal karena sedang terpilih.
+Lalu tombol primer selebar lembar "Simpan" dan tombol teks "Lewati pencatatan mood".
 ```
 
 ### Profil
@@ -348,7 +409,7 @@ Lalu empat kotak ringkasan berjajar: Langkah 7 hari 41.870, Rata-rata tidur 7,1 
 Total olahraga 185 menit, Rata-rata air 6,4 gelas.
 Lalu riwayat dikelompokkan per tanggal, tiap kelompok berisi kartu aktivitas dalam grid tiga kolom.
 Kelompok "HARI INI · 15 AGUSTUS" berisi Olahraga, Langkah, dan Air minum.
-Kelompok "14 AGUSTUS" berisi Tidur, Mood, dan Berat badan.
+Kelompok "14 AGUSTUS" berisi Tidur, Latihan pernapasan, dan Berat badan.
 Tidak ada formulir di halaman ini.
 ```
 
@@ -400,6 +461,6 @@ lalu dikembalikan ke alamat yang tadi dituju setelah berhasil masuk."
 |---|---|
 | Design System | Swatch warna termasuk enam warna aktivitas, text style, radius, bayangan |
 | Komponen | Sepuluh komponen dasar dan empat komponen khas Healthy Life |
-| Mobile | 12 frame 390 × 844 |
+| Mobile | 19 frame 390 × 844, termasuk enam lembar tambah catatan dan dua frame sesi latihan pernapasan |
 | Web | 8 frame 1440 × 900 |
 | Alur | Satu diagram perpindahan layar |
