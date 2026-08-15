@@ -77,7 +77,6 @@ export default function DailyLogScreen() {
           <Text style={styles.addButtonText}>Tambah</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.subtitle}>Boleh mencatat beberapa kali dalam sehari. Catatan ini privat.</Text>
 
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
@@ -146,7 +145,11 @@ function SummaryTile({ label, value, unit }) {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.latar },
   list: { padding: spacing.s16, paddingBottom: spacing.s40 },
-  titleRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  // marginBottom used to live on the subtitle sentence below the title; now
+  // that the sentence is gone, titleRow carries the gap itself so the title
+  // doesn't sit flush against the summary tiles (see FavoritesScreen.jsx for
+  // the same fix applied when its subtitle line was removed).
+  titleRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: spacing.s16 },
   title: { fontSize: 22, fontWeight: "700", color: colors.tinta900 },
   addButton: {
     flexDirection: "row",
@@ -158,7 +161,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8
   },
   addButtonText: { color: colors.putih, fontWeight: "700", fontSize: 13 },
-  subtitle: { fontSize: 13, color: colors.tinta600, marginTop: 4, marginBottom: spacing.s16 },
   errorText: { color: colors.bahaya, marginBottom: spacing.s12 },
   tileGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.s12, marginBottom: spacing.s20 },
   tile: {
