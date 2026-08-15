@@ -24,20 +24,20 @@ function errorHandler(error, req, res, _next) {
   }
 
   const status = error.status || 500;
-  const pesan = status === 500 ? "Terjadi galat di server." : error.message;
+  const message = status === 500 ? "Terjadi galat di server." : error.message;
 
   if (status === 500) {
-    console.error("[galat]", error);
+    console.error("[error]", error);
   }
 
-  res.status(status).json({ pesan });
+  res.status(status).json({ pesan: message });
 }
 
 // Wraps an async handler so its error reaches errorHandler without a repeated try/catch.
 const asyncHandler = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
-function clientError(status, pesan) {
-  const e = new Error(pesan);
+function clientError(status, message) {
+  const e = new Error(message);
   e.status = status;
   return e;
 }

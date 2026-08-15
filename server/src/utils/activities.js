@@ -5,15 +5,15 @@
 //   isDecimal     — allowed to be fractional, or must be a whole number
 //   allowedValues — if present, the value must be one of this list
 //   hasMood       — only this type may include a mood
-//   cara          — how a day's number is computed when aggregated
+//   aggregate     — how a day's number is computed when aggregated
 const ACTIVITIES = {
-  steps:     { label: "Langkah",            unit: "langkah", isDecimal: false, cara: "jumlah" },
-  exercise:  { label: "Olahraga",           unit: "menit",   isDecimal: false, cara: "jumlah" },
-  water:     { label: "Air minum",          unit: "gelas",   isDecimal: false, cara: "jumlah" },
-  sleep:     { label: "Tidur",              unit: "jam",     isDecimal: true,  cara: "terakhir" },
-  breathing: { label: "Latihan pernapasan", unit: "menit",   isDecimal: false, cara: "jumlah",
+  steps:     { label: "Langkah",            unit: "langkah", isDecimal: false, aggregate: "sum" },
+  exercise:  { label: "Olahraga",           unit: "menit",   isDecimal: false, aggregate: "sum" },
+  water:     { label: "Air minum",          unit: "gelas",   isDecimal: false, aggregate: "sum" },
+  sleep:     { label: "Tidur",              unit: "jam",     isDecimal: true,  aggregate: "last" },
+  breathing: { label: "Latihan pernapasan", unit: "menit",   isDecimal: false, aggregate: "sum",
                allowedValues: [1, 3, 5], hasMood: true },
-  weight:    { label: "Berat badan",        unit: "kg",      isDecimal: true,  cara: "terakhir" }
+  weight:    { label: "Berat badan",        unit: "kg",      isDecimal: true,  aggregate: "last" }
 };
 
 const ACTIVITY_TYPES = Object.keys(ACTIVITIES);
@@ -34,35 +34,36 @@ const MOOD_LABELS = {
 };
 
 // Local date as YYYY-MM-DD, used as the grouping key.
-function dateKey(waktu = new Date()) {
-  const d = new Date(waktu);
-  const bulan = String(d.getMonth() + 1).padStart(2, "0");
-  const hari = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${bulan}-${hari}`;
+function dateKey(when = new Date()) {
+  const d = new Date(when);
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${month}-${day}`;
 }
 
-function daysAgo(jumlahHari) {
+function daysAgo(days) {
   const d = new Date();
-  d.setDate(d.getDate() - jumlahHari);
+  d.setDate(d.getDate() - days);
   return d;
 }
 
 // Single validation gate for the value, for every activity type. Used both when
 // creating and editing an entry, so the rules never differ between the two.
-// Returns { value } on success, or { pesan } when rejected.
-function validateValue(type, nilaiMentah) {
+// Returns { value } on success, or { message } when rejected — the same shape as
+// shared/activities.js, so the client and the server never disagree.
+function validateValue(type, rawValue) {
   const info = ACTIVITIES[type];
-  if (!info) return { pesan: `Jenis catatan harus salah satu dari: ${ACTIVITY_TYPES.join(", ")}.` };
+  if (!info) return { message: `Jenis catatan harus salah satu dari: ${ACTIVITY_TYPES.join(", ")}.` };
 
-  const value = Number(nilaiMentah);
+  const value = Number(rawValue);
   if (!Number.isFinite(value) || value < 0) {
-    return { pesan: "Nilai catatan harus angka nol atau lebih." };
+    return { message: "Nilai catatan harus angka nol atau lebih." };
   }
   if (!info.isDecimal && !Number.isInteger(value)) {
-    return { pesan: `${info.label} harus berupa angka bulat.` };
+    return { message: `${info.label} harus berupa angka bulat.` };
   }
   if (info.allowedValues && !info.allowedValues.includes(value)) {
-    return { pesan: `${info.label} hanya menerima nilai ${info.allowedValues.join(", ")} ${info.unit}.` };
+    return { message: `${info.label} hanya menerima nilai ${info.allowedValues.join(", ")} ${info.unit}.` };
   }
   return { value };
 }
@@ -72,13 +73,13 @@ function validateValue(type, nilaiMentah) {
 function validateMood(type, mood) {
   if (mood === undefined || mood === null) return { mood: null };
   if (!ACTIVITIES[type] || !ACTIVITIES[type].hasMood) {
-    return { pesan: `Mood hanya dicatat pada ${ACTIVITIES.breathing.label}, tidak pada jenis lain.` };
+    return { message: `Mood hanya dicatat pada ${ACTIVITIES.breathing.label}, tidak pada jenis lain.` };
   }
-  const angka = Number(mood);
-  if (![1, 2, 3, 4].includes(angka)) {
-    return { pesan: "Mood harus angka 1 sampai 4, atau dikosongkan." };
+  const number = Number(mood);
+  if (![1, 2, 3, 4].includes(number)) {
+    return { message: "Mood harus angka 1 sampai 4, atau dikosongkan." };
   }
-  return { mood: angka };
+  return { mood: number };
 }
 
 module.exports = {

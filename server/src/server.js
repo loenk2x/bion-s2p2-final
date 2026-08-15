@@ -10,8 +10,8 @@ const port = process.env.PORT || 4000;
     const { databaseName, host } = await connectDatabase();
     console.log(`Database tersambung: ${databaseName} di ${host}`);
     app.listen(port, () => console.log(`Server jalan di http://localhost:${port}`));
-  } catch (galat) {
-    console.error("Gagal menyalakan server:", galat.message);
+  } catch (error) {
+    console.error("Gagal menyalakan server:", error.message);
     process.exit(1);
   }
 })();

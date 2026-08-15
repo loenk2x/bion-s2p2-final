@@ -215,6 +215,26 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
     `ruteFavorites`, `ruteLogs`) dan terjemahkan komentar. Langkah
     penutup — jalankan smoke test penuh sebagai regresi akhir.
 
+15. ✅ Sapuan akhir. Peta 14 langkah di atas ternyata melewatkan beberapa
+    identifier. Yang dibereskan di langkah tambahan ini:
+    - `skemaHealthLog` → `healthLogSchema` di `src/models/HealthLog.js`.
+      Tabel bagian 2 memuatnya, tapi tidak ada satu pun dari 14 langkah yang
+      menyebut berkas ini.
+    - `galat` sebagai parameter `catch` di `src/middleware/requireAuth.js` dan
+      `src/server.js` → `error`. Langkah 5 dan 8 hanya menyentuh isi berkas
+      lain.
+    - `pesan` sebagai variabel lokal di `errorHandler` dan sebagai parameter
+      `clientError` → `message`. Shorthand `res.json({ pesan })` diubah jadi
+      `res.json({ pesan: message })` supaya field balasan tidak berubah.
+    - Sisa langkah 7 di `src/utils/activities.js`: `cara` → `aggregate`
+      (nilainya ikut jadi `sum`/`last`), `waktu` → `when`, `bulan` → `month`,
+      `hari` → `day`, `jumlahHari` → `days`, `nilaiMentah` → `rawValue`,
+      `angka` → `number`, dan properti balik `pesan` → `message`.
+    - Properti balik `pesan` → `message` menyeragamkan `validateValue` dan
+      `validateMood` di server dengan kembarannya di `shared/activities.js`
+      yang memang sudah memakai `{ message }`. Empat pemanggilnya di
+      `src/routes/logs.js` ikut disesuaikan.
+
 ## 5. Jebakan yang perlu diwaspadai
 
 - **Variabel lokal yang namanya sama dengan field JSON lewat shorthand

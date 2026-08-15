@@ -143,10 +143,10 @@ router.post(
     }
 
     const validated = validateValue(type, value);
-    if (validated.pesan) throw clientError(400, validated.pesan);
+    if (validated.message) throw clientError(400, validated.message);
 
     const moodResult = validateMood(type, mood);
-    if (moodResult.pesan) throw clientError(400, moodResult.pesan);
+    if (moodResult.message) throw clientError(400, moodResult.message);
 
     const loggedAtDate = loggedAt ? new Date(loggedAt) : new Date();
     if (Number.isNaN(loggedAtDate.getTime())) throw clientError(400, "Waktu pencatatan tidak terbaca.");
@@ -178,13 +178,13 @@ router.put(
     // changing the type would amount to creating a different entry.
     if (value !== undefined) {
       const validated = validateValue(entry.type, value);
-      if (validated.pesan) throw clientError(400, validated.pesan);
+      if (validated.message) throw clientError(400, validated.message);
       entry.value = validated.value;
     }
     if (note !== undefined) entry.note = String(note).trim();
     if (mood !== undefined) {
       const moodResult = validateMood(entry.type, mood);
-      if (moodResult.pesan) throw clientError(400, moodResult.pesan);
+      if (moodResult.message) throw clientError(400, moodResult.message);
       entry.mood = moodResult.mood;
     }
 

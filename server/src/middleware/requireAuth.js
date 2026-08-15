@@ -26,8 +26,8 @@ async function requireAuth(req, res, next) {
     // Identity comes ONLY from the token. Any userId sent by the client is ignored.
     req.user = user;
     next();
-  } catch (galat) {
-    next(galat);
+  } catch (error) {
+    next(error);
   }
 }
 
