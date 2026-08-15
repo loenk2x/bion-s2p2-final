@@ -89,7 +89,14 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 1024px) { .tab-bawah { display: none; } }
 
 /* tombol tambah mengambang, hanya di bawah 1024px */
-.fab-tempel { position: fixed; right: var(--jarak-16); bottom: 102px; z-index: 25; }
+/* .fab in komponen.css is itself position:absolute with right:16px;bottom:102px,
+   coordinates copied straight from the mockup. It expects its positioned
+   ancestor to span the full viewport — giving this wrapper its own
+   right/bottom offset made the two stack, pushing the button an extra
+   16px/102px further from the corner than the mockup shows. inset:0 makes
+   the wrapper the full-viewport anchor .fab already assumes. */
+.fab-tempel { position: fixed; inset: 0; z-index: 25; pointer-events: none; }
+.fab-tempel .fab { pointer-events: auto; }
 @media (min-width: 1024px) { .fab-tempel { display: none; } }
 
 /* ---------- kotak pesan ---------- */
