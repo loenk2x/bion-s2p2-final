@@ -12,6 +12,7 @@ import Icon from "../components/Icon";
 import Loading from "../components/Loading";
 import ActivityCard from "../components/ActivityCard";
 import AddEntryModal from "../components/AddEntryModal";
+import Fab from "../components/Fab";
 import { api } from "../lib/api";
 import { colors, radius, spacing } from "../theme/colors";
 
@@ -125,6 +126,7 @@ export default function DailyLogScreen() {
         }
       />
 
+      <Fab onPress={() => setAddOpen(true)} />
       <AddEntryModal visible={addOpen} onClose={() => setAddOpen(false)} onSaved={handleSaved} />
     </SafeAreaView>
   );

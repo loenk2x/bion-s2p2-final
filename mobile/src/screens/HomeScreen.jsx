@@ -13,6 +13,8 @@ import Icon from "../components/Icon";
 import Loading from "../components/Loading";
 import ContentCard from "../components/ContentCard";
 import DailyRings from "../components/DailyRings";
+import Fab from "../components/Fab";
+import AddEntryModal from "../components/AddEntryModal";
 import { api } from "../lib/api";
 import { colors, radius, spacing } from "../theme/colors";
 
@@ -33,6 +35,7 @@ export default function HomeScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState("");
+  const [addOpen, setAddOpen] = useState(false);
 
   const loadSummary = useCallback(() => {
     api.summary().then(setSummary).catch(() => {});
@@ -88,6 +91,11 @@ export default function HomeScreen({ navigation }) {
 
   function openContent(content) {
     navigation.navigate("kontenDetail", { slug: content.slug });
+  }
+
+  function handleSaved() {
+    setAddOpen(false);
+    loadSummary();
   }
 
   const header = (
@@ -168,6 +176,9 @@ export default function HomeScreen({ navigation }) {
           ) : null
         }
       />
+
+      <Fab onPress={() => setAddOpen(true)} />
+      <AddEntryModal visible={addOpen} onClose={() => setAddOpen(false)} onSaved={handleSaved} />
     </SafeAreaView>
   );
 }
