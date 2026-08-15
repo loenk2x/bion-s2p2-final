@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup Healthy Life — Web dan Mobile</title>
+<style>
+:root{
+  --hijau-700:#0E6E49; --hijau-600:#128A5B; --hijau-500:#19A96F;
+  --hijau-100:#DCF3E8; --hijau-50:#F1FAF5;
+  --jingga-500:#F2762E; --jingga-100:#FDE8DA;
+  --tinta-900:#12211B; --tinta-600:#4B5B54; --tinta-400:#84968D;
+  --garis:#E2EBE6; --putih:#fff; --latar:#F6FBF8;
+  --bahaya:#D2453C; --bahaya-100:#FBE4E2;
+  --biru-t:#1A4E8A; --biru-l:#DDEAFB;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-full:999px;
+  --b1:0 1px 2px rgba(18,33,27,.06), 0 1px 3px rgba(18,33,27,.04);
+  --b2:0 4px 12px rgba(18,33,27,.08);
+  --font:Inter,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --skala-web:.58;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:var(--font);background:#EFF4F1;color:var(--tinta-900);-webkit-font-smoothing:antialiased}
+
+/* ---------- kerangka dokumen ---------- */
+.doc-nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--garis);padding:12px 24px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.doc-nav strong{font-size:15px;margin-right:12px}
+.doc-nav a{font-size:13px;color:var(--tinta-600);text-decoration:none;padding:6px 10px;border-radius:var(--r-full)}
+.doc-nav a:hover{background:var(--hijau-100);color:var(--hijau-700)}
+.doc{max-width:1360px;margin:0 auto;padding:32px 24px 80px}
+.doc h1{font-size:30px;margin:24px 0 8px}
+.doc h2{font-size:22px;margin:48px 0 4px;padding-top:16px;border-top:1px solid var(--garis)}
+.doc h3{font-size:15px;margin:28px 0 10px;color:var(--tinta-600);font-weight:600;
+  text-transform:uppercase;letter-spacing:.06em}
+.doc p.ket{color:var(--tinta-600);font-size:14px;line-height:22px;max-width:70ch;margin:6px 0 0}
+.grid-swatch{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
+.sw{background:var(--putih);border:1px solid var(--garis);border-radius:var(--r-md);overflow:hidden}
+.sw i{display:block;height:56px}
+.sw b{display:block;font-size:12px;padding:8px 10px 2px}
+.sw code{display:block;font-size:11px;color:var(--tinta-400);padding:0 10px 10px;font-family:ui-monospace,Consolas,monospace}
+.papan{background:var(--putih);border:1px solid var(--garis);border-radius:var(--r-md);padding:20px;margin-top:16px}
+.baris{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.label-mini{font-size:11px;color:var(--tinta-400);text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px}
+
+/* ---------- token bersama antar-mockup ---------- */
+.tombol{height:44px;border-radius:var(--r-md);padding:0 20px;font:600 15px/1 var(--font);
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:default;white-space:nowrap}
+.t-primer{background:var(--hijau-600);color:#fff}
+.t-sekunder{background:#fff;color:var(--hijau-600);border:1px solid var(--hijau-600)}
+.t-netral{background:#fff;color:var(--tinta-900);border:1px solid var(--garis)}
+.t-bahaya{background:#fff;color:var(--bahaya);border:1px solid var(--bahaya)}
+.t-teks{background:none;color:var(--hijau-600);padding:0 4px}
+.t-mati{background:var(--garis);color:var(--tinta-400)}
+.t-kecil{height:36px;padding:0 14px;font-size:13px}
+.t-blok{width:100%}
+
+.kolom{display:flex;flex-direction:column}
+.inp-label{font:600 12px/16px var(--font);color:var(--tinta-600);margin-bottom:8px;display:block}
+.inp{height:48px;border:1px solid var(--garis);border-radius:var(--r-sm);background:#fff;
+  padding:0 14px;font:400 15px/48px var(--font);color:var(--tinta-900)}
+.inp.ph{color:var(--tinta-400)}
+.inp-fokus{border-color:var(--hijau-600);box-shadow:0 0 0 3px var(--hijau-100)}
+.inp-galat{border-color:var(--bahaya)}
+.pesan-galat{font:600 12px/16px var(--font);color:var(--bahaya);margin-top:6px}
+.inp-bungkus{position:relative}
+.inp-bungkus .mata{position:absolute;right:12px;top:12px;color:var(--tinta-400)}
+
+.chip{height:34px;border-radius:var(--r-full);padding:0 14px;border:1px solid var(--garis);background:#fff;
+  color:var(--tinta-600);font:400 13px/32px var(--font);white-space:nowrap}
+.chip.on{background:var(--hijau-600);border-color:var(--hijau-600);color:#fff;font-weight:600}
+
+.lencana{height:22px;border-radius:var(--r-sm);padding:0 8px;font:600 12px/22px var(--font);display:inline-block}
+.l-art{background:var(--hijau-100);color:var(--hijau-700)}
+.l-vid{background:var(--jingga-100);color:#9A3F0B}
+.l-inf{background:var(--biru-l);color:var(--biru-t)}
+
+.avatar{border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex:none}
+.a-40{width:40px;height:40px;font-size:15px}
+.a-56{width:56px;height:56px;font-size:20px}
+.a-80{width:80px;height:80px;font-size:28px}
+
+.kartu{background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);overflow:hidden}
+.sampul{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#CFE9DC,#EAD9C8)}
+.sampul img{width:100%;height:100%;object-fit:cover;display:block}
+.sampul .lencana{position:absolute;left:10px;top:10px}
+.simpan{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:var(--r-full);
+  background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;color:var(--tinta-600);box-shadow:var(--b1)}
+.simpan.on{color:var(--hijau-600)}
+.kartu-isi{padding:16px}
+.kartu-judul{font:600 18px/24px var(--font);margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kartu-kutip{font:400 13px/18px var(--font);color:var(--tinta-600);margin:6px 0 0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kartu-meta{font:600 12px/16px var(--font);color:var(--tinta-400);margin-top:12px}
+
+.baris-konten{display:flex;gap:12px;background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:10px;align-items:center}
+.baris-konten .thumb{width:96px;height:72px;border-radius:var(--r-sm);object-fit:cover;flex:none;background:#CFE9DC}
+.baris-konten h4{font:600 15px/20px var(--font);margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.baris-konten .meta{font:600 12px/16px var(--font);color:var(--tinta-400);margin-top:6px}
+
+.ringkas{background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:16px}
+.ringkas .l{font:600 12px/16px var(--font);color:var(--tinta-600)}
+.ringkas .n{font:700 26px/30px var(--font);margin-top:6px}
+.ringkas .n span{font:400 13px/18px var(--font);color:var(--tinta-400);margin-left:4px}
+
+.kosong{text-align:center;padding:40px 24px}
+.kosong svg{color:var(--tinta-400)}
+.kosong h4{font:600 18px/24px var(--font);margin:12px 0 0}
+.kosong p{font:400 13px/18px var(--font);color:var(--tinta-600);margin:6px 0 16px}
+
+.rangka{background:#EDF3F0;border-radius:var(--r-md)}
+
+/* ---------- bingkai mobile ---------- */
+.rak{display:flex;gap:28px;flex-wrap:wrap;margin-top:20px}
+.hp{width:390px;flex:none}
+.hp-nama{font:600 13px/16px var(--font);color:var(--tinta-600);margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.hp-layar{width:390px;height:844px;background:var(--latar);border:10px solid #12211B;border-radius:38px;
+  overflow:hidden;position:relative;box-shadow:var(--b2)}
+.hp-status{height:44px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;
+  font:600 12px/16px var(--font);color:var(--tinta-900);background:transparent}
+.hp-isi{height:calc(844px - 44px);overflow:hidden;position:relative}
+.hp-gulir{padding:0 16px 16px}
+.hp-tab{position:absolute;left:0;right:0;bottom:0;height:64px;background:#fff;border-top:1px solid var(--garis);
+  box-shadow:var(--b2);display:flex}
+.hp-tab a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  color:var(--tinta-400);text-decoration:none;font:600 11px/14px var(--font)}
+.hp-tab a.on{color:var(--hijau-600)}
+.hp-head{height:64px;display:flex;align-items:center;gap:12px;padding:0 16px;background:#fff;border-bottom:1px solid var(--garis)}
+.hp-head h2{font:700 18px/24px var(--font);margin:0}
+
+/* ---------- bingkai web ---------- */
+.slot{width:calc(1180px * var(--skala-web));height:calc(820px * var(--skala-web));margin-bottom:26px}
+.wb{width:1180px;height:820px;transform:scale(var(--skala-web));transform-origin:top left;
+  background:var(--latar);border-radius:14px;overflow:hidden;box-shadow:var(--b2);border:1px solid var(--garis);
+  display:flex;flex-direction:column}
+.wb-bar{height:38px;background:#E7EEEA;display:flex;align-items:center;gap:6px;padding:0 14px;flex:none}
+.wb-bar i{width:11px;height:11px;border-radius:50%;background:#C9D6CF;display:block}
+.wb-bar span{margin-left:12px;background:#fff;border-radius:var(--r-full);padding:3px 14px;
+  font:400 12px/16px var(--font);color:var(--tinta-400)}
+.wb-head{height:64px;background:#fff;border-bottom:1px solid var(--garis);display:flex;align-items:center;
+  padding:0 32px;gap:28px;flex:none}
+.logo{display:flex;align-items:center;gap:8px;font:700 17px/1 var(--font)}
+.logo i{width:28px;height:28px;border-radius:9px;background:var(--hijau-600);display:flex;align-items:center;justify-content:center;color:#fff}
+.wb-menu{display:flex;gap:24px;margin-left:16px}
+.wb-menu a{font:600 14px/1 var(--font);color:var(--tinta-600);text-decoration:none}
+.wb-menu a.on{color:var(--hijau-600)}
+.wb-isi{flex:1;overflow:hidden;padding:28px 32px}
+.wb-wadah{max-width:1120px;margin:0 auto}
+
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+h1.judul-hal{font:700 34px/40px var(--font);margin:0}
+.deret{display:flex;gap:8px;overflow:hidden}
+.tab-tipe{display:flex;gap:4px;background:#EDF3F0;border-radius:var(--r-full);padding:4px}
+.tab-tipe a{flex:1;text-align:center;border-radius:var(--r-full);padding:8px 12px;text-decoration:none;
+  font:600 13px/16px var(--font);color:var(--tinta-600)}
+.tab-tipe a.on{background:#fff;color:var(--hijau-700);box-shadow:var(--b1)}
+.cari{height:48px;border:1px solid var(--garis);border-radius:var(--r-sm);background:#fff;display:flex;
+  align-items:center;gap:10px;padding:0 14px;color:var(--tinta-400);font:400 15px/48px var(--font)}
+.sumber{border:1px solid var(--garis);border-radius:var(--r-md);background:#fff;padding:14px}
+.sumber .l{font:600 12px/16px var(--font);color:var(--tinta-400)}
+.sumber .v{font:600 14px/20px var(--font);color:var(--hijau-600);margin-top:4px}
+.isi-teks p{font:400 15px/24px var(--font);color:var(--tinta-900);margin:0 0 14px}
+.isi-teks h3{font:600 18px/24px var(--font);margin:20px 0 8px;color:var(--tinta-900);text-transform:none;letter-spacing:0}
+.pemutar{aspect-ratio:16/9;background:#12211B;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pemutar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.main-yt{width:64px;height:64px;border-radius:var(--r-full);background:rgba(255,255,255,.92);
+  display:flex;align-items:center;justify-content:center;color:#D2453C;position:relative}
+.pisah{height:1px;background:var(--garis);margin:16px 0}
+.kel-tanggal{font:600 12px/16px var(--font);color:var(--tinta-400);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px}
+.log{background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:14px;margin-bottom:8px}
+.log .jam{font:600 12px/16px var(--font);color:var(--tinta-400)}
+.log .isi{font:400 14px/20px var(--font);margin-top:6px}
+.log .isi b{font-weight:600}
+.mood{display:flex;gap:8px}
+.mood a{flex:1;height:44px;border:1px solid var(--garis);border-radius:var(--r-sm);background:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:20px;text-decoration:none}
+.mood a.on{border-color:var(--hijau-600);background:var(--hijau-50);box-shadow:0 0 0 2px var(--hijau-100)}
+.catatan-bar{position:absolute;left:0;right:0;bottom:64px;background:#fff;border-top:1px solid var(--garis);
+  padding:12px 16px;box-shadow:var(--b2)}
+.mini-tabel{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.mini-tabel th,.mini-tabel td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--garis)}
+.mini-tabel th{font-weight:600;color:var(--tinta-600);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.mini-tabel code{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--tinta-900)}
+@media (max-width:900px){:root{--skala-web:.34}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></symbol>
+<symbol id="i-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4.5L6 21z"/></symbol>
+<symbol id="i-mark-isi" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12v18l-6-4.5L6 21z"/></symbol>
+<symbol id="i-catatan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
+<symbol id="i-cari" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></symbol>
+<symbol id="i-mata" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12s3.8-6 10-6 10 6 10 6-3.8 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></symbol>
+<symbol id="i-daun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c0 9-6 14-13 14"/><path d="M20 4C9 4 4 9 4 15a5 5 0 0 0 5 5c6 0 11-5 11-16Z"/></symbol>
+<symbol id="i-keluar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5V3h4"/><path d="m15 8 4 4-4 4M19 12H9"/></symbol>
+</defs></svg>
+
+<nav class="doc-nav">
+  <strong>Mockup Healthy Life</strong>
+  <a href="#fondasi">Fondasi</a>
+  <a href="#komponen">Komponen</a>
+  <a href="#mobile">Layar mobile</a>
+  <a href="#web">Layar web</a>
+  <a href="#peta">Peta layar</a>
+</nav>
+
+<div class="doc">
+  <h1>Mockup Healthy Life</h1>
+  <p class="ket">Semua layar di halaman ini dibangun dari token yang sama dengan <code>design-system.md</code>: warna, tipografi,
+  jarak, radius, dan bayangan tidak ditulis ulang per layar. Judul dan kutipan konten diambil apa adanya dari 20 berkas di folder
+  <code>content/</code>, jadi yang terlihat di sini adalah data yang nanti benar-benar tampil di aplikasi. Mode terang saja.</p>
+
+  <!-- ============================= FONDASI ============================= -->
+  <h2 id="fondasi">Fondasi</h2>
+
+  <h3>Warna utama dan aksen</h3>
+  <div class="grid-swatch">
+    <div class="sw"><i style="background:#0E6E49"></i><b>hijau-700</b><code>#0E6E49</code></div>
+    <div class="sw"><i style="background:#128A5B"></i><b>hijau-600</b><code>#128A5B</code></div>
+    <div class="sw"><i style="background:#19A96F"></i><b>hijau-500</b><code>#19A96F</code></div>
+    <div class="sw"><i style="background:#DCF3E8"></i><b>hijau-100</b><code>#DCF3E8</code></div>
+    <div class="sw"><i style="background:#F1FAF5"></i><b>hijau-50</b><code>#F1FAF5</code></div>
+    <div class="sw"><i style="background:#F2762E"></i><b>jingga-500</b><code>#F2762E</code></div>
+    <div class="sw"><i style="background:#FDE8DA"></i><b>jingga-100</b><code>#FDE8DA</code></div>
+  </div>
+
+  <h3>Netral dan status</h3>
+  <div class="grid-swatch">
+    <div class="sw"><i style="background:#12211B"></i><b>tinta-900</b><code>#12211B</code></div>
+    <div class="sw"><i style="background:#4B5B54"></i><b>tinta-600</b><code>#4B5B54</code></div>
+    <div class="sw"><i style="background:#84968D"></i><b>tinta-400</b><code>#84968D</code></div>
+    <div class="sw"><i style="background:#E2EBE6"></i><b>garis</b><code>#E2EBE6</code></div>
+    <div class="sw"><i style="background:#F6FBF8"></i><b>latar</b><code>#F6FBF8</code></div>
+    <div class="sw"><i style="background:#D2453C"></i><b>bahaya</b><code>#D2453C</code></div>
+    <div class="sw"><i style="background:#C9820A"></i><b>peringatan</b><code>#C9820A</code></div>
+  </div>
+
+  <h3>Skala tipografi</h3>
+  <div class="papan">
+    <div style="font:700 28px/34px var(--font)">judul-besar — 28/34, 700</div>
+    <div style="font:700 22px/28px var(--font);margin-top:12px">judul-1 — 22/28, 700</div>
+    <div style="font:600 18px/24px var(--font);margin-top:12px">judul-2 — 18/24, 600</div>
+    <div style="font:400 15px/22px var(--font);margin-top:12px">badan — 15/22, 400. Tidur yang cukup bukan sekadar istirahat, tapi kebutuhan biologis.</div>
+    <div style="font:400 13px/18px var(--font);color:var(--tinta-600);margin-top:12px">kecil — 13/18, 400, untuk kutipan kartu dan keterangan.</div>
+    <div style="font:600 12px/16px var(--font);color:var(--tinta-600);margin-top:12px">LABEL — 12/16, 600</div>
+    <div style="font:700 26px/30px var(--font);margin-top:12px">6.240 <span style="font:400 13px/18px var(--font);color:var(--tinta-400)">angka-besar</span></div>
+  </div>
+
+  <h3>Jarak, radius, dan bayangan</h3>
+  <div class="papan">
+    <p class="label-mini">Skala jarak — 4 8 12 16 20 24 32 40 48</p>
+    <div class="baris" style="align-items:flex-end">
+      <div style="width:4px;height:24px;background:var(--hijau-500)"></div>
+      <div style="width:8px;height:28px;background:var(--hijau-500)"></div>
+      <div style="width:12px;height:32px;background:var(--hijau-500)"></div>
+      <div style="width:16px;height:36px;background:var(--hijau-500)"></div>
+      <div style="width:20px;height:40px;background:var(--hijau-500)"></div>
+      <div style="width:24px;height:44px;background:var(--hijau-500)"></div>
+      <div style="width:32px;height:48px;background:var(--hijau-500)"></div>
+      <div style="width:40px;height:52px;background:var(--hijau-500)"></div>
+      <div style="width:48px;height:56px;background:var(--hijau-500)"></div>
+    </div>
+    <div class="pisah"></div>
+    <div class="baris">
+      <div style="width:88px;height:56px;background:#fff;border:1px solid var(--garis);border-radius:8px;font:600 11px/56px var(--font);text-align:center">8px</div>
+      <div style="width:88px;height:56px;background:#fff;border:1px solid var(--garis);border-radius:12px;font:600 11px/56px var(--font);text-align:center">12px</div>
+      <div style="width:88px;height:56px;background:#fff;border:1px solid var(--garis);border-radius:16px;font:600 11px/56px var(--font);text-align:center">16px</div>
+      <div style="width:88px;height:56px;background:#fff;border:1px solid var(--garis);border-radius:999px;font:600 11px/56px var(--font);text-align:center">penuh</div>
+      <div style="width:120px;height:56px;background:#fff;border-radius:12px;box-shadow:var(--b1);font:600 11px/56px var(--font);text-align:center">bayang-1</div>
+      <div style="width:120px;height:56px;background:#fff;border-radius:12px;box-shadow:var(--b2);font:600 11px/56px var(--font);text-align:center">bayang-2</div>
+    </div>
+  </div>
+
+  <!-- ============================= KOMPONEN ============================= -->
+  <h2 id="komponen">Komponen</h2>
+  <p class="ket">Setiap komponen di bawah ini muncul apa adanya di layar-layar berikutnya. Tidak ada komponen yang hanya hidup di halaman ini.</p>
+
+  <h3>Tombol</h3>
+  <div class="papan baris">
+    <span class="tombol t-primer">Simpan catatan</span>
+    <span class="tombol t-sekunder">Isi akun demo</span>
+    <span class="tombol t-netral">Batal</span>
+    <span class="tombol t-bahaya">Keluar</span>
+    <span class="tombol t-teks">Lupa password?</span>
+    <span class="tombol t-primer t-kecil">Ukuran kecil</span>
+    <span class="tombol t-mati">Nonaktif</span>
+  </div>
+
+  <h3>Input</h3>
+  <div class="papan" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+    <div class="kolom"><span class="inp-label">Email</span><div class="inp ph">nama@email.com</div></div>
+    <div class="kolom"><span class="inp-label">Nama lengkap</span><div class="inp inp-fokus">Wiguno</div></div>
+    <div class="kolom"><span class="inp-label">Password</span>
+      <div class="inp-bungkus"><div class="inp inp-galat">••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div>
+      <div class="pesan-galat">Password minimal 8 karakter</div></div>
+  </div>
+
+  <h3>Chip kategori, lencana tipe, dan tab tipe konten</h3>
+  <div class="papan">
+    <div class="baris">
+      <span class="chip on">Semua</span><span class="chip">Pola Hidup Sehat</span><span class="chip">Gizi Seimbang</span>
+      <span class="chip">Olahraga</span><span class="chip">Kesehatan Mental</span><span class="chip">Pencegahan Penyakit</span>
+    </div>
+    <div class="baris" style="margin-top:16px">
+      <span class="lencana l-art">Artikel</span><span class="lencana l-vid">Video</span><span class="lencana l-inf">Infografis</span>
+    </div>
+    <div class="tab-tipe" style="margin-top:16px;max-width:420px">
+      <a class="on">Semua</a><a>Artikel</a><a>Video</a><a>Infografis</a>
+    </div>
+  </div>
+
+  <h3>Avatar inisial</h3>
+  <div class="papan baris">
+    <div class="avatar a-40" style="background:#128A5B">WG</div>
+    <div class="avatar a-56" style="background:#F2762E">SR</div>
+    <div class="avatar a-80" style="background:#2D7FF9">AD</div>
+    <div class="avatar a-56" style="background:#7A5AF8">NF</div>
+    <div class="avatar a-56" style="background:#0E9DA8">BP</div>
+    <p class="ket" style="margin-left:8px">Warna dipilih dari lima nilai tetap berdasarkan huruf nama, jadi satu nama selalu mendapat warna yang sama.</p>
+  </div>
+
+  <h3>Kartu konten, baris konten, kotak ringkasan</h3>
+  <div class="papan" style="display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start">
+    <div class="kartu">
+      <div class="sampul">
+        <img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=640&q=70" alt="">
+        <span class="lencana l-art">Artikel</span>
+        <span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+      </div>
+      <div class="kartu-isi">
+        <p class="kartu-judul">Manfaat Jalan Kaki 30 Menit Setiap Hari</p>
+        <p class="kartu-kutip">Olahraga tidak selalu harus berat. Jalan kaki rutin selama 30 menit sehari sudah cukup memberi manfaat nyata bagi tubuh.</p>
+        <p class="kartu-meta">Olahraga · 5 menit baca</p>
+      </div>
+    </div>
+    <div>
+      <div class="baris-konten">
+        <img class="thumb" src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=320&q=70" alt="">
+        <div style="flex:1">
+          <h4>Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</h4>
+          <div class="meta">Gizi Seimbang · Infografis · 3 menit</div>
+        </div>
+        <span class="simpan on" style="position:static"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+      </div>
+      <div class="g2" style="margin-top:16px">
+        <div class="ringkas"><div class="l">Langkah</div><div class="n">6.240</div></div>
+        <div class="ringkas"><div class="l">Air minum</div><div class="n">5 <span>gelas</span></div></div>
+      </div>
+      <div class="kosong" style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);margin-top:16px">
+        <svg width="48" height="48"><use href="#i-mark"/></svg>
+        <h4>Belum ada favorit</h4>
+        <p>Konten yang Anda simpan akan muncul di sini.</p>
+        <span class="tombol t-primer">Jelajahi konten</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= MOBILE ============================= -->
+  <h2 id="mobile">Layar mobile — 390 × 844</h2>
+  <p class="ket">Tujuh layar dalam delapan bingkai. Register dan Login berdiri sendiri tanpa bottom tab; lima layar sisanya berada di dalam
+  bottom tab, dengan Detail Konten dibuka menumpuk di atas tab Beranda sehingga tombol kembali muncul. Catatan Harian digambar dua kali —
+  keadaan awal dan keadaan setelah digulir — karena riwayatnya berada di bawah lipatan layar.</p>
+
+  <div class="rak">
+
+    <!-- MOBILE 1 REGISTER -->
+    <div class="hp">
+      <p class="hp-nama">1 · Register</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi"><div class="hp-gulir" style="padding-top:24px">
+          <div class="logo" style="margin-bottom:28px"><i><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+          <h1 style="font:700 28px/34px var(--font);margin:0 0 6px">Buat akun</h1>
+          <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:0 0 24px">Daftar dulu untuk membuka semua artikel, video, dan infografis kesehatan.</p>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Nama lengkap</span><div class="inp">Wiguno</div></div>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Email</span><div class="inp">wiguno@email.com</div></div>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Password</span>
+            <div class="inp-bungkus"><div class="inp inp-fokus">••••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div></div>
+          <div class="kolom" style="margin-bottom:24px"><span class="inp-label">Konfirmasi password</span>
+            <div class="inp-bungkus"><div class="inp inp-galat">••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div>
+            <div class="pesan-galat">Konfirmasi password belum sama</div></div>
+          <span class="tombol t-primer t-blok">Daftar</span>
+          <p style="text-align:center;font:400 14px/20px var(--font);color:var(--tinta-600);margin-top:20px">
+            Sudah punya akun? <b style="color:var(--hijau-600)">Masuk</b></p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- MOBILE 2 LOGIN -->
+    <div class="hp">
+      <p class="hp-nama">2 · Login</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi"><div class="hp-gulir" style="padding-top:64px">
+          <div style="text-align:center;margin-bottom:32px">
+            <div style="width:64px;height:64px;border-radius:20px;background:var(--hijau-600);color:#fff;display:inline-flex;align-items:center;justify-content:center">
+              <svg width="34" height="34"><use href="#i-daun"/></svg></div>
+            <h1 style="font:700 28px/34px var(--font);margin:16px 0 6px">Healthy Life</h1>
+            <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:0">Masuk untuk melanjutkan</p>
+          </div>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Email</span><div class="inp">demo@healthylife.id</div></div>
+          <div class="kolom" style="margin-bottom:8px"><span class="inp-label">Password</span>
+            <div class="inp-bungkus"><div class="inp">••••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div></div>
+          <div style="text-align:right;margin-bottom:24px"><span class="tombol t-teks t-kecil">Lupa password?</span></div>
+          <span class="tombol t-primer t-blok" style="margin-bottom:12px">Masuk</span>
+          <span class="tombol t-sekunder t-blok">Isi akun demo</span>
+          <p style="text-align:center;font:400 14px/20px var(--font);color:var(--tinta-600);margin-top:24px">
+            Belum punya akun? <b style="color:var(--hijau-600)">Daftar</b></p>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- MOBILE 3 BERANDA -->
+    <div class="hp">
+      <p class="hp-nama">3 · Beranda</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-gulir" style="padding-top:8px">
+            <div class="baris" style="justify-content:space-between;margin-bottom:16px">
+              <div>
+                <p style="font:700 22px/28px var(--font);margin:0">Halo, Wiguno</p>
+                <p style="font:400 13px/18px var(--font);color:var(--tinta-600);margin:2px 0 0">Sabtu, 15 Agustus 2026</p>
+              </div>
+              <div class="avatar a-40" style="background:#128A5B">WG</div>
+            </div>
+            <div class="g2" style="margin-bottom:16px">
+              <div class="ringkas"><div class="l">Langkah hari ini</div><div class="n">6.240</div></div>
+              <div class="ringkas"><div class="l">Air minum</div><div class="n">5 <span>gelas</span></div></div>
+            </div>
+            <div class="cari" style="margin-bottom:14px"><svg width="20" height="20"><use href="#i-cari"/></svg> Cari artikel, video, infografis</div>
+            <div class="deret" style="margin-bottom:14px">
+              <span class="chip on">Semua</span><span class="chip">Pola Hidup Sehat</span><span class="chip">Gizi Seim…</span>
+            </div>
+            <div class="tab-tipe" style="margin-bottom:16px"><a class="on">Semua</a><a>Artikel</a><a>Video</a><a>Infografis</a></div>
+            <div class="kartu" style="margin-bottom:12px">
+              <div class="sampul">
+                <img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=640&q=70" alt="">
+                <span class="lencana l-art">Artikel</span>
+                <span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+              </div>
+              <div class="kartu-isi">
+                <p class="kartu-judul">Manfaat Jalan Kaki 30 Menit Setiap Hari</p>
+                <p class="kartu-kutip">Olahraga tidak selalu harus berat. Jalan kaki rutin selama 30 menit sehari sudah cukup memberi manfaat nyata bagi tubuh.</p>
+                <p class="kartu-meta">Olahraga · 5 menit baca</p>
+              </div>
+            </div>
+            <div class="kartu">
+              <div class="sampul">
+                <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=640&q=70" alt="">
+                <span class="lencana l-vid">Video</span>
+                <span class="simpan"><svg width="18" height="18"><use href="#i-mark"/></svg></span>
+              </div>
+              <div class="kartu-isi">
+                <p class="kartu-judul">Manfaat Olahraga Sesuai Usia</p>
+                <p class="kartu-kutip">Video ini menjelaskan bagaimana kebutuhan dan manfaat olahraga bisa berbeda-beda tergantung kelompok usia.</p>
+                <p class="kartu-meta">Olahraga · 2 menit</p>
+              </div>
+            </div>
+          </div>
+          <div class="hp-tab">
+            <a class="on"><svg width="24" height="24"><use href="#i-home"/></svg>Beranda</a>
+            <a><svg width="24" height="24"><use href="#i-mark"/></svg>Favorit</a>
+            <a><svg width="24" height="24"><use href="#i-catatan"/></svg>Catatan</a>
+            <a><svg width="24" height="24"><use href="#i-user"/></svg>Profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE 4 DETAIL -->
+    <div class="hp">
+      <p class="hp-nama">4 · Detail konten</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div style="position:relative">
+            <img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=800&q=70" style="width:100%;height:220px;object-fit:cover;display:block" alt="">
+            <span style="position:absolute;left:16px;top:16px;width:40px;height:40px;border-radius:var(--r-full);background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;box-shadow:var(--b1)">
+              <svg width="22" height="22"><use href="#i-back"/></svg></span>
+          </div>
+          <div class="hp-gulir" style="padding-top:16px">
+            <span class="lencana l-art">Artikel</span>
+            <h1 style="font:700 28px/34px var(--font);margin:10px 0 8px">Manfaat Jalan Kaki 30 Menit Setiap Hari</h1>
+            <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0 0 16px">Olahraga · 5 menit baca · Tim Healthy Life</p>
+            <div class="isi-teks">
+              <p>Olahraga tidak selalu harus berat. Jalan kaki rutin selama 30 menit sehari sudah cukup memberi manfaat nyata bagi tubuh, terutama bagi orang yang jarang bergerak karena pekerjaan.</p>
+              <h3>Apa yang terjadi pada tubuh</h3>
+              <p>Jalan kaki teratur membantu menjaga tekanan darah, melatih jantung, dan menurunkan risiko penyakit tidak menular.</p>
+            </div>
+            <div class="sumber" style="margin-top:4px">
+              <div class="l">SUMBER</div>
+              <div class="v">Kementerian Kesehatan RI — ayosehat.kemkes.go.id</div>
+            </div>
+          </div>
+          <div class="catatan-bar"><span class="tombol t-primer t-blok"><svg width="18" height="18"><use href="#i-mark-isi"/></svg> Tersimpan di Favorit</span></div>
+          <div class="hp-tab">
+            <a class="on"><svg width="24" height="24"><use href="#i-home"/></svg>Beranda</a>
+            <a><svg width="24" height="24"><use href="#i-mark"/></svg>Favorit</a>
+            <a><svg width="24" height="24"><use href="#i-catatan"/></svg>Catatan</a>
+            <a><svg width="24" height="24"><use href="#i-user"/></svg>Profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE 5 FAVORIT -->
+    <div class="hp">
+      <p class="hp-nama">5 · Favorit</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-head"><h2>Favorit</h2></div>
+          <div class="hp-gulir" style="padding-top:12px">
+            <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0 0 12px">4 KONTEN DISIMPAN</p>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="baris-konten">
+                <img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+                <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Olahraga · Artikel · 5 menit</div></div>
+                <span class="simpan on" style="position:static"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+              </div>
+              <div class="baris-konten">
+                <img class="thumb" src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=320&q=70" alt="">
+                <div style="flex:1"><h4>Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</h4><div class="meta">Gizi Seimbang · Infografis · 3 menit</div></div>
+                <span class="simpan on" style="position:static"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+              </div>
+              <div class="baris-konten">
+                <img class="thumb" src="https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=320&q=70" alt="">
+                <div style="flex:1"><h4>Pentingnya Tidur Cukup untuk Kesehatan</h4><div class="meta">Pola Hidup Sehat · Artikel · 4 menit</div></div>
+                <span class="simpan on" style="position:static"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+              </div>
+              <div class="baris-konten">
+                <img class="thumb" src="https://images.unsplash.com/photo-1758876019043-cedb0b6f56ea?w=320&q=70" alt="">
+                <div style="flex:1"><h4>Mengelola Stres dalam Kehidupan Sehari-hari</h4><div class="meta">Kesehatan Mental · Artikel · 5 menit</div></div>
+                <span class="simpan on" style="position:static"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span>
+              </div>
+            </div>
+          </div>
+          <div class="hp-tab">
+            <a><svg width="24" height="24"><use href="#i-home"/></svg>Beranda</a>
+            <a class="on"><svg width="24" height="24"><use href="#i-mark-isi"/></svg>Favorit</a>
+            <a><svg width="24" height="24"><use href="#i-catatan"/></svg>Catatan</a>
+            <a><svg width="24" height="24"><use href="#i-user"/></svg>Profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE 6 CATATAN -->
+    <div class="hp">
+      <p class="hp-nama">6 · Catatan harian</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-head"><h2>Catatan Harian</h2></div>
+          <div class="hp-gulir" style="padding-top:12px">
+            <p class="label-mini">RINGKASAN 7 HARI</p>
+            <div class="g2" style="margin-bottom:20px">
+              <div class="ringkas"><div class="l">Total langkah</div><div class="n">41.870</div></div>
+              <div class="ringkas"><div class="l">Rata-rata tidur</div><div class="n">7,1 <span>jam</span></div></div>
+            </div>
+            <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:16px;margin-bottom:20px">
+              <p style="font:600 18px/24px var(--font);margin:0 0 14px">Catat aktivitas</p>
+              <div class="g2" style="gap:12px">
+                <div class="kolom"><span class="inp-label">Langkah</span><div class="inp">3.120</div></div>
+                <div class="kolom"><span class="inp-label">Gelas air</span><div class="inp">3</div></div>
+                <div class="kolom"><span class="inp-label">Jam tidur</span><div class="inp ph">7</div></div>
+                <div class="kolom"><span class="inp-label">Menit olahraga</span><div class="inp">25</div></div>
+              </div>
+              <div style="margin-top:14px"><span class="inp-label">Mood</span>
+                <div class="mood"><a>😞</a><a>😐</a><a class="on">🙂</a><a>😄</a></div></div>
+              <div class="kolom" style="margin-top:14px"><span class="inp-label">Catatan</span><div class="inp ph">Jalan pagi keliling komplek</div></div>
+              <span class="tombol t-primer t-blok" style="margin-top:16px">Simpan catatan</span>
+            </div>
+            <p class="kel-tanggal">HARI INI · 15 AGUSTUS</p>
+            <div class="log"><div class="jam">07.10</div><div class="isi"><b>3.120</b> langkah · <b>25</b> menit olahraga · 🙂</div></div>
+            <div class="log"><div class="jam">17.45</div><div class="isi"><b>3.120</b> langkah · <b>3</b> gelas air · 🙂</div></div>
+            <p class="kel-tanggal">14 AGUSTUS</p>
+            <div class="log"><div class="jam">21.00</div><div class="isi"><b>7.410</b> langkah · <b>8</b> gelas air · <b>7</b> jam tidur · 😄</div></div>
+          </div>
+          <div class="hp-tab">
+            <a><svg width="24" height="24"><use href="#i-home"/></svg>Beranda</a>
+            <a><svg width="24" height="24"><use href="#i-mark"/></svg>Favorit</a>
+            <a class="on"><svg width="24" height="24"><use href="#i-catatan"/></svg>Catatan</a>
+            <a><svg width="24" height="24"><use href="#i-user"/></svg>Profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE 6b CATATAN, KEADAAN TERGULIR -->
+    <div class="hp">
+      <p class="hp-nama">6b · Catatan harian, saat digulir</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-head"><h2>Catatan Harian</h2></div>
+          <div class="hp-gulir" style="padding-top:12px">
+            <p class="kel-tanggal" style="margin-top:0">HARI INI · 15 AGUSTUS — 2 CATATAN</p>
+            <div class="log"><div class="jam">07.10</div><div class="isi"><b>3.120</b> langkah · <b>25</b> menit olahraga · 🙂<br><span style="color:var(--tinta-400)">Jalan pagi keliling komplek</span></div></div>
+            <div class="log"><div class="jam">17.45</div><div class="isi"><b>3.120</b> langkah · <b>3</b> gelas air · 🙂</div></div>
+            <p class="kel-tanggal">14 AGUSTUS — 1 CATATAN</p>
+            <div class="log"><div class="jam">21.00</div><div class="isi"><b>7.410</b> langkah · <b>8</b> gelas air · <b>7</b> jam tidur · 😄</div></div>
+            <p class="kel-tanggal">13 AGUSTUS — 2 CATATAN</p>
+            <div class="log"><div class="jam">08.20</div><div class="isi"><b>2.980</b> langkah · <b>30</b> menit olahraga · 😄</div></div>
+            <div class="log"><div class="jam">20.15</div><div class="isi"><b>4.100</b> langkah · <b>6</b> gelas air · <b>7</b> jam tidur · 🙂</div></div>
+            <p class="kel-tanggal">12 AGUSTUS — 1 CATATAN</p>
+            <div class="log"><div class="jam">19.30</div><div class="isi"><b>5.640</b> langkah · <b>7</b> gelas air · 😐</div></div>
+          </div>
+          <div class="hp-tab">
+            <a><svg width="24" height="24"><use href="#i-home"/></svg>Beranda</a>
+            <a><svg width="24" height="24"><use href="#i-mark"/></svg>Favorit</a>
+            <a class="on"><svg width="24" height="24"><use href="#i-catatan"/></svg>Catatan</a>
+            <a><svg width="24" height="24"><use href="#i-user"/></svg>Profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE 7 PROFIL -->
+    <div class="hp">
+      <p class="hp-nama">7 · Profil</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-head"><h2>Profil</h2></div>
+          <div class="hp-gulir" style="padding-top:20px">
+            <div style="text-align:center;margin-bottom:20px">
+              <div class="avatar a-80" style="background:#128A5B;margin:0 auto">WG</div>
+              <p style="font:700 22px/28px var(--font);margin:12px 0 2px">Wiguno</p>
+              <p style="font:400 13px/18px var(--font);color:var(--tinta-600);margin:0">wiguno@email.com</p>
+            </div>
+            <div class="g2" style="margin-bottom:20px">
+              <div class="ringkas"><div class="l">Favorit</div><div class="n">4</div></div>
+              <div class="ringkas"><div class="l">Catatan</div><div class="n">12</div></div>
+            </div>
+            <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:16px;margin-bottom:16px">
+              <div class="kolom" style="margin-bottom:14px"><span class="inp-label">Nama</span><div class="inp">Wiguno</div></div>
+              <div class="kolom"><span class="inp-label">Bio</span><div class="inp ph">Ceritakan sedikit tentang Anda</div></div>
+              <span class="tombol t-primer t-blok" style="margin-top:16px">Simpan perubahan</span>
+            </div>
+            <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:16px;margin-bottom:16px">
+              <p style="font:600 18px/24px var(--font);margin:0 0 12px">Keamanan</p>
+              <span class="tombol t-netral t-blok">Ganti password</span>
+            </div>
+            <span class="tombol t-bahaya t-blok"><svg width="18" height="18"><use href="#i-keluar"/></svg> Keluar</span>
+          </div>
+          <div class="hp-tab">
+            <a><svg width="24" height="24"><use href="#i-home"/></svg>Beranda</a>
+            <a><svg width="24" height="24"><use href="#i-mark"/></svg>Favorit</a>
+            <a><svg width="24" height="24"><use href="#i-catatan"/></svg>Catatan</a>
+            <a class="on"><svg width="24" height="24"><use href="#i-user"/></svg>Profil</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================= WEB ============================= -->
+  <h2 id="web">Layar web — 1180px, mobile-first</h2>
+  <p class="ket">Tujuh halaman yang sama. Yang berubah dari mobile hanya navigasi dan jumlah kolom: bottom tab diganti menu di header,
+  daftar konten menjadi tiga kolom, dan halaman panjang seperti Detail dan Catatan Harian dibagi dua kolom. Warna, tipografi, kartu,
+  dan tombolnya identik.</p>
+
+  <!-- WEB 1 REGISTER -->
+  <p class="hp-nama" style="margin-top:24px">1 · Register</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/register</span></div>
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr">
+      <div style="background:var(--hijau-600);color:#fff;padding:64px 56px;display:flex;flex-direction:column;justify-content:center">
+        <div class="logo" style="color:#fff;margin-bottom:32px"><i style="background:rgba(255,255,255,.2)"><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+        <h1 style="font:700 40px/48px var(--font);margin:0 0 16px">Belajar hidup sehat, satu langkah tiap hari.</h1>
+        <p style="font:400 17px/26px var(--font);opacity:.9;margin:0">20 artikel, video, dan infografis dari sumber tepercaya. Simpan yang penting, catat aktivitas harian Anda.</p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;padding:48px">
+        <div style="width:400px">
+          <h1 style="font:700 34px/40px var(--font);margin:0 0 6px">Buat akun</h1>
+          <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:0 0 28px">Registrasi wajib sebelum membuka konten.</p>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Nama lengkap</span><div class="inp">Wiguno</div></div>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Email</span><div class="inp">wiguno@email.com</div></div>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Password</span>
+            <div class="inp-bungkus"><div class="inp inp-fokus">••••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div></div>
+          <div class="kolom" style="margin-bottom:24px"><span class="inp-label">Konfirmasi password</span>
+            <div class="inp-bungkus"><div class="inp">••••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div></div>
+          <span class="tombol t-primer t-blok">Daftar</span>
+          <p style="text-align:center;font:400 14px/20px var(--font);color:var(--tinta-600);margin-top:20px">
+            Sudah punya akun? <b style="color:var(--hijau-600)">Masuk</b></p>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- WEB 2 LOGIN -->
+  <p class="hp-nama">2 · Login</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/login</span></div>
+    <div style="flex:1;display:grid;grid-template-columns:1fr 1fr">
+      <div style="background:var(--hijau-600);color:#fff;padding:64px 56px;display:flex;flex-direction:column;justify-content:center">
+        <div class="logo" style="color:#fff;margin-bottom:32px"><i style="background:rgba(255,255,255,.2)"><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+        <h1 style="font:700 40px/48px var(--font);margin:0 0 16px">Selamat datang kembali.</h1>
+        <p style="font:400 17px/26px var(--font);opacity:.9;margin:0">Favorit dan catatan harian Anda tersimpan dan hanya bisa dilihat oleh Anda sendiri.</p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;padding:48px">
+        <div style="width:400px">
+          <h1 style="font:700 34px/40px var(--font);margin:0 0 6px">Masuk</h1>
+          <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:0 0 28px">Gunakan email dan password Anda.</p>
+          <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Email</span><div class="inp">demo@healthylife.id</div></div>
+          <div class="kolom" style="margin-bottom:8px"><span class="inp-label">Password</span>
+            <div class="inp-bungkus"><div class="inp">••••••••</div><svg class="mata" width="24" height="24"><use href="#i-mata"/></svg></div></div>
+          <div style="text-align:right;margin-bottom:24px"><span class="tombol t-teks t-kecil">Lupa password?</span></div>
+          <span class="tombol t-primer t-blok" style="margin-bottom:12px">Masuk</span>
+          <span class="tombol t-sekunder t-blok">Isi akun demo</span>
+          <p style="text-align:center;font:400 14px/20px var(--font);color:var(--tinta-600);margin-top:20px">
+            Belum punya akun? <b style="color:var(--hijau-600)">Daftar</b></p>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- WEB 3 BERANDA -->
+  <p class="hp-nama">3 · Beranda</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/</span></div>
+    <div class="wb-head">
+      <div class="logo"><i><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+      <div class="wb-menu"><a class="on">Beranda</a><a>Favorit</a><a>Catatan Harian</a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <span style="font:600 14px/1 var(--font);color:var(--tinta-600)">Wiguno</span>
+        <div class="avatar a-40" style="background:#128A5B">WG</div>
+      </div>
+    </div>
+    <div class="wb-isi"><div class="wb-wadah">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <h1 class="judul-hal">Halo, Wiguno</h1>
+          <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:6px 0 0">Sabtu, 15 Agustus 2026 — sudah 6.240 langkah hari ini.</p>
+        </div>
+        <div class="cari" style="width:340px"><svg width="20" height="20"><use href="#i-cari"/></svg> Cari artikel, video, infografis</div>
+      </div>
+      <div class="g4" style="margin-bottom:24px">
+        <div class="ringkas"><div class="l">Langkah hari ini</div><div class="n">6.240</div></div>
+        <div class="ringkas"><div class="l">Air minum</div><div class="n">5 <span>gelas</span></div></div>
+        <div class="ringkas"><div class="l">Olahraga</div><div class="n">25 <span>menit</span></div></div>
+        <div class="ringkas"><div class="l">Favorit</div><div class="n">4 <span>konten</span></div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px">
+        <span class="chip on">Semua</span><span class="chip">Pola Hidup Sehat</span><span class="chip">Gizi Seimbang</span>
+        <span class="chip">Olahraga</span><span class="chip">Kesehatan Mental</span><span class="chip">Pencegahan Penyakit</span>
+      </div>
+      <div style="display:flex;gap:16px;align-items:center;margin-bottom:20px">
+        <div class="tab-tipe" style="width:340px"><a class="on">Semua</a><a>Artikel</a><a>Video</a><a>Infografis</a></div>
+        <span style="font:600 12px/16px var(--font);color:var(--tinta-400)">20 KONTEN</span>
+      </div>
+      <div class="g3">
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Manfaat Jalan Kaki 30 Menit Setiap Hari</p>
+            <p class="kartu-kutip">Olahraga tidak selalu harus berat. Jalan kaki rutin selama 30 menit sehari sudah cukup memberi manfaat nyata bagi tubuh.</p>
+            <p class="kartu-meta">Olahraga · 5 menit baca</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=640&q=70" alt="">
+            <span class="lencana l-vid">Video</span><span class="simpan"><svg width="18" height="18"><use href="#i-mark"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Manfaat Olahraga Sesuai Usia</p>
+            <p class="kartu-kutip">Video ini menjelaskan bagaimana kebutuhan dan manfaat olahraga bisa berbeda-beda tergantung kelompok usia.</p>
+            <p class="kartu-meta">Olahraga · 2 menit</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=640&q=70" alt="">
+            <span class="lencana l-inf">Infografis</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</p>
+            <p class="kartu-kutip">Merangkum pembagian porsi makanan pokok, sayur, buah, dan lauk pauk dalam satu piring.</p>
+            <p class="kartu-meta">Gizi Seimbang · 3 menit</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Pentingnya Tidur Cukup untuk Kesehatan</p>
+            <p class="kartu-kutip">Tidur yang cukup bukan sekadar istirahat, tapi kebutuhan biologis yang menentukan kondisi fisik dan mental.</p>
+            <p class="kartu-meta">Pola Hidup Sehat · 4 menit baca</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1758876019043-cedb0b6f56ea?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan"><svg width="18" height="18"><use href="#i-mark"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Mengelola Stres dalam Kehidupan Sehari-hari</p>
+            <p class="kartu-kutip">Stres tidak selalu bisa dihindari, tetapi cara meresponsnya bisa dipelajari.</p>
+            <p class="kartu-meta">Kesehatan Mental · 5 menit baca</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1596290618848-fcda233549e3?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan"><svg width="18" height="18"><use href="#i-mark"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Cuci Tangan Pakai Sabun untuk Cegah Penyakit Menular</p>
+            <p class="kartu-kutip">Kebiasaan sederhana mencuci tangan pakai sabun terbukti menekan penyebaran diare dan infeksi.</p>
+            <p class="kartu-meta">Pencegahan Penyakit · 5 menit baca</p></div>
+        </div>
+      </div>
+    </div></div>
+  </div></div>
+
+  <!-- WEB 4 DETAIL -->
+  <p class="hp-nama">4 · Detail konten — tipe video</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/konten/video-manfaat-olahraga-sesuai-usia</span></div>
+    <div class="wb-head">
+      <div class="logo"><i><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+      <div class="wb-menu"><a class="on">Beranda</a><a>Favorit</a><a>Catatan Harian</a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <span style="font:600 14px/1 var(--font);color:var(--tinta-600)">Wiguno</span>
+        <div class="avatar a-40" style="background:#128A5B">WG</div></div>
+    </div>
+    <div class="wb-isi"><div class="wb-wadah">
+      <p style="font:600 14px/20px var(--font);color:var(--hijau-600);margin:0 0 16px">&larr; Kembali ke Beranda</p>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start">
+        <div>
+          <div class="pemutar" style="margin-bottom:20px">
+            <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=900&q=70" alt="">
+            <span class="main-yt"><svg width="30" height="30"><use href="#i-play"/></svg></span>
+          </div>
+          <span class="lencana l-vid">Video</span>
+          <h1 style="font:700 34px/40px var(--font);margin:12px 0 8px">Manfaat Olahraga Sesuai Usia</h1>
+          <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0 0 20px">Olahraga · 2 menit · CNN Indonesia</p>
+          <div class="isi-teks" style="max-width:68ch">
+            <p>Video ini menjelaskan bagaimana kebutuhan dan manfaat olahraga bisa berbeda-beda tergantung kelompok usia, mulai dari anak-anak sampai lansia.</p>
+            <h3>Poin utama</h3>
+            <p>Anak dan remaja butuh aktivitas yang melatih pertumbuhan otot dan tulang. Orang dewasa memerlukan aktivitas aerobik untuk menjaga kesehatan jantung. Lansia dianjurkan menambah latihan keseimbangan untuk menurunkan risiko jatuh.</p>
+          </div>
+        </div>
+        <div>
+          <div class="sumber" style="margin-bottom:16px">
+            <div class="l">SUMBER</div>
+            <div class="v">CNN Indonesia — youtube.com</div>
+          </div>
+          <span class="tombol t-primer t-blok" style="margin-bottom:10px"><svg width="18" height="18"><use href="#i-mark"/></svg> Simpan ke Favorit</span>
+          <div class="pisah"></div>
+          <p style="font:600 12px/16px var(--font);color:var(--tinta-400);margin:0 0 10px">KONTEN LAIN DI OLAHRAGA</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=320&q=70" alt="">
+              <div style="flex:1"><h4>Manfaat Jalan Kaki 30 Menit Setiap Hari</h4><div class="meta">Artikel · 5 menit</div></div></div>
+            <div class="baris-konten"><img class="thumb" src="https://images.unsplash.com/photo-1518843875459-f738682238a6?w=320&q=70" alt="">
+              <div style="flex:1"><h4>Olahraga Ringan di Rumah Tanpa Alat</h4><div class="meta">Artikel · 5 menit</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div></div>
+
+  <!-- WEB 5 FAVORIT -->
+  <p class="hp-nama">5 · Favorit</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/favorit</span></div>
+    <div class="wb-head">
+      <div class="logo"><i><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+      <div class="wb-menu"><a>Beranda</a><a class="on">Favorit</a><a>Catatan Harian</a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <span style="font:600 14px/1 var(--font);color:var(--tinta-600)">Wiguno</span>
+        <div class="avatar a-40" style="background:#128A5B">WG</div></div>
+    </div>
+    <div class="wb-isi"><div class="wb-wadah">
+      <h1 class="judul-hal">Favorit</h1>
+      <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:6px 0 24px">4 konten disimpan. Hanya Anda yang bisa melihat daftar ini.</p>
+      <div class="g3">
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1487956382158-bb926046304a?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Manfaat Jalan Kaki 30 Menit Setiap Hari</p>
+            <p class="kartu-kutip">Olahraga tidak selalu harus berat. Jalan kaki rutin 30 menit sehari sudah memberi manfaat nyata.</p>
+            <p class="kartu-meta">Olahraga · 5 menit baca</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=640&q=70" alt="">
+            <span class="lencana l-inf">Infografis</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Infografis Isi Piringku: Panduan Porsi Makan Sehari-hari</p>
+            <p class="kartu-kutip">Merangkum pembagian porsi makanan pokok, sayur, buah, dan lauk pauk dalam satu piring.</p>
+            <p class="kartu-meta">Gizi Seimbang · 3 menit</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1531353826977-0941b4779a1c?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Pentingnya Tidur Cukup untuk Kesehatan</p>
+            <p class="kartu-kutip">Tidur yang cukup bukan sekadar istirahat, tapi kebutuhan biologis yang menentukan kondisi fisik.</p>
+            <p class="kartu-meta">Pola Hidup Sehat · 4 menit baca</p></div>
+        </div>
+        <div class="kartu">
+          <div class="sampul"><img src="https://images.unsplash.com/photo-1758876019043-cedb0b6f56ea?w=640&q=70" alt="">
+            <span class="lencana l-art">Artikel</span><span class="simpan on"><svg width="18" height="18"><use href="#i-mark-isi"/></svg></span></div>
+          <div class="kartu-isi"><p class="kartu-judul">Mengelola Stres dalam Kehidupan Sehari-hari</p>
+            <p class="kartu-kutip">Stres tidak selalu bisa dihindari, tetapi cara meresponsnya bisa dipelajari.</p>
+            <p class="kartu-meta">Kesehatan Mental · 5 menit baca</p></div>
+        </div>
+      </div>
+    </div></div>
+  </div></div>
+
+  <!-- WEB 6 CATATAN -->
+  <p class="hp-nama">6 · Catatan harian</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/catatan</span></div>
+    <div class="wb-head">
+      <div class="logo"><i><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+      <div class="wb-menu"><a>Beranda</a><a>Favorit</a><a class="on">Catatan Harian</a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <span style="font:600 14px/1 var(--font);color:var(--tinta-600)">Wiguno</span>
+        <div class="avatar a-40" style="background:#128A5B">WG</div></div>
+    </div>
+    <div class="wb-isi"><div class="wb-wadah">
+      <h1 class="judul-hal">Catatan Harian</h1>
+      <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:6px 0 24px">Boleh mencatat beberapa kali dalam sehari. Catatan ini privat.</p>
+      <div class="g4" style="margin-bottom:24px">
+        <div class="ringkas"><div class="l">Total langkah 7 hari</div><div class="n">41.870</div></div>
+        <div class="ringkas"><div class="l">Rata-rata tidur</div><div class="n">7,1 <span>jam</span></div></div>
+        <div class="ringkas"><div class="l">Total olahraga</div><div class="n">185 <span>menit</span></div></div>
+        <div class="ringkas"><div class="l">Rata-rata air</div><div class="n">6,4 <span>gelas</span></div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:400px 1fr;gap:32px;align-items:start">
+        <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:20px">
+          <p style="font:600 18px/24px var(--font);margin:0 0 16px">Catat aktivitas</p>
+          <div class="g2" style="gap:14px">
+            <div class="kolom"><span class="inp-label">Langkah</span><div class="inp">3.120</div></div>
+            <div class="kolom"><span class="inp-label">Gelas air</span><div class="inp">3</div></div>
+            <div class="kolom"><span class="inp-label">Jam tidur</span><div class="inp ph">7</div></div>
+            <div class="kolom"><span class="inp-label">Menit olahraga</span><div class="inp">25</div></div>
+          </div>
+          <div style="margin-top:16px"><span class="inp-label">Mood</span>
+            <div class="mood"><a>😞</a><a>😐</a><a class="on">🙂</a><a>😄</a></div></div>
+          <div class="kolom" style="margin-top:16px"><span class="inp-label">Catatan</span><div class="inp ph">Jalan pagi keliling komplek</div></div>
+          <span class="tombol t-primer t-blok" style="margin-top:20px">Simpan catatan</span>
+        </div>
+        <div>
+          <p class="kel-tanggal" style="margin-top:0">HARI INI · 15 AGUSTUS — 2 CATATAN</p>
+          <div class="log"><div class="jam">07.10</div><div class="isi"><b>3.120</b> langkah · <b>25</b> menit olahraga · 🙂 &nbsp;<span style="color:var(--tinta-400)">Jalan pagi keliling komplek</span></div></div>
+          <div class="log"><div class="jam">17.45</div><div class="isi"><b>3.120</b> langkah · <b>3</b> gelas air · 🙂</div></div>
+          <p class="kel-tanggal">14 AGUSTUS — 1 CATATAN</p>
+          <div class="log"><div class="jam">21.00</div><div class="isi"><b>7.410</b> langkah · <b>8</b> gelas air · <b>7</b> jam tidur · 😄</div></div>
+          <p class="kel-tanggal">13 AGUSTUS — 2 CATATAN</p>
+          <div class="log"><div class="jam">08.20</div><div class="isi"><b>2.980</b> langkah · <b>30</b> menit olahraga · 😄</div></div>
+          <div class="log"><div class="jam">20.15</div><div class="isi"><b>4.100</b> langkah · <b>6</b> gelas air · <b>7</b> jam tidur · 🙂</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div></div>
+
+  <!-- WEB 7 PROFIL -->
+  <p class="hp-nama">7 · Profil</p>
+  <div class="slot"><div class="wb">
+    <div class="wb-bar"><i></i><i></i><i></i><span>healthylife.netlify.app/profil</span></div>
+    <div class="wb-head">
+      <div class="logo"><i><svg width="18" height="18"><use href="#i-daun"/></svg></i> Healthy Life</div>
+      <div class="wb-menu"><a>Beranda</a><a>Favorit</a><a>Catatan Harian</a></div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+        <span style="font:600 14px/1 var(--font);color:var(--hijau-600)">Wiguno</span>
+        <div class="avatar a-40" style="background:#128A5B">WG</div></div>
+    </div>
+    <div class="wb-isi"><div class="wb-wadah">
+      <h1 class="judul-hal">Profil</h1>
+      <p style="font:400 15px/22px var(--font);color:var(--tinta-600);margin:6px 0 24px">Data akun dan ringkasan aktivitas Anda.</p>
+      <div style="display:grid;grid-template-columns:340px 1fr;gap:32px;align-items:start">
+        <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:24px;text-align:center">
+          <div class="avatar a-80" style="background:#128A5B;margin:0 auto">WG</div>
+          <p style="font:700 22px/28px var(--font);margin:14px 0 2px">Wiguno</p>
+          <p style="font:400 13px/18px var(--font);color:var(--tinta-600);margin:0 0 20px">wiguno@email.com</p>
+          <div class="g2">
+            <div class="ringkas" style="box-shadow:none;border:1px solid var(--garis)"><div class="l">Favorit</div><div class="n">4</div></div>
+            <div class="ringkas" style="box-shadow:none;border:1px solid var(--garis)"><div class="l">Catatan</div><div class="n">12</div></div>
+          </div>
+          <span class="tombol t-bahaya t-blok" style="margin-top:20px"><svg width="18" height="18"><use href="#i-keluar"/></svg> Keluar</span>
+        </div>
+        <div>
+          <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:24px;margin-bottom:20px">
+            <p style="font:600 18px/24px var(--font);margin:0 0 16px">Data diri</p>
+            <div class="g2" style="gap:16px">
+              <div class="kolom"><span class="inp-label">Nama</span><div class="inp">Wiguno</div></div>
+              <div class="kolom"><span class="inp-label">Email</span><div class="inp ph" style="background:#F6FBF8">wiguno@email.com</div></div>
+            </div>
+            <div class="kolom" style="margin-top:16px"><span class="inp-label">Bio</span><div class="inp ph">Ceritakan sedikit tentang Anda</div></div>
+            <span class="tombol t-primer" style="margin-top:20px">Simpan perubahan</span>
+          </div>
+          <div style="background:#fff;border-radius:var(--r-md);box-shadow:var(--b1);padding:24px">
+            <p style="font:600 18px/24px var(--font);margin:0 0 16px">Ganti password</p>
+            <div class="g2" style="gap:16px">
+              <div class="kolom"><span class="inp-label">Password lama</span><div class="inp">••••••••</div></div>
+              <div class="kolom"><span class="inp-label">Password baru</span><div class="inp inp-fokus">••••••••</div></div>
+            </div>
+            <span class="tombol t-netral" style="margin-top:20px">Perbarui password</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div></div>
+
+  <!-- ============================= PETA ============================= -->
+  <h2 id="peta">Peta layar dan perpindahannya</h2>
+  <div class="papan">
+    <pre style="font:400 13px/22px ui-monospace,Consolas,monospace;margin:0;color:var(--tinta-900);white-space:pre-wrap">
+Belum masuk
+  Login  ⇄  Register
+    └── berhasil masuk ──▶ Beranda
+
+Sudah masuk
+  Beranda ──▶ Detail Konten ──▶ kembali ke Beranda
+  Beranda ⇄ Favorit ⇄ Catatan Harian ⇄ Profil      bottom tab di mobile, menu header di web
+  Favorit ──▶ Detail Konten
+  Profil  ──▶ keluar ──▶ Login
+
+Membuka alamat mana pun tanpa token akan dilempar ke Login,
+lalu dikembalikan ke alamat yang tadi dituju setelah berhasil masuk.</pre>
+  </div>
+
+  <h3>Perbedaan yang disengaja antara web dan mobile</h3>
+  <table class="mini-tabel">
+    <tr><th>Bagian</th><th>Mobile</th><th>Web</th></tr>
+    <tr><td>Navigasi utama</td><td>Bottom tab 4 item</td><td>Menu mendatar di header, avatar di kanan</td></tr>
+    <tr><td>Daftar konten</td><td>Satu kolom, kartu penuh</td><td>Tiga kolom mulai 1024px</td></tr>
+    <tr><td>Detail konten</td><td>Satu kolom, tombol simpan menempel di bawah</td><td>Dua kolom, sumber dan konten terkait di kanan</td></tr>
+    <tr><td>Catatan harian</td><td>Form di atas, riwayat di bawah</td><td>Form di kiri, riwayat di kanan</td></tr>
+    <tr><td>Kotak ringkasan</td><td>Dua kolom</td><td>Empat kolom</td></tr>
+    <tr><td>Register dan Login</td><td>Satu kolom penuh</td><td>Dua kolom, panel hijau di kiri</td></tr>
+  </table>
+  <p class="ket" style="margin-top:16px">Selain enam baris di atas, semuanya sama: warna, tipografi, jarak, radius, bayangan, bentuk kartu,
+  lencana tipe konten, chip kategori, dan avatar inisial memakai nilai yang identik di kedua platform.</p>
+</div>
+
+</body>
+</html>
