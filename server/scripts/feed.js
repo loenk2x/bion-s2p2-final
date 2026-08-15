@@ -1,7 +1,7 @@
-// Mengisi database dari berkas JSON di folder content/, lalu menyiapkan akun demo
-// beserta favorit dan catatan hariannya.
+// Seeds the database from JSON files in the content/ folder, then prepares
+// the demo account along with its favorites and daily health log entries.
 //
-// Jalankan: npm run feed
+// Run: npm run feed
 
 require("dotenv").config();
 
@@ -17,55 +17,55 @@ const Favorite = require("../src/models/Favorite");
 const HealthLog = require("../src/models/HealthLog");
 const { tanggalKunci } = require("../src/utils/aktivitas");
 
-const DIR_KONTEN = path.join(__dirname, "..", "..", "content");
-const WAJIB = ["slug", "title", "type", "category", "excerpt", "body", "imageUrl", "publishedAt"];
+const CONTENT_DIR = path.join(__dirname, "..", "..", "content");
+const REQUIRED_FIELDS = ["slug", "title", "type", "category", "excerpt", "body", "imageUrl", "publishedAt"];
 
-const AKUN_DEMO = {
+const DEMO_ACCOUNT = {
   name: "Pengguna Demo",
   email: "demo@healthylife.id",
   password: "demo12345"
 };
 
-function bacaKonten() {
-  const berkas = [];
-  for (const kategori of fs.readdirSync(DIR_KONTEN)) {
-    const dir = path.join(DIR_KONTEN, kategori);
+function readContentFiles() {
+  const files = [];
+  for (const category of fs.readdirSync(CONTENT_DIR)) {
+    const dir = path.join(CONTENT_DIR, category);
     if (!fs.statSync(dir).isDirectory()) continue;
-    for (const nama of fs.readdirSync(dir)) {
-      if (nama.endsWith(".json")) berkas.push(path.join(dir, nama));
+    for (const filename of fs.readdirSync(dir)) {
+      if (filename.endsWith(".json")) files.push(path.join(dir, filename));
     }
   }
 
-  const konten = [];
-  const galat = [];
-  for (const b of berkas) {
-    const rel = path.relative(DIR_KONTEN, b);
+  const contents = [];
+  const validationErrors = [];
+  for (const b of files) {
+    const rel = path.relative(CONTENT_DIR, b);
     let data;
     try {
       data = JSON.parse(fs.readFileSync(b, "utf8"));
     } catch (e) {
-      galat.push(`${rel}: JSON tidak terbaca — ${e.message}`);
+      validationErrors.push(`${rel}: JSON tidak terbaca — ${e.message}`);
       continue;
     }
-    const kurang = WAJIB.filter((k) => data[k] === undefined || data[k] === null || data[k] === "");
-    if (kurang.length) {
-      galat.push(`${rel}: field wajib kosong — ${kurang.join(", ")}`);
+    const missingFields = REQUIRED_FIELDS.filter((k) => data[k] === undefined || data[k] === null || data[k] === "");
+    if (missingFields.length) {
+      validationErrors.push(`${rel}: field wajib kosong — ${missingFields.join(", ")}`);
       continue;
     }
     if (data.type === "video" && !data.videoId) {
-      galat.push(`${rel}: tipe video tapi videoId kosong`);
+      validationErrors.push(`${rel}: tipe video tapi videoId kosong`);
       continue;
     }
-    konten.push(data);
+    contents.push(data);
   }
-  return { konten, galat };
+  return { contents, errors: validationErrors };
 }
 
-async function isiKonten(konten) {
-  let baru = 0;
-  let diperbarui = 0;
-  for (const k of konten) {
-    const hasil = await Content.updateOne(
+async function upsertContents(contents) {
+  let created = 0;
+  let updated = 0;
+  for (const k of contents) {
+    const result = await Content.updateOne(
       { slug: k.slug },
       {
         $set: {
@@ -86,64 +86,64 @@ async function isiKonten(konten) {
       },
       { upsert: true }
     );
-    if (hasil.upsertedCount) baru += 1;
-    else if (hasil.modifiedCount) diperbarui += 1;
+    if (result.upsertedCount) created += 1;
+    else if (result.modifiedCount) updated += 1;
   }
-  return { baru, diperbarui };
+  return { created, updated };
 }
 
-async function siapkanAkunDemo() {
-  let user = await User.findOne({ email: AKUN_DEMO.email });
+async function prepareDemoAccount() {
+  let user = await User.findOne({ email: DEMO_ACCOUNT.email });
   if (!user) {
     user = await User.create({
-      name: AKUN_DEMO.name,
-      email: AKUN_DEMO.email,
-      passwordHash: await bcrypt.hash(AKUN_DEMO.password, 10),
+      name: DEMO_ACCOUNT.name,
+      email: DEMO_ACCOUNT.email,
+      passwordHash: await bcrypt.hash(DEMO_ACCOUNT.password, 10),
       bio: "Akun contoh untuk mencoba Healthy Life."
     });
   }
 
-  // Isi ulang dari nol supaya menjalankan feeder berkali-kali tidak menumpuk data.
+  // Reset from scratch so running the feeder multiple times doesn't pile up data.
   await Favorite.deleteMany({ userId: user._id });
   await HealthLog.deleteMany({ userId: user._id });
 
-  const favorit = await Content.find({}).sort({ publishedAt: -1 }).limit(4);
-  await Favorite.insertMany(favorit.map((k) => ({ userId: user._id, contentId: k._id })));
+  const favorites = await Content.find({}).sort({ publishedAt: -1 }).limit(4);
+  await Favorite.insertMany(favorites.map((k) => ({ userId: user._id, contentId: k._id })));
 
-  // Tujuh hari terakhir, tersebar di enam jenis aktivitas.
-  const pola = [
-    { steps: [3120, 4100], exercise: [25], water: [3, 3, 2], sleep: 7.1, napas: [{ menit: 3, mood: 3 }], weight: 68.4 },
-    { steps: [7410], exercise: [30], water: [8], sleep: 7.6, napas: [{ menit: 5, mood: 4 }] },
-    { steps: [2980, 4100], exercise: [], water: [6], sleep: 6.8, napas: [] },
-    { steps: [5640], exercise: [45], water: [7], sleep: 8.1, napas: [{ menit: 1, mood: 2 }], weight: 68.1 },
-    { steps: [6820], exercise: [20], water: [5], sleep: 7.4, napas: [{ menit: 3, mood: 3 }] },
-    { steps: [4310], exercise: [], water: [6, 2], sleep: 7.0, napas: [{ menit: 3, mood: 4 }] },
-    { steps: [8150], exercise: [35], water: [8], sleep: 7.9, napas: [{ menit: 5, mood: 4 }], weight: 67.9 }
+  // Last seven days, spread across six activity types.
+  const dailyPatterns = [
+    { steps: [3120, 4100], exercise: [25], water: [3, 3, 2], sleep: 7.1, breathing: [{ minutes: 3, mood: 3 }], weight: 68.4 },
+    { steps: [7410], exercise: [30], water: [8], sleep: 7.6, breathing: [{ minutes: 5, mood: 4 }] },
+    { steps: [2980, 4100], exercise: [], water: [6], sleep: 6.8, breathing: [] },
+    { steps: [5640], exercise: [45], water: [7], sleep: 8.1, breathing: [{ minutes: 1, mood: 2 }], weight: 68.1 },
+    { steps: [6820], exercise: [20], water: [5], sleep: 7.4, breathing: [{ minutes: 3, mood: 3 }] },
+    { steps: [4310], exercise: [], water: [6, 2], sleep: 7.0, breathing: [{ minutes: 3, mood: 4 }] },
+    { steps: [8150], exercise: [35], water: [8], sleep: 7.9, breathing: [{ minutes: 5, mood: 4 }], weight: 67.9 }
   ];
 
-  const catatan = [];
-  pola.forEach((hari, i) => {
-    const mundur = pola.length - 1 - i;
-    const dasar = new Date();
-    dasar.setDate(dasar.getDate() - mundur);
-    const date = tanggalKunci(dasar);
-    const pada = (jam, menit) => {
-      const d = new Date(dasar);
-      d.setHours(jam, menit, 0, 0);
+  const entries = [];
+  dailyPatterns.forEach((day, i) => {
+    const daysBack = dailyPatterns.length - 1 - i;
+    const baseDate = new Date();
+    baseDate.setDate(baseDate.getDate() - daysBack);
+    const date = tanggalKunci(baseDate);
+    const at = (hour, minute) => {
+      const d = new Date(baseDate);
+      d.setHours(hour, minute, 0, 0);
       return d;
     };
 
-    hari.steps.forEach((v, n) => catatan.push({ type: "steps", value: v, loggedAt: pada(7 + n * 10, 10), date }));
-    hari.exercise.forEach((v) => catatan.push({ type: "exercise", value: v, loggedAt: pada(6, 15), date, note: "Jalan pagi keliling komplek" }));
-    hari.water.forEach((v, n) => catatan.push({ type: "water", value: v, loggedAt: pada(9 + n * 4, 30), date }));
-    if (hari.sleep) catatan.push({ type: "sleep", value: hari.sleep, loggedAt: pada(6, 0), date });
-    hari.napas.forEach((s) => catatan.push({ type: "breathing", value: s.menit, mood: s.mood, loggedAt: pada(12, 0), date }));
-    if (hari.weight) catatan.push({ type: "weight", value: hari.weight, loggedAt: pada(7, 0), date });
+    day.steps.forEach((v, n) => entries.push({ type: "steps", value: v, loggedAt: at(7 + n * 10, 10), date }));
+    day.exercise.forEach((v) => entries.push({ type: "exercise", value: v, loggedAt: at(6, 15), date, note: "Jalan pagi keliling komplek" }));
+    day.water.forEach((v, n) => entries.push({ type: "water", value: v, loggedAt: at(9 + n * 4, 30), date }));
+    if (day.sleep) entries.push({ type: "sleep", value: day.sleep, loggedAt: at(6, 0), date });
+    day.breathing.forEach((s) => entries.push({ type: "breathing", value: s.minutes, mood: s.mood, loggedAt: at(12, 0), date }));
+    if (day.weight) entries.push({ type: "weight", value: day.weight, loggedAt: at(7, 0), date });
   });
 
-  await HealthLog.insertMany(catatan.map((c) => ({ ...c, userId: user._id, note: c.note || "" })));
+  await HealthLog.insertMany(entries.map((c) => ({ ...c, userId: user._id, note: c.note || "" })));
 
-  return { email: AKUN_DEMO.email, password: AKUN_DEMO.password, favorit: favorit.length, catatan: catatan.length };
+  return { email: DEMO_ACCOUNT.email, password: DEMO_ACCOUNT.password, favorites: favorites.length, entries: entries.length };
 }
 
 (async () => {
@@ -151,31 +151,31 @@ async function siapkanAkunDemo() {
     const { namaDatabase } = await sambungkanDatabase();
     console.log(`Database tersambung: ${namaDatabase}`);
 
-    const { konten, galat } = bacaKonten();
-    if (galat.length) {
-      console.error(`\n${galat.length} berkas konten bermasalah:`);
-      galat.forEach((g) => console.error("  - " + g));
+    const { contents, errors } = readContentFiles();
+    if (errors.length) {
+      console.error(`\n${errors.length} berkas konten bermasalah:`);
+      errors.forEach((g) => console.error("  - " + g));
       throw new Error("Perbaiki berkas di content/ dulu sebelum mengisi database.");
     }
 
-    const { baru, diperbarui } = await isiKonten(konten);
-    console.log(`Konten: ${konten.length} berkas dibaca, ${baru} baru, ${diperbarui} diperbarui.`);
+    const { created, updated } = await upsertContents(contents);
+    console.log(`Konten: ${contents.length} berkas dibaca, ${created} baru, ${updated} diperbarui.`);
 
-    const demo = await siapkanAkunDemo();
+    const demo = await prepareDemoAccount();
     console.log(`Akun demo: ${demo.email} / ${demo.password}`);
-    console.log(`  ${demo.favorit} favorit, ${demo.catatan} catatan harian selama 7 hari.`);
+    console.log(`  ${demo.favorites} favorit, ${demo.entries} catatan harian selama 7 hari.`);
 
-    const perKategori = await Content.aggregate([
-      { $group: { _id: "$category", jumlah: { $sum: 1 } } },
+    const byCategory = await Content.aggregate([
+      { $group: { _id: "$category", count: { $sum: 1 } } },
       { $sort: { _id: 1 } }
     ]);
     console.log("\nJumlah konten per kategori:");
-    perKategori.forEach((k) => console.log(`  ${k._id.padEnd(22)} ${k.jumlah}`));
+    byCategory.forEach((k) => console.log(`  ${k._id.padEnd(22)} ${k.count}`));
 
     await mongoose.disconnect();
     console.log("\nSelesai.");
-  } catch (galat) {
-    console.error("\nFeeder gagal:", galat.message);
+  } catch (error) {
+    console.error("\nFeeder gagal:", error.message);
     await mongoose.disconnect().catch(() => {});
     process.exit(1);
   }

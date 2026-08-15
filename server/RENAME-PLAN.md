@@ -164,7 +164,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
 `npm run smoke` (dan `npm run feed` khusus langkah yang menyentuh
 `scripts/feed.js`).
 
-1. `scripts/feed.js` — ganti semua identifier internalnya (`bacaKonten`,
+1. ✅ `scripts/feed.js` — ganti semua identifier internalnya (`bacaKonten`,
    `isiKonten`, `siapkanAkunDemo`, `DIR_KONTEN`, `WAJIB`, `AKUN_DEMO`, dan
    variabel lokalnya). Tidak ada berkas lain yang bergantung padanya.
 2. `src/models/Favorite.js` — ganti `skemaFavorite`. Tanpa dependen.
