@@ -5,8 +5,8 @@ const { asyncHandler, clientError } = require("../middleware/error");
 
 const router = express.Router();
 
-// Setiap query di berkas ini menyertakan req.user._id. Tidak ada satu pun jalan
-// untuk membaca atau menghapus favorit milik pengguna lain.
+// Every query in this file includes req.user._id. There is no path here that can
+// read or delete another user's favorites.
 
 router.get(
   "/",
@@ -27,10 +27,10 @@ router.get(
 router.post(
   "/:contentId",
   asyncHandler(async (req, res) => {
-    const ada = await Content.exists({ _id: req.params.contentId });
-    if (!ada) throw clientError(404, "Konten tidak ditemukan.");
+    const contentExists = await Content.exists({ _id: req.params.contentId });
+    if (!contentExists) throw clientError(404, "Konten tidak ditemukan.");
 
-    // Menyimpan dua kali tidak menghasilkan galat, cukup tetap tersimpan.
+    // Saving twice is not an error; the favorite simply stays saved.
     await Favorite.updateOne(
       { userId: req.user._id, contentId: req.params.contentId },
       { $setOnInsert: { userId: req.user._id, contentId: req.params.contentId } },
@@ -44,13 +44,13 @@ router.post(
 router.delete(
   "/:contentId",
   asyncHandler(async (req, res) => {
-    const hasil = await Favorite.deleteOne({
+    const result = await Favorite.deleteOne({
       userId: req.user._id,
       contentId: req.params.contentId
     });
 
-    // 404, bukan 403 — supaya keberadaan favorit milik orang lain pun tidak bocor.
-    if (hasil.deletedCount === 0) {
+    // 404, not 403 — so the existence of another user's favorite never leaks.
+    if (result.deletedCount === 0) {
       throw clientError(404, "Favorit tidak ditemukan.");
     }
 
