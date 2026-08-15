@@ -211,7 +211,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
     harus diubah jadi mapping eksplisit supaya field balasan tidak ikut
     berubah. Uji `GET /api/logs/summary` secara khusus, bukan cuma smoke
     test umum.
-14. `src/app.js` — bereskan sisa alias impor (`ruteAuth`, `ruteContents`,
+14. ✅ `src/app.js` — bereskan sisa alias impor (`ruteAuth`, `ruteContents`,
     `ruteFavorites`, `ruteLogs`) dan terjemahkan komentar. Langkah
     penutup — jalankan smoke test penuh sebagai regresi akhir.
 
