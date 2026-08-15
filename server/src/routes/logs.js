@@ -4,10 +4,10 @@ const { bungkus, galatKlien } = require("../middleware/error");
 const {
   AKTIVITAS,
   JENIS,
-  JENIS_MANUAL,
-  DURASI_SESI_NAPAS,
   TARGET_HARIAN,
   MOOD,
+  periksaNilai,
+  periksaMood,
   tanggalKunci,
   tanggalMundur
 } = require("../utils/aktivitas");
@@ -129,28 +129,24 @@ router.get(
   })
 );
 
-// ---------- catat satu aktivitas ----------
+// ---------- catat satu aktivitas, semua jenis lewat pintu yang sama ----------
+// Latihan pernapasan tidak punya endpoint sendiri. Yang membedakannya hanya dua
+// aturan validasi yang sudah menempel pada jenisnya: nilai harus 1, 3, atau 5 menit,
+// dan hanya jenis ini yang boleh menyertakan mood.
 router.post(
   "/",
   bungkus(async (req, res) => {
-    const { type, value, note, loggedAt } = req.body || {};
+    const { type, value, mood, note, loggedAt } = req.body || {};
 
     if (!JENIS.includes(type)) {
-      throw galatKlien(400, `Jenis catatan harus salah satu dari: ${JENIS_MANUAL.join(", ")}.`);
-    }
-    // Sesi pernapasan hanya boleh masuk lewat endpointnya sendiri, supaya durasinya
-    // lahir dari sesi yang dijalani dan tidak bisa diketik sembarangan.
-    if (type === "breathing") {
-      throw galatKlien(400, "Latihan pernapasan hanya bisa dicatat lewat POST /api/logs/breathing.");
+      throw galatKlien(400, `Jenis catatan harus salah satu dari: ${JENIS.join(", ")}.`);
     }
 
-    const angka = Number(value);
-    if (!Number.isFinite(angka) || angka < 0) {
-      throw galatKlien(400, "Nilai catatan harus angka nol atau lebih.");
-    }
-    if (!AKTIVITAS[type].desimal && !Number.isInteger(angka)) {
-      throw galatKlien(400, `${AKTIVITAS[type].nama} harus berupa angka bulat.`);
-    }
+    const nilai = periksaNilai(type, value);
+    if (nilai.pesan) throw galatKlien(400, nilai.pesan);
+
+    const hasilMood = periksaMood(type, mood);
+    if (hasilMood.pesan) throw galatKlien(400, hasilMood.pesan);
 
     const waktu = loggedAt ? new Date(loggedAt) : new Date();
     if (Number.isNaN(waktu.getTime())) throw galatKlien(400, "Waktu pencatatan tidak terbaca.");
@@ -158,36 +154,9 @@ router.post(
     const catatan = await HealthLog.create({
       userId: req.user._id,
       type,
-      value: angka,
+      value: nilai.nilai,
+      mood: hasilMood.mood,
       note: note ? String(note).trim() : "",
-      loggedAt: waktu,
-      date: tanggalKunci(waktu)
-    });
-
-    res.status(201).json({ catatan: bentukCatatan(catatan) });
-  })
-);
-
-// ---------- akhir sesi latihan pernapasan ----------
-router.post(
-  "/breathing",
-  bungkus(async (req, res) => {
-    const { durasiMenit, mood } = req.body || {};
-    const durasi = Number(durasiMenit);
-
-    if (!DURASI_SESI_NAPAS.includes(durasi)) {
-      throw galatKlien(400, `Durasi sesi harus ${DURASI_SESI_NAPAS.join(", ")} menit.`);
-    }
-    if (mood !== undefined && mood !== null && ![1, 2, 3, 4].includes(Number(mood))) {
-      throw galatKlien(400, "Mood harus angka 1 sampai 4, atau dikosongkan.");
-    }
-
-    const waktu = new Date();
-    const catatan = await HealthLog.create({
-      userId: req.user._id,
-      type: "breathing",
-      value: durasi,
-      mood: mood === undefined || mood === null ? null : Number(mood),
       loggedAt: waktu,
       date: tanggalKunci(waktu)
     });
@@ -205,17 +174,18 @@ router.put(
     // 404, bukan 403 — keberadaan catatan milik orang lain tidak boleh bocor.
     if (!catatan) throw galatKlien(404, "Catatan tidak ditemukan.");
 
+    // Aturan validasi yang sama persis dengan saat membuat. Jenis catatan tidak
+    // bisa diubah — mengubah jenis sama saja membuat catatan baru.
     if (value !== undefined) {
-      const angka = Number(value);
-      if (!Number.isFinite(angka) || angka < 0) throw galatKlien(400, "Nilai catatan harus angka nol atau lebih.");
-      if (!AKTIVITAS[catatan.type].desimal && !Number.isInteger(angka)) {
-        throw galatKlien(400, `${AKTIVITAS[catatan.type].nama} harus berupa angka bulat.`);
-      }
-      catatan.value = angka;
+      const nilai = periksaNilai(catatan.type, value);
+      if (nilai.pesan) throw galatKlien(400, nilai.pesan);
+      catatan.value = nilai.nilai;
     }
     if (note !== undefined) catatan.note = String(note).trim();
-    if (mood !== undefined && catatan.type === "breathing") {
-      catatan.mood = mood === null ? null : Number(mood);
+    if (mood !== undefined) {
+      const hasilMood = periksaMood(catatan.type, mood);
+      if (hasilMood.pesan) throw galatKlien(400, hasilMood.pesan);
+      catatan.mood = hasilMood.mood;
     }
 
     await catatan.save();
