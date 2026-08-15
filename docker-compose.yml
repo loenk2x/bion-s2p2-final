@@ -21,6 +21,12 @@ services:
       - /app/node_modules
     env_file:
       - ./server/.env
+    environment:
+      # node:22-alpine tidak menyetel zona waktu apa pun, jadi process.env.TZ
+      # kosong dan Date lokal proses jatuh ke UTC. Itu menggeser dateKey() di
+      # src/utils/activities.js tujuh jam dari WIB (UTC+7), membuat catatan
+      # yang dibuat pukul 00.00–06.59 WIB masuk ke kelompok tanggal kemarin.
+      TZ: Asia/Jakarta
 
   web:
     build:

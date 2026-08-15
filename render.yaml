@@ -18,6 +18,11 @@ services:
         value: production
       - key: PORT
         value: 4000
+      - key: TZ
+        # Render juga tidak menyetel zona waktu apa pun secara default, jadi
+        # tanpa ini dateKey() di src/utils/activities.js memakai UTC, bukan
+        # WIB. Lihat catatan yang sama di docker-compose.yml.
+        value: Asia/Jakarta
       - key: JWT_EXPIRES_IN
         value: 7d
       - key: MONGO_URI
