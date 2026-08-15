@@ -96,6 +96,8 @@ export default function HomeScreen({ navigation }) {
       <Text style={styles.greeting}>Halo, {firstName(user?.name)}</Text>
       <Text style={styles.date}>{formatLongDate(today)}</Text>
 
+      {summary ? <DailyRings rings={summary.cincin} /> : null}
+
       <View style={styles.searchBox}>
         <Icon name="search" size={18} color={colors.tinta400} />
         <TextInput
@@ -106,8 +108,6 @@ export default function HomeScreen({ navigation }) {
           placeholderTextColor={colors.tinta400}
         />
       </View>
-
-      {summary ? <DailyRings rings={summary.cincin} /> : null}
 
       <FlatList
         horizontal
@@ -191,7 +191,9 @@ const styles = StyleSheet.create({
     borderRadius: radius.sm,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    marginBottom: spacing.s16
+    // Sits below the rings card now, so the gap belongs above it. The gap to the
+    // category chips comes from chipRow's own marginTop.
+    marginTop: spacing.s16
   },
   searchInput: { flex: 1, fontSize: 14, color: colors.tinta900 },
   chipRow: { marginTop: spacing.s16, marginBottom: spacing.s12 },
