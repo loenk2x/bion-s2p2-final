@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-async function sambungkanDatabase() {
+async function connectDatabase() {
   const uri = process.env.MONGO_URI;
   if (!uri) {
     throw new Error("MONGO_URI belum diisi. Salin server/.env.example jadi server/.env lalu isi nilainya.");
@@ -10,7 +10,7 @@ async function sambungkanDatabase() {
   await mongoose.connect(uri, { serverSelectionTimeoutMS: 15000 });
 
   const { name, host } = mongoose.connection;
-  return { namaDatabase: name, host };
+  return { databaseName: name, host };
 }
 
-module.exports = { sambungkanDatabase };
+module.exports = { connectDatabase };

@@ -10,7 +10,7 @@ const path = require("node:path");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 
-const { sambungkanDatabase } = require("../src/config/db");
+const { connectDatabase } = require("../src/config/db");
 const Content = require("../src/models/Content");
 const User = require("../src/models/User");
 const Favorite = require("../src/models/Favorite");
@@ -148,8 +148,8 @@ async function prepareDemoAccount() {
 
 (async () => {
   try {
-    const { namaDatabase } = await sambungkanDatabase();
-    console.log(`Database tersambung: ${namaDatabase}`);
+    const { databaseName } = await connectDatabase();
+    console.log(`Database tersambung: ${databaseName}`);
 
     const { contents, errors } = readContentFiles();
     if (errors.length) {

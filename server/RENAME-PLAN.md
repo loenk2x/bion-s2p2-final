@@ -175,7 +175,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
    `src/routes/contents.js` dan `src/routes/favorites.js`.
 5. ✅ `src/middleware/requireAuth.js` — ganti `isi` menjadi `payload`. Nama
    fungsi `requireAuth` sudah Inggris, tidak berubah.
-6. `src/config/db.js` — ganti `sambungkanDatabase` dan `namaDatabase`,
+6. ✅ `src/config/db.js` — ganti `sambungkanDatabase` dan `namaDatabase`,
    sekaligus perbarui pemanggilnya di `src/server.js` dan `scripts/feed.js`.
 7. `src/utils/aktivitas.js` → pindah jadi `src/utils/activities.js`, ganti
    seluruh isinya (`AKTIVITAS`, `JENIS`, `DURASI_SESI_NAPAS`,
