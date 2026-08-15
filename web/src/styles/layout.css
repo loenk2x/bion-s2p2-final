@@ -165,6 +165,15 @@ button { font: inherit; cursor: pointer; }
    repeat(4, 1fr) never had to shrink to phone width before. */
 .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
+/* .g3 also comes from the mockup as a bare repeat(3, 1fr), used on the daily
+   log page for the activity-entry cards (.ak). The mockup's phone screen
+   (layar 10 · Catatan harian, 390px) stacks these one per row full-width;
+   repeat(3, 1fr) is only ever shown on the web screen. Match the same
+   breakpoints as .grid-konten so entries are full-width on phones. */
+.g3 { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
 /* generic white card, used on the profile page — the mockup wrote this as a
    one-off inline style each time rather than giving it a class */
 .kartu-panel { background: var(--putih); border-radius: var(--radius-md); box-shadow: var(--bayang-1); padding: var(--jarak-24); }
