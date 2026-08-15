@@ -137,7 +137,14 @@ button { font: inherit; cursor: pointer; }
    than the viewport on phones, so without the minmax the whole grid — and
    the page — pushed out sideways instead of letting .deret-chip scroll. */
 .beranda-atas { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--jarak-24); align-items: start; margin-bottom: var(--jarak-24); }
-@media (min-width: 1024px) { .beranda-atas { grid-template-columns: minmax(0, 1fr) 380px; } }
+/* mockup (layar 4 · Beranda, 390px) puts the rings card above the search box
+   and filters on phones; only the >=1024px two-column layout puts them side
+   by side, where DOM order already reads left-to-right correctly. */
+.beranda-atas .cincin-kartu { order: -1; }
+@media (min-width: 1024px) {
+  .beranda-atas { grid-template-columns: minmax(0, 1fr) 380px; }
+  .beranda-atas .cincin-kartu { order: 0; }
+}
 
 /* ---------- profile page ---------- */
 .profil-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--jarak-32); align-items: start; }
