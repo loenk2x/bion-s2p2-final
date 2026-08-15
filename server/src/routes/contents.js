@@ -16,22 +16,22 @@ router.get(
     if (category) filter.category = category;
     if (type) filter.type = type;
     if (search) {
-      const pola = new RegExp(String(search).trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
-      filter.$or = [{ title: pola }, { excerpt: pola }, { tags: pola }];
+      const pattern = new RegExp(String(search).trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+      filter.$or = [{ title: pattern }, { excerpt: pattern }, { tags: pattern }];
     }
 
-    const [daftar, total, idFavorit] = await Promise.all([
+    const [items, total, favoriteIds] = await Promise.all([
       Content.find(filter).sort({ publishedAt: -1 }).skip((page - 1) * perPage).limit(perPage),
       Content.countDocuments(filter),
       Favorite.find({ userId: req.user._id }).distinct("contentId")
     ]);
 
-    const himpunanFavorit = new Set(idFavorit.map((id) => id.toString()));
+    const favoriteIdSet = new Set(favoriteIds.map((id) => id.toString()));
 
     res.json({
-      konten: daftar.map((k) => ({
+      konten: items.map((k) => ({
         ...k.toCard(),
-        disimpan: himpunanFavorit.has(k._id.toString())
+        disimpan: favoriteIdSet.has(k._id.toString())
       })),
       halaman: page,
       perHalaman: perPage,

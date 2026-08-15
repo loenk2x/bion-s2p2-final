@@ -199,7 +199,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
 10. ✅ `src/routes/auth.js` — ganti `buatToken`, `cocok`, dan nama variabel
     lokal hasil destructure `passwordLama`/`passwordBaru` (field JSON di
     body tetap sama, hanya nama variabel JavaScript-nya yang berubah).
-11. `src/routes/contents.js` — ganti variabel lokal (`pola`, `daftar`,
+11. ✅ `src/routes/contents.js` — ganti variabel lokal (`pola`, `daftar`,
     `idFavorit`, `himpunanFavorit`).
 12. `src/routes/favorites.js` — ganti variabel lokal (`daftar`, `ada`,
     `hasil`).
