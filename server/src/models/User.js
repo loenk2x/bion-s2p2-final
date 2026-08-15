@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const skemaUser = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true, maxlength: 80 },
     email: {
@@ -17,8 +17,8 @@ const skemaUser = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Bentuk aman untuk dikirim ke klien. passwordHash tidak pernah ikut.
-skemaUser.methods.keBentukPublik = function () {
+// Safe shape to send to the client. passwordHash never comes along.
+userSchema.methods.toPublicProfile = function () {
   return {
     id: this._id,
     name: this.name,
@@ -28,4 +28,4 @@ skemaUser.methods.keBentukPublik = function () {
   };
 };
 
-module.exports = mongoose.model("User", skemaUser);
+module.exports = mongoose.model("User", userSchema);

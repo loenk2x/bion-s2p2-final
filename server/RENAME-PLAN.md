@@ -168,7 +168,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
    `isiKonten`, `siapkanAkunDemo`, `DIR_KONTEN`, `WAJIB`, `AKUN_DEMO`, dan
    variabel lokalnya). Tidak ada berkas lain yang bergantung padanya.
 2. ✅ `src/models/Favorite.js` — ganti `skemaFavorite`. Tanpa dependen.
-3. `src/models/User.js` — ganti `skemaUser` dan `keBentukPublik`, sekaligus
+3. ✅ `src/models/User.js` — ganti `skemaUser` dan `keBentukPublik`, sekaligus
    perbarui 4 titik pemanggilan `keBentukPublik` di `src/routes/auth.js`.
 4. `src/models/Content.js` — ganti `KATEGORI`, `TIPE`, `skemaContent`, dan
    `keKartu`, sekaligus perbarui pemanggilan `keKartu` di
