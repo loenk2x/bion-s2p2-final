@@ -4,9 +4,13 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@shared/AuthProvider";
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+  validateConfirmPassword
+} from "@shared/register";
 import Icon from "../components/Icon";
-
-const MIN_PASSWORD_LENGTH = 8;
 
 export default function Register() {
   const { signUp } = useAuth();
@@ -22,11 +26,16 @@ export default function Register() {
   const [submitting, setSubmitting] = useState(false);
 
   function validate() {
+    const checks = {
+      name: validateName(name),
+      email: validateEmail(email),
+      password: validatePassword(password),
+      confirmPassword: validateConfirmPassword(confirmPassword, password)
+    };
     const errors = {};
-    if (!name.trim()) errors.name = "Nama wajib diisi.";
-    if (!email.trim()) errors.email = "Email wajib diisi.";
-    if (password.length < MIN_PASSWORD_LENGTH) errors.password = `Password minimal ${MIN_PASSWORD_LENGTH} karakter.`;
-    if (confirmPassword !== password) errors.confirmPassword = "Konfirmasi password tidak sama.";
+    for (const [field, result] of Object.entries(checks)) {
+      if (result.message) errors[field] = result.message;
+    }
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   }
