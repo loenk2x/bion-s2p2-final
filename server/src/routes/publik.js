@@ -1,6 +1,6 @@
 const express = require("express");
 const Content = require("../models/Content");
-const { bungkus } = require("../middleware/error");
+const { asyncHandler } = require("../middleware/error");
 
 const router = express.Router();
 
@@ -9,7 +9,7 @@ const router = express.Router();
 // sengaja tidak ikut, jadi isi kontennya tetap tertutup.
 router.get(
   "/teaser",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const daftar = await Content.find({})
       .sort({ publishedAt: -1 })
       .limit(3)

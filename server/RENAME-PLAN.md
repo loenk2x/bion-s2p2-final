@@ -186,7 +186,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
    `src/routes/logs.js`, dan `scripts/feed.js`. Langkah paling luas
    cakupannya sejauh ini karena diimpor 4 berkas — uji dengan smoke test
    penuh, bukan cuma endpoint logs.
-8. `src/middleware/error.js` — ganti `tidakDitemukan`, `tanganiGalat`,
+8. ✅ `src/middleware/error.js` — ganti `tidakDitemukan`, `tanganiGalat`,
    `bungkus`, `galatKlien`, `rincian`, `kolom`, sekaligus perbarui 6 berkas
    pengimpor (`src/app.js`, `src/routes/auth.js`, `src/routes/publik.js`,
    `src/routes/favorites.js`, `src/routes/logs.js`,

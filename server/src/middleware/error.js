@@ -1,45 +1,45 @@
-// Penanganan galat terpusat. Pesan yang keluar selalu Bahasa Indonesia dan
-// menyebut apa yang harus dilakukan, bukan sekadar "tidak valid".
+// Centralized error handling. Outgoing messages are always Bahasa Indonesia and
+// say what to do, not just "invalid".
 
-function tidakDitemukan(req, res) {
+function notFound(req, res) {
   res.status(404).json({ pesan: `Alamat ${req.method} ${req.originalUrl} tidak ada.` });
 }
 
-function tanganiGalat(galat, req, res, _next) {
-  if (galat.name === "ValidationError") {
-    const rincian = Object.values(galat.errors).map((e) => e.message);
-    return res.status(400).json({ pesan: "Isian belum benar.", rincian });
+function errorHandler(error, req, res, _next) {
+  if (error.name === "ValidationError") {
+    const details = Object.values(error.errors).map((e) => e.message);
+    return res.status(400).json({ pesan: "Isian belum benar.", rincian: details });
   }
 
-  if (galat.code === 11000) {
-    const kolom = Object.keys(galat.keyPattern || {});
-    if (kolom.includes("email")) {
+  if (error.code === 11000) {
+    const fields = Object.keys(error.keyPattern || {});
+    if (fields.includes("email")) {
       return res.status(409).json({ pesan: "Email itu sudah terdaftar. Silakan masuk." });
     }
     return res.status(409).json({ pesan: "Data itu sudah ada." });
   }
 
-  if (galat.name === "CastError") {
+  if (error.name === "CastError") {
     return res.status(400).json({ pesan: "Id yang dikirim tidak berbentuk benar." });
   }
 
-  const status = galat.status || 500;
-  const pesan = status === 500 ? "Terjadi galat di server." : galat.message;
+  const status = error.status || 500;
+  const pesan = status === 500 ? "Terjadi galat di server." : error.message;
 
   if (status === 500) {
-    console.error("[galat]", galat);
+    console.error("[galat]", error);
   }
 
   res.status(status).json({ pesan });
 }
 
-// Membungkus handler async supaya galatnya sampai ke tanganiGalat tanpa try/catch berulang.
-const bungkus = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+// Wraps an async handler so its error reaches errorHandler without a repeated try/catch.
+const asyncHandler = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
-function galatKlien(status, pesan) {
+function clientError(status, pesan) {
   const e = new Error(pesan);
   e.status = status;
   return e;
 }
 
-module.exports = { tidakDitemukan, tanganiGalat, bungkus, galatKlien };
+module.exports = { notFound, errorHandler, asyncHandler, clientError };

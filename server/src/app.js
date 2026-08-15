@@ -4,7 +4,7 @@ const morgan = require("morgan");
 
 const Content = require("./models/Content");
 const { requireAuth } = require("./middleware/requireAuth");
-const { tidakDitemukan, tanganiGalat, bungkus } = require("./middleware/error");
+const { notFound, errorHandler, asyncHandler } = require("./middleware/error");
 const { ACTIVITIES, BREATHING_SESSION_MINUTES, DAILY_TARGETS, MOOD_LABELS } = require("./utils/activities");
 
 const rutePublik = require("./routes/publik");
@@ -34,7 +34,7 @@ app.use("/api/logs", requireAuth, ruteLogs);
 app.get(
   "/api/categories",
   requireAuth,
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const hasil = await Content.aggregate([
       { $group: { _id: "$category", jumlah: { $sum: 1 } } },
       { $sort: { _id: 1 } }
@@ -48,7 +48,7 @@ app.get("/api/aktivitas", requireAuth, (req, res) => {
   res.json({ aktivitas: ACTIVITIES, durasiSesiNapas: BREATHING_SESSION_MINUTES, targetHarian: DAILY_TARGETS, mood: MOOD_LABELS });
 });
 
-app.use(tidakDitemukan);
-app.use(tanganiGalat);
+app.use(notFound);
+app.use(errorHandler);
 
 module.exports = app;

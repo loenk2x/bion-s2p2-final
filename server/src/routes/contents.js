@@ -1,13 +1,13 @@
 const express = require("express");
 const Content = require("../models/Content");
 const Favorite = require("../models/Favorite");
-const { bungkus, galatKlien } = require("../middleware/error");
+const { asyncHandler, clientError } = require("../middleware/error");
 
 const router = express.Router();
 
 router.get(
   "/",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const { category, type, search } = req.query;
     const page = Math.max(1, parseInt(req.query.page, 10) || 1);
     const perPage = Math.min(50, parseInt(req.query.perPage, 10) || 12);
@@ -43,9 +43,9 @@ router.get(
 
 router.get(
   "/:slug",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const konten = await Content.findOne({ slug: req.params.slug });
-    if (!konten) throw galatKlien(404, "Konten tidak ditemukan.");
+    if (!konten) throw clientError(404, "Konten tidak ditemukan.");
 
     const disimpan = await Favorite.exists({ userId: req.user._id, contentId: konten._id });
 

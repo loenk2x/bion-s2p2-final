@@ -1,6 +1,6 @@
 const express = require("express");
 const HealthLog = require("../models/HealthLog");
-const { bungkus, galatKlien } = require("../middleware/error");
+const { asyncHandler, clientError } = require("../middleware/error");
 const {
   ACTIVITIES,
   ACTIVITY_TYPES,
@@ -35,7 +35,7 @@ function bentukCatatan(c) {
 // ---------- ringkasan: cincin harian hari ini dan rekap tujuh hari ----------
 router.get(
   "/summary",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const hariIni = dateKey();
     const mulai = dateKey(daysAgo(6));
 
@@ -95,12 +95,12 @@ router.get(
 // ---------- riwayat ----------
 router.get(
   "/",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const { type, from, to } = req.query;
     const filter = { userId: req.user._id };
 
     if (type) {
-      if (!ACTIVITY_TYPES.includes(type)) throw galatKlien(400, `Jenis catatan "${type}" tidak dikenal.`);
+      if (!ACTIVITY_TYPES.includes(type)) throw clientError(400, `Jenis catatan "${type}" tidak dikenal.`);
       filter.type = type;
     }
     if (from || to) {
@@ -135,21 +135,21 @@ router.get(
 // dan hanya jenis ini yang boleh menyertakan mood.
 router.post(
   "/",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const { type, value, mood, note, loggedAt } = req.body || {};
 
     if (!ACTIVITY_TYPES.includes(type)) {
-      throw galatKlien(400, `Jenis catatan harus salah satu dari: ${ACTIVITY_TYPES.join(", ")}.`);
+      throw clientError(400, `Jenis catatan harus salah satu dari: ${ACTIVITY_TYPES.join(", ")}.`);
     }
 
     const nilai = validateValue(type, value);
-    if (nilai.pesan) throw galatKlien(400, nilai.pesan);
+    if (nilai.pesan) throw clientError(400, nilai.pesan);
 
     const hasilMood = validateMood(type, mood);
-    if (hasilMood.pesan) throw galatKlien(400, hasilMood.pesan);
+    if (hasilMood.pesan) throw clientError(400, hasilMood.pesan);
 
     const waktu = loggedAt ? new Date(loggedAt) : new Date();
-    if (Number.isNaN(waktu.getTime())) throw galatKlien(400, "Waktu pencatatan tidak terbaca.");
+    if (Number.isNaN(waktu.getTime())) throw clientError(400, "Waktu pencatatan tidak terbaca.");
 
     const catatan = await HealthLog.create({
       userId: req.user._id,
@@ -168,23 +168,23 @@ router.post(
 // ---------- ubah dan hapus ----------
 router.put(
   "/:id",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const { value, note, mood } = req.body || {};
     const catatan = await HealthLog.findOne({ _id: req.params.id, userId: req.user._id });
     // 404, bukan 403 — keberadaan catatan milik orang lain tidak boleh bocor.
-    if (!catatan) throw galatKlien(404, "Catatan tidak ditemukan.");
+    if (!catatan) throw clientError(404, "Catatan tidak ditemukan.");
 
     // Aturan validasi yang sama persis dengan saat membuat. Jenis catatan tidak
     // bisa diubah — mengubah jenis sama saja membuat catatan baru.
     if (value !== undefined) {
       const nilai = validateValue(catatan.type, value);
-      if (nilai.pesan) throw galatKlien(400, nilai.pesan);
+      if (nilai.pesan) throw clientError(400, nilai.pesan);
       catatan.value = nilai.value;
     }
     if (note !== undefined) catatan.note = String(note).trim();
     if (mood !== undefined) {
       const hasilMood = validateMood(catatan.type, mood);
-      if (hasilMood.pesan) throw galatKlien(400, hasilMood.pesan);
+      if (hasilMood.pesan) throw clientError(400, hasilMood.pesan);
       catatan.mood = hasilMood.mood;
     }
 
@@ -195,9 +195,9 @@ router.put(
 
 router.delete(
   "/:id",
-  bungkus(async (req, res) => {
+  asyncHandler(async (req, res) => {
     const hasil = await HealthLog.deleteOne({ _id: req.params.id, userId: req.user._id });
-    if (hasil.deletedCount === 0) throw galatKlien(404, "Catatan tidak ditemukan.");
+    if (hasil.deletedCount === 0) throw clientError(404, "Catatan tidak ditemukan.");
     res.json({ pesan: "Catatan dihapus." });
   })
 );
