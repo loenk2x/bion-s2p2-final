@@ -1,0 +1,209 @@
+/* Hanya berisi hal yang tidak ada di komponen.css: reset, tata letak responsif,
+   kerangka aplikasi setelah masuk, dan keadaan memuat.
+
+   Semua tampilan komponen — tombol, input, chip, kartu, cincin harian, lembar
+   pencatatan, papan tombol — datang dari komponen.css yang diangkat dari mockup.
+   Jangan menulis ulang aturan komponen di berkas ini. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--latar);
+  color: var(--tinta-900);
+  font: 400 15px/22px var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--hijau-600); }
+button { font: inherit; cursor: pointer; }
+
+/* ---------- pembantu tipografi ---------- */
+.judul-besar { font: 700 28px/34px var(--font); margin: 0; }
+.judul-1 { font: 700 22px/28px var(--font); margin: 0; }
+.judul-2 { font: 600 18px/24px var(--font); margin: 0; }
+.kecil { font: 400 13px/18px var(--font); }
+.label { font: 600 12px/16px var(--font); }
+.redup { color: var(--tinta-600); }
+.paling-redup { color: var(--tinta-400); }
+@media (min-width: 1024px) {
+  .judul-besar { font-size: 34px; line-height: 40px; }
+  .judul-1 { font-size: 26px; line-height: 32px; }
+}
+
+/* ---------- wadah dan grid ---------- */
+.wadah { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 var(--jarak-16); }
+@media (min-width: 640px) { .wadah { padding: 0 var(--jarak-24); } }
+.tumpuk { display: flex; flex-direction: column; }
+.dorong { margin-left: auto; }
+
+.grid-konten { display: grid; grid-template-columns: 1fr; gap: var(--jarak-12); }
+@media (min-width: 640px) { .grid-konten { grid-template-columns: repeat(2, 1fr); gap: var(--jarak-16); } }
+@media (min-width: 1024px) { .grid-konten { grid-template-columns: repeat(3, 1fr); gap: var(--jarak-20); } }
+
+/* deret chip kategori yang bisa digeser mendatar */
+.deret-chip { display: flex; gap: var(--jarak-8); overflow-x: auto; padding-bottom: var(--jarak-4); scrollbar-width: none; }
+.deret-chip::-webkit-scrollbar { display: none; }
+
+/* ---------- halaman masuk dan daftar ---------- */
+.auth { min-height: 100%; display: grid; grid-template-columns: 1fr; }
+.auth-panel { display: none; }
+.auth-isi { display: flex; align-items: center; justify-content: center; padding: var(--jarak-32) var(--jarak-16); }
+.auth-form { width: 100%; max-width: 400px; }
+@media (min-width: 1024px) {
+  .auth { grid-template-columns: 1fr 1fr; }
+  .auth-panel {
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--hijau-600); color: var(--putih); padding: 64px 56px;
+  }
+  .auth-panel h1 { font: 700 40px/48px var(--font); margin: 0 0 var(--jarak-16); }
+  .auth-panel p { font: 400 17px/26px var(--font); opacity: .9; margin: 0; }
+  .auth-panel .logo i { background: rgba(255, 255, 255, .2); }
+}
+
+/* ---------- kerangka aplikasi setelah masuk ---------- */
+.app-head {
+  height: 64px; background: var(--putih); border-bottom: 1px solid var(--garis);
+  display: flex; align-items: center; position: sticky; top: 0; z-index: 20;
+}
+.app-menu { display: none; gap: var(--jarak-24); margin-left: var(--jarak-32); }
+.app-menu a { font: 600 14px/1 var(--font); color: var(--tinta-600); text-decoration: none; }
+.app-menu a.on { color: var(--hijau-600); }
+@media (min-width: 1024px) { .app-menu { display: flex; } }
+
+.app-isi { padding: var(--jarak-24) 0 108px; }
+@media (min-width: 1024px) { .app-isi { padding-bottom: var(--jarak-48); } }
+
+.tab-bawah {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  height: calc(64px + env(safe-area-inset-bottom, 22px));
+  padding-bottom: env(safe-area-inset-bottom, 22px);
+  background: var(--putih); border-top: 1px solid var(--garis); box-shadow: var(--bayang-2);
+  display: flex;
+}
+.tab-bawah a {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--jarak-4);
+  color: var(--tinta-400); text-decoration: none; font: 600 11px/14px var(--font);
+}
+.tab-bawah a.on { color: var(--hijau-600); }
+@media (min-width: 1024px) { .tab-bawah { display: none; } }
+
+/* tombol tambah mengambang, hanya di bawah 1024px */
+.fab-tempel { position: fixed; right: var(--jarak-16); bottom: 102px; z-index: 25; }
+@media (min-width: 1024px) { .fab-tempel { display: none; } }
+
+/* ---------- kotak pesan ---------- */
+.kotak-galat {
+  background: var(--bahaya-100); color: var(--bahaya); border-radius: var(--radius-sm);
+  padding: var(--jarak-12) var(--jarak-16); font: 400 13px/18px var(--font); margin-bottom: var(--jarak-16);
+}
+.kotak-berhasil {
+  background: var(--hijau-100); color: var(--hijau-700); border-radius: var(--radius-sm);
+  padding: var(--jarak-12) var(--jarak-16); font: 400 13px/18px var(--font); margin-bottom: var(--jarak-16);
+}
+
+/* ---------- memuat ---------- */
+.memuat { display: flex; flex-direction: column; align-items: center; gap: var(--jarak-12);
+  padding: var(--jarak-48) var(--jarak-16); color: var(--tinta-600); }
+.memuat-putar { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--hijau-100);
+  border-top-color: var(--hijau-600); animation: putar .8s linear infinite; }
+@keyframes putar { to { transform: rotate(360deg); } }
+
+.kerangka { background: #EDF3F0; border-radius: var(--radius-sm); animation: kedip 1.4s ease-in-out infinite; }
+.kerangka-kartu { background: var(--putih); border-radius: var(--radius-md); box-shadow: var(--bayang-1); overflow: hidden; }
+.kerangka-sampul { aspect-ratio: 16 / 9; border-radius: 0; }
+.kerangka-isi { padding: var(--jarak-16); display: flex; flex-direction: column; gap: var(--jarak-8); }
+.kerangka-baris { height: 14px; }
+.kerangka-baris.pendek { width: 60%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .memuat-putar, .kerangka { animation: none; }
+}
+
+/* ---------- landing page hero ---------- */
+.landing-hero { display: grid; grid-template-columns: 1fr; gap: var(--jarak-32); align-items: center; }
+@media (min-width: 1024px) { .landing-hero { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- home page top row: search/filters beside the daily rings ---------- */
+.beranda-atas { display: grid; grid-template-columns: 1fr; gap: var(--jarak-24); align-items: start; margin-bottom: var(--jarak-24); }
+@media (min-width: 1024px) { .beranda-atas { grid-template-columns: 1fr 380px; } }
+
+/* ---------- profile page ---------- */
+.profil-layout { display: grid; grid-template-columns: 1fr; gap: var(--jarak-32); align-items: start; }
+@media (min-width: 1024px) { .profil-layout { grid-template-columns: 340px 1fr; } }
+.profil-avatar { margin: 0 auto; }
+
+/* generic white card, used on the profile page — the mockup wrote this as a
+   one-off inline style each time rather than giving it a class */
+.kartu-panel { background: var(--putih); border-radius: var(--radius-md); box-shadow: var(--bayang-1); padding: var(--jarak-24); }
+
+/* ---------- favorites row: delete button only on hover ---------- */
+.baris-favorit .hapus-favorit { opacity: 0; transition: opacity .15s ease; }
+.baris-favorit:hover .hapus-favorit, .baris-favorit:focus-within .hapus-favorit { opacity: 1; }
+
+/* ---------- content detail: article/related-content split ---------- */
+.detail-layout { display: grid; grid-template-columns: 1fr; gap: var(--jarak-32); align-items: start; }
+@media (min-width: 1024px) { .detail-layout { grid-template-columns: 1fr 320px; } }
+
+/* ---------- functional search field ---------- */
+/* .cari only ever showed static placeholder text in the mockup; it needs a
+   real input here. */
+.cari input { border: 0; outline: 0; background: none; flex: 1; font: 400 15px/1.3 var(--font); color: var(--tinta-900); }
+.cari input::placeholder { color: var(--tinta-400); }
+
+/* ---------- app header inner layout ---------- */
+/* .app-head only centers its child vertically; the row arrangement of logo,
+   menu and actions has no home in komponen.css because the mockup wrote it
+   as one-off inline styles per screen. */
+.app-head .wadah { display: flex; align-items: center; gap: var(--jarak-32); }
+.app-head .aksi { display: flex; align-items: center; gap: var(--jarak-12); margin-left: auto; }
+
+/* ---------- content body lists ---------- */
+/* .isi-teks only styles p and h3 in komponen.css; article bodies also use
+   "- " lists, which need to keep the same rhythm as the paragraphs around them. */
+.isi-teks ul { font: 400 15px/24px var(--font); color: var(--tinta-900); margin: 0 0 14px; padding-left: 20px; }
+.isi-teks li { margin-bottom: 4px; }
+
+/* ---------- plain row-button, used for the add-entry menu ---------- */
+.baris-tombol { display: flex; align-items: center; gap: var(--jarak-12); width: 100%; padding: var(--jarak-8) 0; background: none; border: 0; text-align: left; }
+
+/* ---------- editable number field ---------- */
+/* the mockup's .angka-inp only ever showed a static <b> digit; the web app
+   needs a real, typable input styled the same way. */
+.angka-inp input { border: 0; outline: 0; background: none; width: 100%; text-align: center; font: 700 40px/44px var(--font); color: var(--tinta-900); }
+.angka-inp input::-webkit-outer-spin-button, .angka-inp input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* ---------- modal layer for .lembar / .tirai ---------- */
+/* in the mockup, .lembar and .tirai are positioned inside the fixed-size
+   phone frame (.hp-layar). The real web app has no such frame, so the sheet
+   needs its own full-viewport layer to anchor to. */
+.lembar-lapis { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; }
+.lembar-lapis .tirai { position: fixed; inset: 0; }
+.lembar-lapis .lembar { position: relative; width: 100%; max-height: 88vh; overflow-y: auto; }
+@media (min-width: 640px) {
+  .lembar-lapis { align-items: center; }
+  .lembar-lapis .lembar { max-width: 420px; border-radius: var(--radius-lg); }
+}
+
+/* ---------- full-screen guided breathing session ---------- */
+/* the mockup's session screen used a hand-picked gradient as an inline style;
+   color-mix() derives the darker stops from --ak-napas so no raw colour is
+   ever written here. */
+.sesi-napas {
+  position: fixed; inset: 0; z-index: 60; color: var(--putih);
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg,
+    var(--ak-napas) 0%,
+    color-mix(in srgb, var(--ak-napas) 78%, black) 55%,
+    color-mix(in srgb, var(--ak-napas) 58%, black) 100%);
+}
+.sesi-napas .atas { display: flex; align-items: center; justify-content: space-between; padding: var(--jarak-16); flex: none; }
+.sesi-napas .ikon-bulat { background: color-mix(in srgb, var(--putih) 18%, transparent); border-color: transparent; color: var(--putih); }
+.sesi-napas .tengah { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 var(--jarak-16); }
+.sesi-napas .ket { font: 400 14px/20px var(--font); color: color-mix(in srgb, var(--putih) 85%, transparent); margin: var(--jarak-32) 0 0; text-align: center; max-width: 280px; }
+.sesi-napas .bawah { padding: 0 var(--jarak-24) var(--jarak-24); flex: none; }
+.sesi-napas .trek { height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--putih) 25%, transparent); }
+.sesi-napas .trek i { display: block; height: 4px; border-radius: 2px; background: var(--putih); }
+.sesi-napas .waktu { display: flex; justify-content: space-between; margin-top: var(--jarak-8); font: 600 12px/16px var(--font); }
+.sesi-napas .waktu .redup { color: color-mix(in srgb, var(--putih) 80%, transparent); }
+.sesi-napas .tombol.t-blok { background: color-mix(in srgb, var(--putih) 18%, transparent); color: var(--putih); }

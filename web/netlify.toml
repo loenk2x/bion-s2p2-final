@@ -1,0 +1,16 @@
+# Konfigurasi deployment aplikasi web Healthy Life ke Netlify.
+# Repositorinya adalah monorepo, jadi "base" menunjuk ke folder web/.
+
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+# Healthy Life memakai React Router (client-side routing). Tanpa pengalihan ini,
+# memuat ulang halaman selain "/" langsung menghasilkan 404 dari Netlify, karena
+# Netlify mencari berkas fisik di path itu padahal routingnya ditangani React
+# di dalam index.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

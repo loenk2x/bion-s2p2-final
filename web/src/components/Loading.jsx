@@ -1,16 +1,16 @@
-export default function Memuat({ pesan = "Memuat…" }) {
+export default function Loading({ message = "Memuat…" }) {
   return (
     <div className="memuat" role="status" aria-live="polite">
       <span className="memuat-putar" aria-hidden="true" />
-      <p>{pesan}</p>
+      <p>{message}</p>
     </div>
   );
 }
 
-export function KerangkaKartu({ jumlah = 4 }) {
+export function CardSkeleton({ count = 4 }) {
   return (
     <div className="grid-konten" aria-hidden="true">
-      {Array.from({ length: jumlah }, (_, i) => (
+      {Array.from({ length: count }, (_, i) => (
         <div key={i} className="kerangka-kartu">
           <div className="kerangka kerangka-sampul" />
           <div className="kerangka-isi">

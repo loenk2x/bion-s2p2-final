@@ -1,37 +1,38 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import RuteTerlindungi from "./components/RuteTerlindungi";
-import Kerangka from "./components/Kerangka";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AppShell from "./components/AppShell";
 
 import Landing from "./pages/Landing";
 import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Beranda from "./pages/Beranda";
-import DetailKonten from "./pages/DetailKonten";
-import Favorit from "./pages/Favorit";
-import CatatanHarian from "./pages/CatatanHarian";
-import Profil from "./pages/Profil";
+import SignIn from "./pages/SignIn";
+import Home from "./pages/Home";
+import ContentDetail from "./pages/ContentDetail";
+import Favorites from "./pages/Favorites";
+import DailyLog from "./pages/DailyLog";
+import Profile from "./pages/Profile";
 
+// Route paths stay Indonesian because they are user-visible; component names are English.
 export default function App() {
   return (
     <Routes>
-      {/* tanpa login */}
+      {/* public */}
       <Route path="/" element={<Landing />} />
       <Route path="/daftar" element={<Register />} />
-      <Route path="/masuk" element={<Login />} />
+      <Route path="/masuk" element={<SignIn />} />
 
-      {/* wajib login — semuanya dibungkus RuteTerlindungi dan memakai kerangka bersama */}
+      {/* everything below requires a token and shares the app shell */}
       <Route
         element={
-          <RuteTerlindungi>
-            <Kerangka />
-          </RuteTerlindungi>
+          <ProtectedRoute>
+            <AppShell />
+          </ProtectedRoute>
         }
       >
-        <Route path="/beranda" element={<Beranda />} />
-        <Route path="/konten/:slug" element={<DetailKonten />} />
-        <Route path="/favorit" element={<Favorit />} />
-        <Route path="/catatan" element={<CatatanHarian />} />
-        <Route path="/profil" element={<Profil />} />
+        <Route path="/beranda" element={<Home />} />
+        <Route path="/konten/:slug" element={<ContentDetail />} />
+        <Route path="/favorit" element={<Favorites />} />
+        <Route path="/catatan" element={<DailyLog />} />
+        <Route path="/profil" element={<Profile />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
