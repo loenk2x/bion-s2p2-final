@@ -464,12 +464,12 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
   </div>
   <table class="mini-tabel">
     <tr><th style="width:150px">Jenis</th><th>Kunci di database</th><th>Satuan</th><th>Warna</th><th>Cara mengisi</th></tr>
-    <tr><td>Langkah</td><td><code>steps</code></td><td>langkah</td><td><code>#F2762E</code></td><td>Pengatur angka, langkah 100, ditambah tiga pintasan cepat</td></tr>
-    <tr><td>Olahraga</td><td><code>exercise</code></td><td>menit</td><td><code>#19A96F</code></td><td>Pengatur angka, langkah 5</td></tr>
-    <tr><td>Air minum</td><td><code>water</code></td><td>gelas</td><td><code>#2D7FF9</code></td><td>Pengatur angka, langkah 1</td></tr>
-    <tr><td>Tidur</td><td><code>sleep</code></td><td>jam</td><td><code>#7A5AF8</code></td><td>Pengatur angka, langkah 0,5</td></tr>
+    <tr><td>Langkah</td><td><code>steps</code></td><td>langkah</td><td><code>#F2762E</code></td><td>Input angka bulat dengan papan tombol, ditambah tiga pintasan cepat</td></tr>
+    <tr><td>Olahraga</td><td><code>exercise</code></td><td>menit</td><td><code>#19A96F</code></td><td>Input angka bulat dengan papan tombol, ditambah tiga pintasan cepat</td></tr>
+    <tr><td>Air minum</td><td><code>water</code></td><td>gelas</td><td><code>#2D7FF9</code></td><td>Input angka bulat dengan papan tombol</td></tr>
+    <tr><td>Tidur</td><td><code>sleep</code></td><td>jam</td><td><code>#7A5AF8</code></td><td>Input angka desimal dengan papan tombol berkoma</td></tr>
     <tr><td>Latihan pernapasan</td><td><code>breathing</code></td><td>menit</td><td><code>#0E9DA8</code></td><td>Pilih durasi lalu jalani sesi; mood dicatat di akhir sesi</td></tr>
-    <tr><td>Berat badan</td><td><code>weight</code></td><td>kg</td><td><code>#C9820A</code></td><td>Pengatur angka, langkah 0,1</td></tr>
+    <tr><td>Berat badan</td><td><code>weight</code></td><td>kg</td><td><code>#C9820A</code></td><td>Input angka desimal dengan papan tombol berkoma</td></tr>
   </table>
   <div class="catatan-rev"><b>Mood bukan jenis tersendiri.</b> Mengikuti pola Huawei Health, mood hanya dicatat di akhir sesi latihan pernapasan
   dan disimpan sebagai field tambahan pada catatan <code>breathing</code>, bukan sebagai catatan terpisah. Jadi tidak ada tombol "catat mood"
@@ -484,6 +484,18 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
   .pintasan{display:flex;gap:8px;margin-bottom:16px}
   .pintasan span{flex:1;height:36px;border:1px solid var(--garis);border-radius:var(--r-sm);background:#fff;
     display:flex;align-items:center;justify-content:center;font:600 13px/1 var(--font);color:var(--hijau-600)}
+  .angka-inp{height:76px;border:1px solid var(--hijau-600);box-shadow:0 0 0 3px var(--hijau-100);
+    border-radius:var(--r-md);background:#fff;display:flex;align-items:center;justify-content:center;
+    gap:8px;margin:10px 0 14px}
+  .angka-inp b{font:700 40px/44px var(--font)}
+  .angka-inp i{width:2px;height:38px;background:var(--hijau-600);font-style:normal;display:block}
+  .angka-inp span{font:400 15px/20px var(--font);color:var(--tinta-400);align-self:flex-end;margin-bottom:12px}
+  .jenis-tombol{font:600 11px/15px var(--font);color:var(--tinta-400);text-align:center;margin:0 0 14px}
+  .papan-tombol{background:#DDE4E0;padding:8px 6px 10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px 6px}
+  .papan-tombol span{height:46px;background:#fff;border-radius:6px;box-shadow:0 1px 0 rgba(18,33,27,.25);
+    display:flex;align-items:center;justify-content:center;font:400 24px/1 var(--font);color:var(--tinta-900)}
+  .papan-tombol span.kosong,.papan-tombol span.hapus{background:#C6D0CB;box-shadow:none}
+  .papan-tombol span.hapus{font-size:18px}
   .durasi{display:flex;gap:10px;margin:6px 0 18px}
   .durasi span{flex:1;height:72px;border:1px solid var(--garis);border-radius:var(--r-md);background:#fff;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
@@ -493,8 +505,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
   </style>
 
   <h3>Lembar tambah catatan — enam jenis, seluruhnya</h3>
-  <p class="ket">Satu lembar hanya mengisi satu jenis. Lima jenis pertama memakai pengatur angka dengan langkah yang berbeda-beda sesuai
-  satuannya. Latihan pernapasan tidak memakai pengatur angka sama sekali, karena angkanya lahir dari sesi yang dijalani, bukan diketik.</p>
+  <p class="ket">Satu lembar hanya mengisi satu jenis. Lima jenis pertama memakai satu input angka yang memunculkan papan tombol hanya saat sedang diisi. Latihan pernapasan tidak memakai pengatur angka sama sekali, karena angkanya lahir dari sesi yang dijalani, bukan diketik.</p>
   <div class="rak-lembar">
 
     <div><p>1 · Langkah</p>
@@ -506,7 +517,8 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <div><h3 style="font:700 22px/28px var(--font);margin:0">Langkah</h3>
             <p class="sub" style="margin:0">Sabtu, 15 Agustus · 07.10</p></div>
         </div>
-        <div class="stepper"><span class="tbl">−</span><span class="nilai">3.120<span>langkah</span></span><span class="tbl">+</span></div>
+        <div class="angka-inp"><b>3.120</b><i></i><span>langkah</span></div>
+        <p class="jenis-tombol">Papan tombol angka bulat — tanpa koma</p>
         <div class="pintasan"><span>+500</span><span>+1.000</span><span>+2.000</span></div>
         <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span><div class="inp ph">Jalan pagi</div></div>
         <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
@@ -523,7 +535,8 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <div><h3 style="font:700 22px/28px var(--font);margin:0">Olahraga</h3>
             <p class="sub" style="margin:0">Sabtu, 15 Agustus · 06.15</p></div>
         </div>
-        <div class="stepper"><span class="tbl">−</span><span class="nilai">25<span>menit</span></span><span class="tbl">+</span></div>
+        <div class="angka-inp"><b>25</b><i></i><span>menit</span></div>
+        <p class="jenis-tombol">Papan tombol angka bulat — tanpa koma</p>
         <div class="pintasan"><span>+5</span><span>+15</span><span>+30</span></div>
         <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
           <div class="inp ph">Jalan pagi keliling komplek</div></div>
@@ -541,7 +554,8 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <div><h3 style="font:700 22px/28px var(--font);margin:0">Air minum</h3>
             <p class="sub" style="margin:0">Sabtu, 15 Agustus · 09.30</p></div>
         </div>
-        <div class="stepper"><span class="tbl">−</span><span class="nilai">3<span>gelas</span></span><span class="tbl">+</span></div>
+        <div class="angka-inp"><b>3</b><i></i><span>gelas</span></div>
+        <p class="jenis-tombol">Papan tombol angka bulat — tanpa koma</p>
         <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
           <div class="inp ph">Setelah olahraga pagi</div></div>
         <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
@@ -558,7 +572,8 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <div><h3 style="font:700 22px/28px var(--font);margin:0">Tidur</h3>
             <p class="sub" style="margin:0">Sabtu, 15 Agustus · 06.00</p></div>
         </div>
-        <div class="stepper"><span class="tbl">−</span><span class="nilai">7,1<span>jam</span></span><span class="tbl">+</span></div>
+        <div class="angka-inp"><b>7,1</b><i></i><span>jam</span></div>
+        <p class="jenis-tombol">Papan tombol angka desimal — ada tombol koma</p>
         <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
           <div class="inp ph">Sempat terbangun tengah malam</div></div>
         <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
@@ -593,7 +608,8 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
           <div><h3 style="font:700 22px/28px var(--font);margin:0">Berat badan</h3>
             <p class="sub" style="margin:0">Sabtu, 15 Agustus · 07.00</p></div>
         </div>
-        <div class="stepper"><span class="tbl">−</span><span class="nilai">68,4<span>kg</span></span><span class="tbl">+</span></div>
+        <div class="angka-inp"><b>68,4</b><i></i><span>kg</span></div>
+        <p class="jenis-tombol">Papan tombol angka desimal — ada tombol koma</p>
         <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
           <div class="inp ph">Ditimbang sebelum sarapan</div></div>
         <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
@@ -623,7 +639,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
 
   <!-- ============================= MOBILE ============================= -->
   <h2 id="mobile">Layar mobile — 390 × 844</h2>
-  <p class="ket">Sembilan layar dalam empat belas bingkai. Landing bisa dibuka tanpa login. Detail konten digambar tiga kali karena tampilannya
+  <p class="ket">Sembilan layar dalam lima belas bingkai. Landing bisa dibuka tanpa login. Detail konten digambar tiga kali karena tampilannya
   berbeda untuk artikel, video, dan infografis. Beranda punya bingkai tambahan untuk tombol tambah yang terbuka, Catatan Harian punya bingkai
   lembar pencatatan, dan latihan pernapasan punya dua bingkai: sesi yang sedang berjalan dan pencatatan mood di akhir sesi.</p>
 
@@ -1020,7 +1036,7 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
 
     <!-- 11 LEMBAR TAMBAH CATATAN -->
     <div class="hp">
-      <p class="hp-nama">11 · Lembar tambah catatan</p>
+      <p class="hp-nama">11 · Lembar tambah catatan — angka bulat</p>
       <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
         <div class="hp-isi">
           <div class="hp-head"><h2>Catatan Harian</h2></div>
@@ -1031,22 +1047,58 @@ h1.judul-hal{font:700 34px/40px var(--font);margin:0}
               <div class="jns" style="color:var(--ak-olahraga)">Olahraga</div></div>
           </div>
           <div class="tirai"></div>
-          <div class="lembar">
+          <div class="lembar" style="bottom:238px;border-radius:var(--r-lg) var(--r-lg) 0 0;padding-bottom:16px">
             <div class="pegangan"></div>
-            <div class="baris" style="gap:10px;margin-bottom:10px">
+            <div class="baris" style="gap:10px;margin-bottom:6px">
               <span class="ikon-bulat" style="color:var(--ak-air);border-color:var(--biru-l);background:#F2F7FE">
                 <svg width="22" height="22"><use href="#i-air"/></svg></span>
               <div><h3>Air minum</h3><p class="sub" style="margin:0">Sabtu, 15 Agustus · 09.30</p></div>
             </div>
-            <div class="stepper">
-              <span class="tbl">−</span>
-              <span class="nilai">3<span>gelas</span></span>
-              <span class="tbl">+</span>
-            </div>
-            <div class="kolom" style="margin-bottom:16px"><span class="inp-label">Catatan, opsional</span>
+            <div class="angka-inp"><b>3</b><i></i><span>gelas</span></div>
+            <div class="kolom" style="margin-bottom:14px"><span class="inp-label">Catatan, opsional</span>
               <div class="inp ph">Setelah olahraga pagi</div></div>
-            <span class="tombol t-primer t-blok" style="margin-bottom:10px">Simpan</span>
-            <span class="tombol t-netral t-blok">Batal</span>
+            <span class="tombol t-primer t-blok">Simpan</span>
+          </div>
+          <div class="papan-tombol" style="position:absolute;left:0;right:0;bottom:0;padding-bottom:26px;border-radius:0 0 28px 28px">
+            <span>1</span><span>2</span><span>3</span>
+            <span>4</span><span>5</span><span>6</span>
+            <span>7</span><span>8</span><span>9</span>
+            <span class="kosong"></span><span>0</span><span class="hapus">⌫</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11b LEMBAR DESIMAL -->
+    <div class="hp">
+      <p class="hp-nama">11b · Lembar tambah catatan — desimal</p>
+      <div class="hp-layar"><div class="hp-status"><span>09:41</span><span>▮▮▮</span></div>
+        <div class="hp-isi">
+          <div class="hp-head"><h2>Catatan Harian</h2></div>
+          <div class="hp-gulir" style="padding-top:12px">
+            <p class="kel-tanggal" style="margin-top:0">HARI INI · 15 AGUSTUS</p>
+            <div class="ak"><span class="cap" style="background:var(--ak-langkah)"></span>
+              <div class="jam">07.10</div><div class="nilai">3.120 <span>langkah</span></div>
+              <div class="jns" style="color:var(--ak-langkah)">Langkah</div></div>
+          </div>
+          <div class="tirai"></div>
+          <div class="lembar" style="bottom:238px;border-radius:var(--r-lg) var(--r-lg) 0 0;padding-bottom:16px">
+            <div class="pegangan"></div>
+            <div class="baris" style="gap:10px;margin-bottom:6px">
+              <span class="ikon-bulat" style="color:var(--ak-tidur);border-color:#E4DEFE;background:#F4F1FE">
+                <svg width="22" height="22"><use href="#i-tidur"/></svg></span>
+              <div><h3>Tidur</h3><p class="sub" style="margin:0">Sabtu, 15 Agustus · 06.00</p></div>
+            </div>
+            <div class="angka-inp"><b>7,1</b><i></i><span>jam</span></div>
+            <div class="kolom" style="margin-bottom:14px"><span class="inp-label">Catatan, opsional</span>
+              <div class="inp ph">Sempat terbangun tengah malam</div></div>
+            <span class="tombol t-primer t-blok">Simpan</span>
+          </div>
+          <div class="papan-tombol" style="position:absolute;left:0;right:0;bottom:0;padding-bottom:26px;border-radius:0 0 28px 28px">
+            <span>1</span><span>2</span><span>3</span>
+            <span>4</span><span>5</span><span>6</span>
+            <span>7</span><span>8</span><span>9</span>
+            <span>,</span><span>0</span><span class="hapus">⌫</span>
           </div>
         </div>
       </div>

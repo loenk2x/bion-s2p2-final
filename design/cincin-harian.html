@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cincin Harian — percobaan sebelum masuk mockup</title>
+<style>
+:root{
+  --hijau-700:#0E6E49; --hijau-600:#128A5B; --hijau-100:#DCF3E8; --hijau-50:#F1FAF5;
+  --tinta-900:#12211B; --tinta-600:#4B5B54; --tinta-400:#84968D;
+  --garis:#E2EBE6; --latar:#F6FBF8;
+  --gerak:#F2762E; --tidur:#7A5AF8; --relaksasi:#0E9DA8;
+  --r-md:12px; --r-lg:16px; --r-full:999px;
+  --b1:0 1px 2px rgba(18,33,27,.06), 0 1px 3px rgba(18,33,27,.04);
+  --font:Inter,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);background:#EFF4F1;color:var(--tinta-900);-webkit-font-smoothing:antialiased}
+.doc{max-width:1180px;margin:0 auto;padding:36px 24px 80px}
+h1{font-size:30px;margin:0 0 8px}
+h2{font-size:22px;margin:44px 0 4px;padding-top:16px;border-top:1px solid var(--garis)}
+h3{font-size:13px;margin:24px 0 10px;color:var(--tinta-600);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+p.ket{color:var(--tinta-600);font-size:14px;line-height:22px;max-width:76ch;margin:6px 0 0}
+.papan{background:#fff;border:1px solid var(--garis);border-radius:var(--r-md);padding:20px;margin-top:16px}
+.rak{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+.spesimen{text-align:center}
+.spesimen .cap{font:600 11px/15px var(--font);color:var(--tinta-400);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:14px;background:#fff}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--garis);vertical-align:top}
+th{font-weight:600;color:var(--tinta-600);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+code{font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.pilih{background:var(--hijau-50);border:1px solid var(--hijau-100);border-radius:var(--r-md);padding:14px 16px;margin-top:14px;
+  font:400 13px/20px var(--font);color:var(--tinta-600)}
+.pilih b{color:var(--hijau-700)}
+.tanya{background:#FFF6E8;border:1px solid #F3E3C2;border-radius:var(--r-md);padding:14px 16px;margin-top:14px;
+  font:400 13px/20px var(--font);color:var(--tinta-600)}
+.tanya b{color:#8A5A05}
+
+/* kartu cincin harian */
+.kartu-cincin{background:#fff;border-radius:var(--r-lg);box-shadow:var(--b1);padding:16px 14px 12px;width:340px}
+.legenda{display:flex;margin-top:8px}
+.legenda > div{flex:1;text-align:center;position:relative;padding:0 4px}
+.legenda > div + div::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:1px;background:var(--garis)}
+.legenda .l{font:600 12px/16px var(--font);color:var(--tinta-600);display:flex;align-items:center;justify-content:center;gap:5px}
+.legenda .l i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.legenda .n{font:700 19px/24px var(--font);margin-top:3px;white-space:nowrap}
+.legenda .n .tgt{font:600 12px/16px var(--font);color:var(--tinta-400)}
+.legenda .sat{font:400 11px/15px var(--font);color:var(--tinta-400);margin-top:1px}
+svg.cincin{display:block;margin:0 auto}
+</style>
+</head>
+<body>
+<div class="doc">
+  <h1>Cincin Harian — percobaan</h1>
+  <p class="ket">Berkas terpisah untuk menguji dua hal sebelum masuk ke <code>mockups.html</code>: cincin bayangan yang menunjukkan target,
+  dan cara menuliskan angka capaian beserta targetnya. Belum ada yang dipindahkan ke mockup utama — menunggu pilihan Anda.</p>
+
+  <h2>Target bawaan</h2>
+  <table>
+    <tr><th style="width:150px">Sumbu</th><th>Target bawaan</th><th>Sumber angkanya</th><th>Warna</th></tr>
+    <tr><td>Gerak</td><td>10.000 langkah</td><td>Jumlah seluruh catatan <code>steps</code> hari itu</td><td><code>#F2762E</code></td></tr>
+    <tr><td>Tidur</td><td>8 jam</td><td>Catatan <code>sleep</code> terakhir hari itu</td><td><code>#7A5AF8</code></td></tr>
+    <tr><td>Relaksasi</td><td>3 sesi</td><td>Jumlah catatan <code>breathing</code> hari itu</td><td><code>#0E9DA8</code></td></tr>
+  </table>
+  <div class="tanya"><b>Perlu dipastikan:</b> target relaksasi "3" saya baca sebagai <b>3 sesi</b> per hari, sejalan dengan legenda yang
+  memakai satuan sesi. Kalau yang Anda maksud 3 menit, satuannya saya ganti dan angka capaiannya diambil dari total menit, bukan jumlah sesi.</div>
+
+  <h2>1 · Anatomi satu lingkaran</h2>
+  <p class="ket">Lingkaran bayangan digambar sebesar target dan tidak pernah berubah ukuran. Lingkaran aktif digambar di atasnya, dan
+  ukurannya yang bergerak. Jarak antara tepi lingkaran aktif dan tepi bayangan itulah sisa yang belum tercapai.</p>
+  <div class="papan"><div class="rak" id="anatomi"></div></div>
+
+  <h2>2 · Dua cara menghitung ukuran lingkaran aktif</h2>
+  <p class="ket">Pertanyaannya: kalau capaian 50%, seberapa besar lingkarannya? Dua jawaban yang masuk akal memberi kesan yang berbeda jauh.</p>
+
+  <h3>Opsi A — jari-jari sebanding capaian</h3>
+  <p class="ket"><code>r = rTarget × p</code>. Sederhana, tapi pada 50% luas lingkarannya hanya seperempat luas bayangan, sehingga terasa
+  lebih sedikit daripada yang sebenarnya sudah dicapai.</p>
+  <div class="papan"><div class="rak" id="opsiA"></div></div>
+
+  <h3>Opsi B — luas sebanding capaian</h3>
+  <p class="ket"><code>r = rTarget × √p</code>. Pada 50% luas lingkarannya benar-benar setengah luas bayangan. Mata membaca lingkaran penuh
+  sebagai luas, bukan sebagai lebar, jadi cara ini lebih jujur.</p>
+  <div class="papan"><div class="rak" id="opsiB"></div></div>
+
+  <div class="pilih"><b>Saran saya Opsi B.</b> Pada capaian setengah, lingkarannya terlihat setengah penuh — itu yang diharapkan orang saat
+  melihat bentuk yang membesar di dalam bingkai. Opsi A membuat pagi hari terasa jauh lebih kosong daripada kenyataannya, dan itu justru
+  melemahkan dorongan untuk melanjutkan. Keduanya memakai ukuran terkecil 18% supaya capaian nol tetap kelihatan sebagai titik, bukan hilang.</p></div>
+
+  <h2>3 · Tampilan cincin bayangan</h2>
+  <p class="ket">Tiga cara menggambar bayangan target. Semuanya memakai warna sumbunya sendiri supaya pasangan bayangan dan lingkaran
+  aktifnya terbaca sebagai satu kesatuan.</p>
+  <div class="papan"><div class="rak" id="bayangan"></div></div>
+
+  <h2>4 · Penulisan angka di legenda</h2>
+  <p class="ket">Angka capaian tetap yang paling besar dan paling gelap. Target ditempel di belakangnya dengan ukuran lebih kecil dan warna
+  lebih pudar, jadi terbaca sebagai konteks, bukan sebagai angka kedua yang setara.</p>
+  <div class="papan"><div class="rak" id="legenda" style="gap:32px"></div></div>
+
+  <h2>5 · Kartu utuh sepanjang hari</h2>
+  <p class="ket">Empat keadaan yang sama-sama sering terjadi. Semuanya memakai Opsi B dan bayangan bentuk ketiga.</p>
+  <div class="papan"><div class="rak" id="kartu" style="gap:20px"></div></div>
+
+  <h2>6 · Kalau target terlampaui</h2>
+  <p class="ket">Lingkaran aktif berhenti di ukuran bayangan dan tidak tumbuh lebih besar, supaya tiga lingkaran tidak saling menabrak.
+  Kelebihannya ditandai cincin putih tipis di dalam tepi lingkaran, dan angka di legenda tetap menampilkan nilai sebenarnya.</p>
+  <div class="papan"><div class="rak" id="lampau" style="gap:20px"></div></div>
+
+  <h2>Yang perlu Anda putuskan</h2>
+  <table>
+    <tr><th style="width:220px">Pilihan</th><th>Saran saya</th></tr>
+    <tr><td>Cara menghitung ukuran</td><td>Opsi B, luas sebanding capaian</td></tr>
+    <tr><td>Tampilan bayangan</td><td>Bentuk 3, isian samar ditambah garis tepi tipis</td></tr>
+    <tr><td>Satuan target relaksasi</td><td>3 sesi — mohon dipastikan, bisa juga 3 menit</td></tr>
+    <tr><td>Perilaku saat target terlampaui</td><td>Berhenti di ukuran bayangan, ditandai cincin putih tipis</td></tr>
+  </table>
+  <p class="ket">Setelah keempatnya dipilih, saya pindahkan ke <code>mockups.html</code>, <code>design-system.md</code>, dan
+  <code>figma-prompt.md</code> sekaligus.</p>
+</div>
+
+<script>
+const SUMBU = [
+  { kunci:"gerak",     nama:"Gerak",     warna:"#F2762E", satuan:"langkah", target:10000, cx:120, cy:54,  rT:46 },
+  { kunci:"tidur",     nama:"Tidur",     warna:"#7A5AF8", satuan:"jam",     target:8,     cx:82,  cy:106, rT:40 },
+  { kunci:"relaksasi", nama:"Relaksasi", warna:"#0E9DA8", satuan:"sesi",    target:3,     cx:158, cy:106, rT:33 },
+];
+const MIN = 0.18;
+const jariJari = (rT, p, opsi) => {
+  const q = Math.max(0, Math.min(1, p));
+  const f = opsi === "A" ? q : Math.sqrt(q);
+  return rT * Math.max(MIN, f);
+};
+const angka = n => n.toLocaleString("id-ID");
+
+function bayanganSvg(s, bentuk){
+  if (bentuk === 1) return `<circle cx="${s.cx}" cy="${s.cy}" r="${s.rT}" fill="${s.warna}" opacity=".12"/>`;
+  if (bentuk === 2) return `<circle cx="${s.cx}" cy="${s.cy}" r="${s.rT}" fill="none" stroke="${s.warna}"
+      stroke-opacity=".38" stroke-width="1.5" stroke-dasharray="5 4"/>`;
+  return `<circle cx="${s.cx}" cy="${s.cy}" r="${s.rT}" fill="${s.warna}" opacity=".10"/>
+          <circle cx="${s.cx}" cy="${s.cy}" r="${s.rT}" fill="none" stroke="${s.warna}" stroke-opacity=".28" stroke-width="1.5"/>`;
+}
+
+function cincin(nilai, {opsi="B", bentuk=3, lebar=240, tinggi=160, hanya=null} = {}){
+  const dipakai = hanya ? SUMBU.filter(s => s.kunci === hanya) : SUMBU;
+  const bayang = dipakai.map(s => bayanganSvg(s, bentuk)).join("");
+  const aktif = dipakai.map(s => {
+    const p = nilai[s.kunci] / s.target;
+    const r = jariJari(s.rT, p, opsi);
+    const lampau = p > 1;
+    return `<circle cx="${s.cx}" cy="${s.cy}" r="${r}" fill="${s.warna}" opacity=".8" style="mix-blend-mode:multiply"/>` +
+      (lampau ? `<circle cx="${s.cx}" cy="${s.cy}" r="${r-4}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.5"/>` : "");
+  }).join("");
+  return `<svg class="cincin" width="${lebar}" height="${tinggi}" viewBox="0 0 240 160">${bayang}${aktif}</svg>`;
+}
+
+function legendaHtml(nilai){
+  return `<div class="legenda">` + SUMBU.map(s => `
+    <div>
+      <div class="l"><i style="background:${s.warna}"></i>${s.nama}</div>
+      <div class="n">${angka(nilai[s.kunci])}<span class="tgt">/${angka(s.target)}</span></div>
+      <div class="sat">${s.satuan}</div>
+    </div>`).join("") + `</div>`;
+}
+
+const kartu = (judul, nilai) => `
+  <div>
+    <div class="cap" style="font:600 11px/15px var(--font);color:var(--tinta-400);margin-bottom:8px;
+      text-transform:uppercase;letter-spacing:.05em">${judul}</div>
+    <div class="kartu-cincin">${cincin(nilai)}${legendaHtml(nilai)}</div>
+  </div>`;
+
+const spesimen = (cap, svg) => `<div class="spesimen"><div class="cap">${cap}</div>${svg}</div>`;
+
+// 1 anatomi
+document.getElementById("anatomi").innerHTML = [
+  spesimen("Bayangan saja", `<svg class="cincin" width="150" height="150" viewBox="60 0 120 130">
+      ${bayanganSvg(SUMBU[0], 3)}</svg>`),
+  spesimen("Aktif 35%", `<svg class="cincin" width="150" height="150" viewBox="60 0 120 130">
+      ${bayanganSvg(SUMBU[0], 3)}
+      <circle cx="120" cy="54" r="${jariJari(46, .35, "B")}" fill="#F2762E" opacity=".8"/></svg>`),
+  spesimen("Aktif 100%", `<svg class="cincin" width="150" height="150" viewBox="60 0 120 130">
+      ${bayanganSvg(SUMBU[0], 3)}
+      <circle cx="120" cy="54" r="46" fill="#F2762E" opacity=".8"/></svg>`),
+].join("");
+
+// 2 dua opsi skala
+const tahap = [0, .25, .5, .75, 1];
+for (const opsi of ["A", "B"]) {
+  document.getElementById("opsi" + opsi).innerHTML = tahap.map(p => spesimen(
+    Math.round(p * 100) + "%",
+    cincin({gerak: 10000 * p, tidur: 8 * p, relaksasi: 3 * p}, {opsi, lebar: 190, tinggi: 127})
+  )).join("");
+}
+
+// 3 tampilan bayangan
+document.getElementById("bayangan").innerHTML = [1, 2, 3].map(b => spesimen(
+  ["Bentuk 1 — isian samar", "Bentuk 2 — garis putus-putus", "Bentuk 3 — isian samar dan garis tepi"][b - 1],
+  cincin({gerak: 6240, tidur: 7.1, relaksasi: 2}, {bentuk: b, lebar: 250, tinggi: 167})
+)).join("");
+
+// 4 legenda
+document.getElementById("legenda").innerHTML = [
+  `<div><div class="cap" style="font:600 11px/15px var(--font);color:var(--tinta-400);margin-bottom:8px;
+     text-transform:uppercase;letter-spacing:.05em">Pagi</div>
+   <div class="kartu-cincin" style="width:340px;padding-top:10px">${legendaHtml({gerak:1240, tidur:7.1, relaksasi:0})}</div></div>`,
+  `<div><div class="cap" style="font:600 11px/15px var(--font);color:var(--tinta-400);margin-bottom:8px;
+     text-transform:uppercase;letter-spacing:.05em">Malam</div>
+   <div class="kartu-cincin" style="width:340px;padding-top:10px">${legendaHtml({gerak:10450, tidur:7.1, relaksasi:3})}</div></div>`,
+].join("");
+
+// 5 kartu utuh
+document.getElementById("kartu").innerHTML = [
+  kartu("Pagi — baru bangun",   {gerak: 640,   tidur: 7.1, relaksasi: 0}),
+  kartu("Siang — separuh hari", {gerak: 5120,  tidur: 7.1, relaksasi: 1}),
+  kartu("Sore — hampir penuh",  {gerak: 8600,  tidur: 7.1, relaksasi: 2}),
+  kartu("Malam — target lewat", {gerak: 11240, tidur: 8.4, relaksasi: 3}),
+].join("");
+
+// 6 target terlampaui
+document.getElementById("lampau").innerHTML = [
+  kartu("Pas di target",   {gerak: 10000, tidur: 8,   relaksasi: 3}),
+  kartu("Lewat target",    {gerak: 13800, tidur: 9.2, relaksasi: 5}),
+].join("");
+</script>
+</body>
+</html>
