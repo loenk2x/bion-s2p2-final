@@ -221,6 +221,11 @@ button { font: inherit; cursor: pointer; }
    needs a real, typable input styled the same way. */
 .angka-inp input { border: 0; outline: 0; background: none; width: 100%; text-align: center; font: 700 40px/44px var(--font); color: var(--tinta-900); }
 .angka-inp input::-webkit-outer-spin-button, .angka-inp input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+/* the mockup's unit <span> sits next to a static, auto-width <b> digit inside
+   a centered group, so it never needed its own spacing. The real input has
+   width:100% and fills the row up to the unit label, leaving it flush
+   against the box's right edge — give it room here. */
+.angka-inp { padding-right: var(--jarak-16); }
 
 /* ---------- modal layer for .lembar / .tirai ---------- */
 /* in the mockup, .lembar and .tirai are positioned inside the fixed-size
