@@ -1,0 +1,28 @@
+# Konfigurasi deployment server Healthy Life ke Render.
+# Repositorinya adalah monorepo, jadi rootDir menunjuk ke folder server/.
+#
+# MONGO_URI, JWT_SECRET, dan CORS_ORIGIN sengaja ditandai sync: false supaya
+# nilainya diisi lewat dashboard Render, bukan disimpan di repositori.
+
+services:
+  - type: web
+    name: healthy-life-server
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false

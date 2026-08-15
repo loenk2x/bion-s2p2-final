@@ -1,0 +1,40 @@
+# Docker Compose untuk pengembangan Healthy Life di komputer lokal.
+#
+# Hanya dua layanan: server dan web. Database tidak ikut karena memakai
+# MongoDB Atlas (lihat README.md bagian database). Expo juga sengaja tidak
+# dimasukkan — alasannya ada di README.md bagian Docker.
+#
+# Menjalankan: docker compose up --build
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      # Kode di host ikut termonitor, perubahan langsung terlihat lewat node --watch.
+      - ./server:/app
+      # Volume anonim ini melindungi node_modules hasil install di dalam image
+      # supaya tidak tertimpa bind mount di atas.
+      - /app/node_modules
+    env_file:
+      - ./server/.env
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    environment:
+      # Web jalan di browser host, server jalan di localhost:4000 host juga
+      # (port 4000 dipetakan di atas), jadi alamatnya tetap localhost, bukan
+      # nama layanan "server".
+      VITE_API_URL: http://localhost:4000
+    depends_on:
+      - server

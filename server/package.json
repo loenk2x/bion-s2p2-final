@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "feed": "node scripts/feed.js"
+    "feed": "node scripts/feed.js",
+    "smoke": "node scripts/smoke-test.mjs"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
