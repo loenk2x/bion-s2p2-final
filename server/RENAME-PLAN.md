@@ -173,7 +173,7 @@ paling banyak diimpor. Tiap langkah bisa di-commit dan diuji sendiri lewat
 4. ✅ `src/models/Content.js` — ganti `KATEGORI`, `TIPE`, `skemaContent`, dan
    `keKartu`, sekaligus perbarui pemanggilan `keKartu` di
    `src/routes/contents.js` dan `src/routes/favorites.js`.
-5. `src/middleware/requireAuth.js` — ganti `isi` menjadi `payload`. Nama
+5. ✅ `src/middleware/requireAuth.js` — ganti `isi` menjadi `payload`. Nama
    fungsi `requireAuth` sudah Inggris, tidak berubah.
 6. `src/config/db.js` — ganti `sambungkanDatabase` dan `namaDatabase`,
    sekaligus perbarui pemanggilnya di `src/server.js` dan `scripts/feed.js`.

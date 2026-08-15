@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-// Menutup seluruh route konten dan data pribadi. Tanpa token yang sah, permintaan
-// berhenti di sini — bukan sekadar disembunyikan di antarmuka.
+// Locks down every content and personal-data route. Without a valid token, the
+// request stops right here — not just hidden in the UI.
 async function requireAuth(req, res, next) {
   try {
     const header = req.headers.authorization || "";
@@ -11,19 +11,19 @@ async function requireAuth(req, res, next) {
     }
 
     const token = header.slice(7).trim();
-    let isi;
+    let payload;
     try {
-      isi = jwt.verify(token, process.env.JWT_SECRET);
+      payload = jwt.verify(token, process.env.JWT_SECRET);
     } catch {
       return res.status(401).json({ pesan: "Sesi Anda sudah berakhir. Silakan masuk lagi." });
     }
 
-    const user = await User.findById(isi.sub);
+    const user = await User.findById(payload.sub);
     if (!user) {
       return res.status(401).json({ pesan: "Akun tidak ditemukan." });
     }
 
-    // Identitas HANYA berasal dari token. Nilai userId yang dikirim klien diabaikan.
+    // Identity comes ONLY from the token. Any userId sent by the client is ignored.
     req.user = user;
     next();
   } catch (galat) {
