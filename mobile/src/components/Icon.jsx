@@ -82,27 +82,40 @@ const SOLID = {
   ]
 };
 
-// react-native-svg has no reliable "currentColor" inheritance, unlike CSS in
-// the browser, so every caller passes an explicit color; this is only a
-// fallback for callers that don't.
-export default function Icon({ name, size = 24, color = colors.tinta900, ...rest }) {
+// The glyph as a <G>, scaled and positioned, but with NO <Svg> wrapper of its
+// own. react-native-svg does not support nesting a full <Svg> inside another
+// <Svg> the way the web app nests <svg> inside <svg> - each <Svg> is its own
+// native surface. Anything that draws an icon inside an existing <Svg> (e.g.
+// DailyRings' ring icons) must use IconGlyph, not the default export.
+export function IconGlyph({ name, size = 24, color = colors.tinta900, x = 0, y = 0 }) {
   const solid = SOLID[name];
   const outline = OUTLINE[name];
   if (!solid && !outline) return null;
+  const scale = size / 24;
 
   return (
-    <Svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
+    <G
+      transform={`translate(${x}, ${y}) scale(${scale})`}
       fill={solid ? color : "none"}
       stroke={solid ? "none" : color}
       strokeWidth={solid ? undefined : 1.8}
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...rest}
     >
-      <G>{solid || outline}</G>
+      {solid || outline}
+    </G>
+  );
+}
+
+// react-native-svg has no reliable "currentColor" inheritance, unlike CSS in
+// the browser, so every caller passes an explicit color; this is only a
+// fallback for callers that don't.
+export default function Icon({ name, size = 24, color = colors.tinta900, ...rest }) {
+  if (!SOLID[name] && !OUTLINE[name]) return null;
+
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" {...rest}>
+      <IconGlyph name={name} size={24} color={color} />
     </Svg>
   );
 }
