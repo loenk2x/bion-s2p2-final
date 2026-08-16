@@ -46,8 +46,6 @@ Plugin ini menghasilkan layer, bukan design system. Setelah semua masuk:
 4. **Denyut cincin.** Animasinya hanya hidup di kode dan tidak ikut terimpor. Kalau perlu diperagakan, buat dua frame kembar dengan lingkaran aktif berbeda 4,5 persen lalu hubungkan dengan Smart Animate 1,8 detik, easing Ease In And Out.
 5. **Penamaan frame.** Ganti nama frame hasil impor menjadi `Mobile / Beranda`, `Web / Beranda`, dan seterusnya.
 
-Deskripsi tiap layar dalam bentuk kalimat, kalau Anda lebih suka menggambar lewat Figma AI daripada mengimpor, ada di `../figma-prompt.md`.
-
 ## Membangun ulang
 
 Berkas di folder ini dihasilkan otomatis dan tidak untuk diedit langsung. Setiap `../mockups.html` berubah, jalankan:

@@ -5,8 +5,7 @@
 // keypadFor(type) from @shared/activities returns "decimal" or "integer" -
 // web maps that to inputMode, this maps it to React Native's keyboardType
 // ("decimal-pad" / "number-pad"). That mapping is platform presentation, so
-// it lives here rather than in shared/activities.js, per RENCANA-MOBILE.md
-// section 1.
+// it lives here rather than in shared/activities.js.
 
 import { useEffect, useRef, useState } from "react";
 import { Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";

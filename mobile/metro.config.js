@@ -16,7 +16,7 @@
 // consulted and every "@shared/*" import fails to resolve. This was proven
 // by running `npx expo export --platform android`, which failed with
 // "Unable to resolve module @shared/activities" until resolveRequest below
-// was added; see RENCANA-MOBILE.md section 2.
+// was added; see the "Metro dan shared/" section of the repository README.
 
 const { getDefaultConfig } = require("expo/metro-config");
 const path = require("path");

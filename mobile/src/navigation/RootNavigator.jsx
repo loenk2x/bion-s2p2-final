@@ -3,9 +3,9 @@
 // wall (the bottom-tab group plus content detail, which pushes over the
 // tabs the same way ContentDetail pushes over AppShell on the web).
 //
-// Route names stay Indonesian to match the web app's paths, per
-// RENCANA-MOBILE.md section 3: landing, daftar, masuk, then the tab names
-// (beranda, favorit, catatan, profil) plus kontenDetail.
+// Route names stay Indonesian to match the web app's paths: landing, daftar,
+// masuk, then the tab names (beranda, favorit, catatan, profil) plus
+// kontenDetail.
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

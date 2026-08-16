@@ -2,8 +2,7 @@
 // name + bio, change password, sign out.
 //
 // changePassword sends fields "passwordLama" and "passwordBaru" - part of
-// the API contract (RENCANA-MOBILE.md section 5), not a naming choice made
-// here.
+// the API contract, not a naming choice made here.
 
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";

@@ -1,6 +1,6 @@
 // Bottom tab bar for the five screens behind the login wall. Route names are
 // Indonesian to match the web app's URL paths (/beranda, /favorit, /catatan,
-// /profil), per RENCANA-MOBILE.md section 3. Shape follows the "Bottom tab"
+// /profil). Shape follows the "Bottom tab"
 // component in the Figma file: icon above a label, active tab in hijau600.
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";

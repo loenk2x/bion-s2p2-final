@@ -2,7 +2,7 @@
 // breathing session opened from AddEntryModal once a duration is picked.
 // Saves the entry itself once the mood step is resolved (mood chosen or
 // skipped) - mood is a field on the breathing entry, not a separate
-// activity type, per RENCANA-MOBILE.md section 4 (Langkah 7).
+// activity type. The server rejects a mood on any other type.
 
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";

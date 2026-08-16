@@ -11,8 +11,7 @@
 // repeats forever; that mapping is used below to reproduce the same stagger.
 //
 // Turned off entirely when the system's reduce-motion setting is on, per
-// RENCANA-MOBILE.md section 4 (Langkah 5) and matching the web app's
-// behaviour under prefers-reduced-motion.
+// matching the web app's behaviour under prefers-reduced-motion.
 
 import { useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, Animated, StyleSheet, Text, View } from "react-native";
