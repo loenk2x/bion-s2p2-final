@@ -1,0 +1,157 @@
+<!-- Sumber diagram alur aplikasi. Dirender jadi design/alur-aplikasi.png lewat
+     Edge/Chrome headless; lihat perintahnya di bagian bawah berkas ini. -->
+<style>
+  html, body { margin: 0; padding: 0; background: #F7F9F8; }
+  svg { display: block; }
+</style>
+
+<svg width="1440" height="1140" viewBox="0 0 1440 1140" xmlns="http://www.w3.org/2000/svg"
+     font-family="Segoe UI, Arial, sans-serif">
+
+  <defs>
+    <marker id="panah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5C6B64"/>
+    </marker>
+    <marker id="panahHijau" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#19A96F"/>
+    </marker>
+  </defs>
+
+  <rect width="1440" height="1140" fill="#F7F9F8"/>
+
+  <!-- ================= judul ================= -->
+  <text x="80" y="62" font-size="34" font-weight="700" fill="#16211C">Alur Aplikasi Healthy Life</text>
+  <text x="80" y="94" font-size="16" fill="#5C6B64">Registrasi dan login wajib sebelum seluruh fitur dan konten bisa diakses. Delapan layar yang sama dipakai aplikasi web dan aplikasi mobile.</text>
+
+  <!-- ================= bagian tanpa login ================= -->
+  <text x="80" y="142" font-size="13" font-weight="700" fill="#19A96F" letter-spacing="1.5">TANPA LOGIN</text>
+
+  <g>
+    <rect x="80" y="156" width="360" height="86" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <text x="104" y="192" font-size="19" font-weight="600" fill="#16211C">Landing</text>
+    <text x="104" y="218" font-size="14" fill="#5C6B64">Cuplikan konten, tanpa isi penuh</text>
+
+    <rect x="540" y="156" width="360" height="86" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <text x="564" y="192" font-size="19" font-weight="600" fill="#16211C">Register</text>
+    <text x="564" y="218" font-size="14" fill="#5C6B64">Nama, email, password minimal 8 karakter</text>
+
+    <rect x="1000" y="156" width="360" height="86" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <text x="1024" y="192" font-size="19" font-weight="600" fill="#16211C">Masuk</text>
+    <text x="1024" y="218" font-size="14" fill="#5C6B64">Menukar email dan password jadi token</text>
+  </g>
+
+  <line x1="440" y1="199" x2="530" y2="199" stroke="#5C6B64" stroke-width="2" marker-end="url(#panah)"/>
+  <text x="446" y="188" font-size="12" fill="#5C6B64">daftar</text>
+  <line x1="900" y1="199" x2="990" y2="199" stroke="#5C6B64" stroke-width="2" marker-end="url(#panah)"/>
+  <text x="900" y="188" font-size="12" fill="#5C6B64">sudah punya</text>
+
+  <!-- ================= gerbang login ================= -->
+  <!-- Register dan Masuk sama-sama mengeluarkan token, jadi dua-duanya masuk ke gerbang. -->
+  <line x1="720" y1="242" x2="720" y2="286" stroke="#19A96F" stroke-width="2.5" marker-end="url(#panahHijau)"/>
+  <line x1="1180" y1="242" x2="1180" y2="286" stroke="#19A96F" stroke-width="2.5" marker-end="url(#panahHijau)"/>
+  <text x="736" y="268" font-size="12" fill="#5C6B64">token terbit</text>
+  <text x="1196" y="268" font-size="12" fill="#5C6B64">token terbit</text>
+
+  <rect x="80" y="292" width="1280" height="60" rx="12" fill="#0F7A50"/>
+  <text x="720" y="322" font-size="17" font-weight="600" fill="#FFFFFF" text-anchor="middle">requireAuth — token JWT wajib pada setiap permintaan</text>
+  <text x="720" y="342" font-size="13" fill="#B7E4CE" text-anchor="middle">Identitas selalu diambil dari token, tidak pernah dari body atau query. Milik pengguna lain dibalas 404, bukan 403.</text>
+
+  <line x1="720" y1="352" x2="720" y2="392" stroke="#19A96F" stroke-width="2.5" marker-end="url(#panahHijau)"/>
+
+  <!-- ================= bagian setelah login ================= -->
+  <text x="80" y="386" font-size="13" font-weight="700" fill="#19A96F" letter-spacing="1.5">SETELAH LOGIN</text>
+
+  <g font-size="13" fill="#5C6B64">
+    <!-- Beranda -->
+    <rect x="80" y="400" width="240" height="186" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <rect x="80" y="400" width="240" height="5" rx="2.5" fill="#19A96F"/>
+    <text x="102" y="436" font-size="18" font-weight="600" fill="#16211C">Beranda</text>
+    <text x="102" y="458" font-size="12" fill="#8A9791">/beranda</text>
+    <text x="102" y="486">Cincin harian</text>
+    <text x="102" y="510">Cari dan filter kategori</text>
+    <text x="102" y="534">Daftar konten</text>
+    <text x="102" y="558">Tombol tambah catatan</text>
+
+    <!-- Detail konten -->
+    <rect x="340" y="400" width="240" height="186" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <rect x="340" y="400" width="240" height="5" rx="2.5" fill="#2D7FF9"/>
+    <text x="362" y="436" font-size="18" font-weight="600" fill="#16211C">Detail konten</text>
+    <text x="362" y="458" font-size="12" fill="#8A9791">/konten/:slug</text>
+    <text x="362" y="486">Artikel, video, infografis</text>
+    <text x="362" y="510">Isi ditulis Markdown</text>
+    <text x="362" y="534">Tombol simpan favorit</text>
+
+    <!-- Favorit -->
+    <rect x="600" y="400" width="240" height="186" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <rect x="600" y="400" width="240" height="5" rx="2.5" fill="#F2762E"/>
+    <text x="622" y="436" font-size="18" font-weight="600" fill="#16211C">Favorit</text>
+    <text x="622" y="458" font-size="12" fill="#8A9791">/favorit</text>
+    <text x="622" y="486">Konten tersimpan</text>
+    <text x="622" y="510">Geser kiri untuk hapus</text>
+    <text x="622" y="534">Hanya milik sendiri</text>
+
+    <!-- Catatan -->
+    <rect x="860" y="400" width="240" height="186" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <rect x="860" y="400" width="240" height="5" rx="2.5" fill="#0E9DA8"/>
+    <text x="882" y="436" font-size="18" font-weight="600" fill="#16211C">Catatan</text>
+    <text x="882" y="458" font-size="12" fill="#8A9791">/catatan</text>
+    <text x="882" y="486">Riwayat per tanggal</text>
+    <text x="882" y="510">Enam jenis aktivitas</text>
+    <text x="882" y="534">Sesi latihan pernapasan</text>
+    <text x="882" y="558">Mood diisi setelah sesi</text>
+
+    <!-- Profil -->
+    <rect x="1120" y="400" width="240" height="186" rx="12" fill="#FFFFFF" stroke="#DDE5E1"/>
+    <rect x="1120" y="400" width="240" height="5" rx="2.5" fill="#7A5AF8"/>
+    <text x="1142" y="436" font-size="18" font-weight="600" fill="#16211C">Profil</text>
+    <text x="1142" y="458" font-size="12" fill="#8A9791">/profil</text>
+    <text x="1142" y="486">Data diri dan bio</text>
+    <text x="1142" y="510">Ganti password</text>
+    <text x="1142" y="534">Keluar</text>
+  </g>
+
+  <!-- navigasi antar layar -->
+  <path d="M 200 596 L 200 616 L 1240 616 L 1240 596" fill="none" stroke="#C3CFC9" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="720" y="636" font-size="12.5" fill="#8A9791" text-anchor="middle">Kelima layar saling terhubung lewat bottom tab di mobile dan menu samping di web. Beranda dan Favorit membuka Detail konten.</text>
+
+  <!-- ================= lapisan shared ================= -->
+  <rect x="80" y="656" width="1280" height="76" rx="12" fill="#EAF6F0" stroke="#19A96F" stroke-dasharray="6 5"/>
+  <text x="104" y="686" font-size="16" font-weight="600" fill="#0F7A50">shared/ — logika yang dipakai ulang aplikasi web dan aplikasi mobile</text>
+  <text x="104" y="712" font-size="13.5" fill="#3E5A4D">api.js · AuthProvider.jsx · activities.js · rings.js · format.js · categories.js · avatar.js · markdown.js · register.js · activityColors.js</text>
+
+  <line x1="720" y1="732" x2="720" y2="774" stroke="#19A96F" stroke-width="2.5" marker-end="url(#panahHijau)"/>
+  <text x="736" y="760" font-size="12.5" fill="#5C6B64">HTTP + Bearer token</text>
+
+  <!-- ================= server ================= -->
+  <rect x="80" y="780" width="1280" height="150" rx="12" fill="#FFFFFF" stroke="#19A96F" stroke-width="1.5"/>
+  <text x="104" y="814" font-size="19" font-weight="600" fill="#16211C">Server — Express 4 + Mongoose 8 + JSON Web Token</text>
+  <text x="104" y="838" font-size="13.5" fill="#5C6B64">20 route. Zona waktu proses disetel Asia/Jakarta supaya kunci tanggal catatan harian mengikuti waktu pengguna.</text>
+
+  <g font-size="13" fill="#0F7A50">
+    <rect x="104" y="858" width="150" height="34" rx="8" fill="#EAF6F0"/><text x="179" y="880" text-anchor="middle">/api/public</text>
+    <rect x="268" y="858" width="150" height="34" rx="8" fill="#EAF6F0"/><text x="343" y="880" text-anchor="middle">/api/auth</text>
+    <rect x="432" y="858" width="176" height="34" rx="8" fill="#EAF6F0"/><text x="520" y="880" text-anchor="middle">/api/contents</text>
+    <rect x="622" y="858" width="180" height="34" rx="8" fill="#EAF6F0"/><text x="712" y="880" text-anchor="middle">/api/favorites</text>
+    <rect x="816" y="858" width="150" height="34" rx="8" fill="#EAF6F0"/><text x="891" y="880" text-anchor="middle">/api/logs</text>
+    <rect x="980" y="858" width="186" height="34" rx="8" fill="#EAF6F0"/><text x="1073" y="880" text-anchor="middle">/api/categories</text>
+    <rect x="1180" y="858" width="156" height="34" rx="8" fill="#EAF6F0"/><text x="1258" y="880" text-anchor="middle">/api/aktivitas</text>
+  </g>
+
+  <line x1="720" y1="930" x2="720" y2="972" stroke="#2D7FF9" stroke-width="2.5" marker-end="url(#panah)"/>
+
+  <!-- ================= database ================= -->
+  <rect x="80" y="978" width="1280" height="112" rx="12" fill="#EDF3FE" stroke="#2D7FF9" stroke-width="1.5"/>
+  <text x="104" y="1012" font-size="19" font-weight="600" fill="#16211C">MongoDB Atlas — basis data bion-final-healthylife</text>
+
+  <g font-size="13.5" fill="#1B4C93">
+    <rect x="104" y="1030" width="290" height="38" rx="8" fill="#FFFFFF"/><text x="249" y="1054" text-anchor="middle">users — akun dan password hash</text>
+    <rect x="410" y="1030" width="290" height="38" rx="8" fill="#FFFFFF"/><text x="555" y="1054" text-anchor="middle">contents — 20 artikel, video, infografis</text>
+    <rect x="716" y="1030" width="290" height="38" rx="8" fill="#FFFFFF"/><text x="861" y="1054" text-anchor="middle">favorites — milik tiap pengguna</text>
+    <rect x="1022" y="1030" width="314" height="38" rx="8" fill="#FFFFFF"/><text x="1179" y="1054" text-anchor="middle">healthlogs — catatan harian, privat</text>
+  </g>
+</svg>
+
+<!--
+Render ke PNG:
+msedge --headless --disable-gpu --window-size=1440,1140 --screenshot="design\alur-aplikasi.png" "design\alur-aplikasi.html"
+-->
