@@ -157,8 +157,20 @@ button { font: inherit; cursor: pointer; }
    the profile page's real "Nama"/"Email" and password inputs are wider than
    that, so a bare 1fr track refused to shrink and pushed the page sideways.
    minmax(0, 1fr) keeps the same two-column look everywhere it already works
-   and only changes behaviour where content would otherwise overflow. */
-.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+   and only changes behaviour where content would otherwise overflow.
+
+   In this app .g2 is only ever used on the profile page (Profile.jsx) — the
+   mockup's other .g2 use (the landing page's two short stat numbers) was
+   never carried into the React pages, so this rule can't affect anything
+   else. The mockup's own web screen (layar 8 · Profil, >=1024px frame) shows
+   Nama/Email and the two password fields side by side, but it never shows a
+   phone-width Profil screen at all. At 375px two fields sharing one row left
+   each field too narrow, so stack to one column by default (mobile-first,
+   same as the rest of this file) and only go to two columns at the same
+   1024px breakpoint .profil-layout already uses for its own two-column
+   switch, matching what the mockup actually shows. */
+.g2 { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1024px) { .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Same fix, same reason, for the daily-log page's four-card weekly summary
    row (.g4): the mockup only ever places it on the web screen, so a bare
