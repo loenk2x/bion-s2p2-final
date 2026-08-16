@@ -133,7 +133,11 @@ export default function Favorites() {
       container.removeEventListener("touchend", onTouchEnd);
       container.removeEventListener("touchcancel", onTouchEnd);
     };
-  }, [openFavId]);
+    // favorites is a dependency, not just openFavId: the list container is only
+    // rendered once the data arrives, so on the first run listRef.current is
+    // still null and this effect bails out. Without re-running when favorites
+    // lands, the listeners would never be attached at all.
+  }, [openFavId, favorites]);
 
   function handleRowClick(event, id) {
     if (openFavId === id) {
