@@ -198,6 +198,16 @@ button { font: inherit; cursor: pointer; }
    one-off inline style each time rather than giving it a class */
 .kartu-panel { background: var(--putih); border-radius: var(--radius-md); box-shadow: var(--bayang-1); padding: var(--jarak-24); }
 
+/* ---------- profile page: Bio as a multi-line field ---------- */
+/* komponen.css's .inp is sized for a single-line <input> (fixed 48px height,
+   line-height 48px to vertically center one row of text). The Bio field is a
+   <textarea> so long answers stay readable, which needs a real multi-row
+   height and top-aligned text instead. Border, radius, background, padding
+   and font all stay inherited from .inp so it still matches every other
+   field on the page; only resize is limited to vertical so a wide drag can't
+   push the page sideways. */
+textarea.inp { height: auto; min-height: 96px; padding-top: 12px; padding-bottom: 12px; line-height: 22px; resize: vertical; }
+
 /* ---------- favorites row: delete button only on hover ---------- */
 .baris-favorit .hapus-favorit { opacity: 0; transition: opacity .15s ease; }
 .baris-favorit:hover .hapus-favorit, .baris-favorit:focus-within .hapus-favorit { opacity: 1; }

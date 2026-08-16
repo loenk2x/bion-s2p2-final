@@ -96,9 +96,9 @@ export default function Profile() {
             </div>
             <div className="kolom" style={{ marginTop: 16 }}>
               <span className="inp-label">Bio</span>
-              <input
+              <textarea
                 className="inp"
-                type="text"
+                rows={4}
                 value={bio}
                 onChange={(event) => setBio(event.target.value)}
                 placeholder="Ceritakan sedikit tentang Anda"
