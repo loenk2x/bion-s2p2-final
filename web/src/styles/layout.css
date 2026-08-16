@@ -162,8 +162,16 @@ button { font: inherit; cursor: pointer; }
 
 /* Same fix, same reason, for the daily-log page's four-card weekly summary
    row (.g4): the mockup only ever places it on the web screen, so a bare
-   repeat(4, 1fr) never had to shrink to phone width before. */
-.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+   repeat(4, 1fr) never had to shrink to phone width before. minmax(0, 1fr)
+   alone stopped the row from overflowing, but four columns at phone width
+   left each .ringkas tile too narrow for its number/label and the text got
+   clipped. The mockup never shows .g4 itself below 1024px, but it does show
+   the same .ringkas card in a 2-column .g2 row on a phone screen (layar 1 ·
+   Landing, 390px) — follow that precedent and only go to four columns at
+   the >=1024px breakpoint where the mockup's own four-column web screen
+   lives (layar 7 · Catatan harian). */
+.g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1024px) { .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 /* .g3 also comes from the mockup as a bare repeat(3, 1fr), used on the daily
    log page for the activity-entry cards (.ak). The mockup's phone screen
