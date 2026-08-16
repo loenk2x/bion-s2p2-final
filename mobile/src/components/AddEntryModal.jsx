@@ -8,7 +8,7 @@
 // it lives here rather than in shared/activities.js.
 
 import { useEffect, useRef, useState } from "react";
-import { Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   ACTIVITIES,
   ADD_MENU_ORDER,
@@ -102,13 +102,16 @@ export default function AddEntryModal({ visible, onClose, onSaved }) {
 
   return (
     <Modal visible transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
-      <View style={styles.overlay}>
+      <KeyboardAvoidingView
+        style={styles.overlay}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
         <View style={styles.sheet}>
           <View style={styles.handle} />
 
           {step === "menu" ? (
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps="handled">
               <Text style={styles.title}>Tambah catatan</Text>
               <Text style={styles.subtitle}>Pilih jenis aktivitas yang ingin dicatat.</Text>
               <View style={styles.menuList}>
@@ -128,7 +131,7 @@ export default function AddEntryModal({ visible, onClose, onSaved }) {
           ) : null}
 
           {step === "value" && activity ? (
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps="handled">
               <View style={styles.valueHeader}>
                 <View style={[styles.menuIcon, { borderColor: color, backgroundColor: `${color}1F` }]}>
                   <Icon name={ACTIVITY_ICONS[type]} size={20} color={color} />
@@ -203,7 +206,7 @@ export default function AddEntryModal({ visible, onClose, onSaved }) {
             </View>
           ) : null}
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
