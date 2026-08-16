@@ -10,6 +10,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "id.healthylife.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -23,6 +24,12 @@
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1eb8ee43-90b2-4ce5-9c18-851345543624"
+      }
+    },
+    "owner": "loenk2x"
   }
 }
