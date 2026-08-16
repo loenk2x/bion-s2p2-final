@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { Image, Linking, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import WebView from "react-native-webview";
+import YoutubePlayer from "react-native-youtube-iframe";
 import { categoryLabel, contentTypeLabel } from "@shared/categories";
 import Icon from "../components/Icon";
 import Loading from "../components/Loading";
@@ -22,6 +22,7 @@ export default function ContentDetailScreen({ route, navigation }) {
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [playerWidth, setPlayerWidth] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -93,20 +94,17 @@ export default function ContentDetailScreen({ route, navigation }) {
         </View>
 
         {content.type === "video" ? (
-          <View style={styles.player}>
-            <WebView
-              source={{
-                html: `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><style>html,body{margin:0;padding:0;background:#000;height:100%;}iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}</style></head><body><iframe src="https://www.youtube-nocookie.com/embed/${content.videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></body></html>`,
-                baseUrl: "https://www.youtube.com"
-              }}
-              originWhitelist={["*"]}
-              javaScriptEnabled
-              domStorageEnabled
-              allowsInlineMediaPlayback
-              mediaPlaybackRequiresUserAction={false}
-              allowsFullscreenVideo
-              style={styles.playerWebview}
-            />
+          <View
+            style={styles.player}
+            onLayout={(event) => setPlayerWidth(event.nativeEvent.layout.width)}
+          >
+            {playerWidth > 0 ? (
+              <YoutubePlayer
+                height={Math.round((playerWidth * 9) / 16)}
+                videoId={content.videoId}
+                webViewProps={{ allowsInlineMediaPlayback: true }}
+              />
+            ) : null}
           </View>
         ) : null}
 
@@ -193,7 +191,6 @@ const styles = StyleSheet.create({
   },
   roundButtonOn: { backgroundColor: colors.hijau600, borderColor: colors.hijau600 },
   player: { aspectRatio: 16 / 9, borderRadius: radius.md, overflow: "hidden", backgroundColor: "#000" },
-  playerWebview: { flex: 1 },
   youtubeFallback: { alignSelf: "flex-start", marginTop: 6 },
   youtubeFallbackText: { fontSize: 12, fontWeight: "600", color: colors.hijau700 },
   infographicFrame: { borderRadius: radius.md, overflow: "hidden", backgroundColor: colors.latar },
