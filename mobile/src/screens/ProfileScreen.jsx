@@ -89,7 +89,14 @@ export default function ProfileScreen() {
             <Text style={styles.readonlyText}>{user?.email}</Text>
           </View>
         </View>
-        <Field label="Bio" value={bio} onChangeText={setBio} placeholder="Ceritakan sedikit tentang Anda" />
+        <Field
+          label="Bio"
+          value={bio}
+          onChangeText={setBio}
+          placeholder="Ceritakan sedikit tentang Anda"
+          multiline
+          numberOfLines={4}
+        />
         {profileError ? <Text style={styles.errorText}>{profileError}</Text> : null}
         {profileMessage ? <Text style={styles.successText}>{profileMessage}</Text> : null}
         <TouchableOpacity style={[styles.primaryButton, profileSaving && styles.disabled]} disabled={profileSaving} onPress={saveProfile}>
@@ -112,11 +119,16 @@ export default function ProfileScreen() {
   );
 }
 
-function Field({ label, ...inputProps }) {
+function Field({ label, multiline, ...inputProps }) {
   return (
     <View style={styles.field}>
       <Text style={styles.fieldLabel}>{label}</Text>
-      <TextInput style={styles.input} placeholderTextColor={colors.tinta400} {...inputProps} />
+      <TextInput
+        style={[styles.input, multiline && styles.textarea]}
+        placeholderTextColor={colors.tinta400}
+        multiline={multiline}
+        {...inputProps}
+      />
     </View>
   );
 }
@@ -158,6 +170,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.tinta900
   },
+  // Bio can run to a few sentences, so it gets a taller box. textAlignVertical
+  // keeps Android from centring the first line vertically; iOS already starts
+  // at the top and ignores it.
+  textarea: { minHeight: 96, paddingTop: 10, textAlignVertical: "top" },
   readonlyInput: { backgroundColor: colors.latar, borderRadius: radius.sm, paddingHorizontal: 14, paddingVertical: 10 },
   readonlyText: { fontSize: 14, color: colors.tinta600 },
   errorText: { color: colors.bahaya, fontSize: 12, marginBottom: spacing.s8 },
